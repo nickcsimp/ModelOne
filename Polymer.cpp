@@ -39,6 +39,7 @@ void Polymer::addPolymer(Polymer * poly, int pos){
     }
     length = length + seq.size();
     //polymer sorting out
+    poly->remove();
 }
 
 Polymer * Polymer::cutPolymer(int index){
@@ -67,6 +68,8 @@ bool Polymer::operator==(Polymer p) {
     return false;
 }
 
+//TODO add a != operator?
+//TODO index automation
 void Polymer::remove(){
     //TODO this
 }

@@ -22,6 +22,29 @@ public:
     Tests();
     bool runTests();
     bool testSystemInitialisation();
+    bool testChangeMonomerCount();
+    bool testChangeDimerCount();
+    bool testPolymerInitialisation();
+    bool testPolymerParameters();
+    bool testPolymerEquals();
+    bool testAddPolymer();
+    bool testCutPolymer();
+    bool testRemovePolymer();
+    bool testConnectionInitialisation();
+    bool testConnectionEquals();
+    bool testConnectionRemove();
+    bool testConglomerateInitialisation();
+    bool testConglomerateGetters();
+    bool testUpdatePolymersInConglomerate();
+    bool testUpdateTemplateBond();
+    bool testUpdateBackboneBond();
+    bool testUpdatePolymerConnections();
+    bool testUpdateTailUnbindingSites();
+    bool testUpdateTailBindingSites();
+    bool testTailConnectionOptions();
+    bool testUpdateValidNeighbour();
+    bool testValidNeighbourOptions();
+    bool testSystemGetters();
 };
 
 

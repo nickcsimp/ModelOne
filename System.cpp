@@ -19,11 +19,19 @@ int System::getDimers(){
 }
 
 void System::changeMonomerCount(int increase){
-    monomers=monomers+increase;
+    if(monomers+increase>=0) {
+        monomers = monomers + increase;
+    } else {
+        throw invalid_argument("Monomer count can't be below 0.");
+    }
 }
 
 void System::changeDimerCount(int increase){
-    dimers=dimers+increase;
+    if(dimers+increase>=0) {
+        dimers = dimers + increase;
+    } else {
+        throw invalid_argument("Dimer count can't be below 0.");
+    }
 }
 
 vector<Polymer *> System::getPolymers(){

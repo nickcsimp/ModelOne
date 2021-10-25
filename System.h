@@ -39,7 +39,7 @@ public:
 
     void popPolymer();
 
-    void joinPolymers(int ind_one, int ind_two);
+    void joinPolymers(int ind_one, int ind_two); //Same as Polymer::addPolymer()????
 
     void print();
 };
