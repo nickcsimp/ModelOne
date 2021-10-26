@@ -44,7 +44,7 @@ vector<Conglomerate *> System::getConglomerates(){
 
 void System::addPolymer(Polymer * p){
     polymers.push_back(p);
-    p->setIndex(polymers.size()-1);
+    //p->setIndex(polymers.size()-1);
     changeMonomerCount(-p->getLength());
 }
 
@@ -54,7 +54,7 @@ void System::popPolymer(){
 
 void System::addConglomerate(Conglomerate * c){
     conglomerates.push_back(c);
-    c->setIndex(conglomerates.size()-1);
+    //c->setIndex(conglomerates.size()-1);
 }
 
 void System::joinPolymers(int ind_one, int ind_two){

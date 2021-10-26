@@ -34,7 +34,6 @@ public:
     bool testConnectionEquals();
     bool testConnectionRemove();
     bool testConglomerateInitialisation();
-    bool testConglomerateGetters();
     bool testUpdatePolymersInConglomerate();
     bool testUpdateTemplateBond();
     bool testUpdateBackboneBond();

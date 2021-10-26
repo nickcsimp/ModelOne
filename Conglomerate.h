@@ -48,6 +48,8 @@ public:
 
     void setIndex(int ind);
 
+    vector<Polymer*> getPolymersInConglomerate();
+
     void addConnection(Connection* con);
 
     void removeConnection(Connection* con);
@@ -58,9 +60,25 @@ public:
 
     void updateTemplateBond();
 
+    int getTemplateBonds();
+
+    int getBackboneBonds();
+
     void updateBackboneBonds();
 
     void updatePolymerConnections();
+
+    vector<vector<Connection * >> getPolymerConnections();
+
+    vector<vector<int>> getPolymerConnectionIndexes();
+
+    int getTailUnbindingSites();
+
+    int getTailBindingSites();
+
+    vector<Connection *> getTailUnbindingConnections();
+
+    vector<Connection *> getTailBindingConnections();
 
     void makePolymerConnections();
 
@@ -72,7 +90,10 @@ public:
 
     void updateValidNeighbours();
 
-    bool validNeighbourOptions(Connection * con, Polymer * p, int direction);
+    int getValidNeighbours();
+
+    bool validNeighbourOptions(Connection * con, Polymer * p, int direction, Polymer * original_polymer);
+
     void remove();
 };
 
