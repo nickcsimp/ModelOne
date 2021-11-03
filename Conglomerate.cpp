@@ -5,24 +5,17 @@
 #include "Conglomerate.h"
 using namespace std;
 
-Conglomerate::Conglomerate(vector<Connection *> con){
+Conglomerate::Conglomerate(vector<Connection *> con, int family_count, int monomer_type_count){
     connections = con;
+    number_of_families = family_count;
+    number_of_monomer_types = monomer_type_count;
 }
 
-Conglomerate::Conglomerate(Polymer *p, int index, int monomer_type){
-    vector<int> s = {monomer_type};
-    Polymer *polymer = new Polymer(s);
-    tuple<Polymer *, int> t_one = make_tuple(p, index);
-    tuple<Polymer *, int> t_two = make_tuple(polymer, 0);
-    Connection *c = new Connection(t_one, t_two);
-    connections.push_back(c);
-}
-
-Conglomerate::Conglomerate(Polymer * p_one, int index_one, Polymer * p_two, int index_two){
-    tuple<Polymer *, int> t_one = make_tuple(p_one, index_one);
-    tuple<Polymer *, int> t_two = make_tuple(p_two, index_two);
-    Connection *c = new Connection(t_one, t_two);
-    connections.push_back(c);
+Conglomerate::Conglomerate(Polymer * polymer, int family_count, int monomer_type_count){
+    connections.clear();
+    polymers_in_conglomerate.push_back(polymer);
+    number_of_families = family_count;
+    number_of_monomer_types = monomer_type_count;
 }
 
 int Conglomerate::getIndex(){
@@ -41,16 +34,77 @@ void Conglomerate::addConnection(Connection* con){
     updatePolymersInConglomerate();
 }
 
-void Conglomerate::removeConnection(Connection* con){
+void Conglomerate::addConnections(vector<Connection*> cons){
+    for(auto & con : cons){
+        connections.push_back(con);
+    }
+    updatePolymersInConglomerate();
+}
+
+
+bool Conglomerate::removeConnection(Connection* con){
     for(int i=0; i<connections.size(); i++){
         if(con == connections[i]){
             connections.erase(connections.begin()+i);
         }
     }
+    updateConnectivity();
     if(connections.size()==0){
-        remove();
+        return true;
+        //Todo split conglom into polymers!
     }
     updatePolymersInConglomerate();
+    return false;
+}
+
+vector<vector<Connection *>> Conglomerate::updateConnectivity(){ //TODO test
+    updatePolymersInConglomerate();
+    updatePolymerConnections();
+
+    int polymer_count = polymer_connections.size();
+    bool matrix[polymer_count][polymer_count];
+    for(int i=0 ; i<polymer_count; i++){
+        for(int j=0 ; j<polymer_count; j++){
+            if(i==j){
+                matrix[i][j]=true;
+            } else {
+                matrix[i][j]=false;
+            }
+        }
+    }
+
+
+    for(int i=0; i<polymer_count; i++){
+        for(auto & connection : polymer_connections[i]){
+            for(auto & polymer : connection->getPolymers()){
+                for(int k=0; k<polymers_in_conglomerate.size(); k++){
+                    if(*polymers_in_conglomerate[k]==*polymer){
+                        matrix[i][k]=true;
+
+                        for(int j=0; j<polymer_count; j++){
+                            if(matrix[k][j]){
+                                matrix[i][k]=true; //This
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for(int i=polymer_count-1; i>=0; i++){
+        for(int j=0; j<polymer_count; j++){
+            if(matrix[i][j]){
+                matrix[j][i]=true;//This
+            }
+        }
+    }
+
+    for(int i=0; i<polymer_count; i++){
+        for(int j=0; j<polymer_count; j++){
+            //TODO - get connection lists
+        }
+    }
 }
 
 vector<Connection *> Conglomerate::getConnections(){
@@ -58,27 +112,30 @@ vector<Connection *> Conglomerate::getConnections(){
 }
 
 void Conglomerate::updatePolymersInConglomerate() {
-    polymers_in_conglomerate.clear();
-    for(auto & elem : connections){ //Loop all connections in conglomerate
-        vector<Polymer *> v= elem->getPolymers(); //Find the polymers involved in the connection
-        for(auto & eleme : v){ //Loop the two polymers in each connection
-            bool in_vector = false; //Initialise a boolean to determine whether the polymer is already in the list
-            for(auto & elemen : polymers_in_conglomerate){ //Loop all polymers already in the list
-                if(*eleme==*elemen){ //If any polymers in the list match the polymer we are looking at the bool becomes true
-                    in_vector = true;
+    if (connections.size() > 0 && polymers_in_conglomerate.size() > 1) { //If a lone polymer then leave this
+        polymers_in_conglomerate.clear();
+        for (auto &elem: connections) { //Loop all connections in conglomerate
+            vector<Polymer *> v = elem->getPolymers(); //Find the polymers involved in the connection
+            for (auto &eleme: v) { //Loop the two polymers in each connection
+                bool in_vector = false; //Initialise a boolean to determine whether the polymer is already in the list
+                for (auto &elemen: polymers_in_conglomerate) { //Loop all polymers already in the list
+                    if (*eleme ==
+                        *elemen) { //If any polymers in the list match the polymer we are looking at the bool becomes true
+                        in_vector = true;
+                    }
+                }
+                if (!in_vector) {
+                    polymers_in_conglomerate.push_back(eleme);
                 }
             }
-            if(!in_vector){
-                polymers_in_conglomerate.push_back(eleme);
-            }
         }
-    }
-    for(int j=0; j<polymers_in_conglomerate.size(); j++) {
-        for (int i = 1; i < polymers_in_conglomerate.size(); i++) {
-            if (polymers_in_conglomerate[i - 1]->getIndex() > polymers_in_conglomerate[i]->getIndex()) {
-                Polymer *temp = polymers_in_conglomerate[i - 1];
-                polymers_in_conglomerate[i - 1] = polymers_in_conglomerate[i];
-                polymers_in_conglomerate[i] = temp;
+        for (int j = 0; j < polymers_in_conglomerate.size(); j++) {
+            for (int i = 1; i < polymers_in_conglomerate.size(); i++) {
+                if (polymers_in_conglomerate[i - 1]->getIndex() > polymers_in_conglomerate[i]->getIndex()) {
+                    Polymer *temp = polymers_in_conglomerate[i - 1];
+                    polymers_in_conglomerate[i - 1] = polymers_in_conglomerate[i];
+                    polymers_in_conglomerate[i] = temp;
+                }
             }
         }
     }
@@ -93,8 +150,64 @@ void Conglomerate::updateTemplateBond(){
     template_bonds=template_bonds-(2*connections.size());
 }
 
+void Conglomerate::updateAvailableTemplateBonds(){
+    updatePolymersInConglomerate(); // Probs shouldn't have to rerun every time
+    available_template_bonds.clear();
+    for(int i=0; i<number_of_monomer_types; i++){
+        vector<int> family;
+        for(int j=0; j<number_of_families; j++){
+            family.push_back(0);
+        }
+        available_template_bonds.push_back(family);
+    }
+
+    for(int i=0; i<polymers_in_conglomerate.size(); i++){
+        int family = polymers_in_conglomerate[i]->getFamily();
+        vector<int> seq = polymers_in_conglomerate[i]->getSequence();
+        for(int k=0; k<seq.size(); k++){
+            bool there_is_a_connection = false;
+            for(int j=0; j<polymer_connection_indexes[i].size(); j++){
+                if(polymer_connection_indexes[i][j]==k){
+                    there_is_a_connection = true;
+                }
+            }
+            if(!there_is_a_connection){
+                available_template_bonds[seq[k]][family]++;
+            }
+        }
+    }
+}
+
+vector<tuple<Polymer *, int>> Conglomerate::getPossibleSites(int type, int family){
+    vector<tuple<Polymer *, int>> output;
+    for(int i=0; i<polymers_in_conglomerate.size(); i++){
+        if(family == polymers_in_conglomerate[i]->getFamily()) {
+            vector<int> seq = polymers_in_conglomerate[i]->getSequence();
+            for (int k = 0; k < seq.size(); k++) {
+                bool there_is_a_connection = false;
+                for (int j = 0; j < polymer_connection_indexes[i].size(); j++) {
+                    if (polymer_connection_indexes[i][j] == k) {
+                        there_is_a_connection = true;
+                    }
+                }
+                if (!there_is_a_connection) {
+                    if(seq[k]==type){
+                        tuple<Polymer *, int> site = make_tuple(polymers_in_conglomerate[i], k);
+                        output.push_back(site);
+                    }
+                }
+            }
+        }
+    }
+    return output;
+}
+
 int Conglomerate::getTemplateBonds(){
     return template_bonds;
+}
+
+vector<vector<int>> Conglomerate::getAvailableTemplateBonds(){
+    return available_template_bonds;
 }
 
 void Conglomerate::updateBackboneBonds(){
@@ -110,7 +223,6 @@ int Conglomerate::getBackboneBonds(){
 }
 
 void Conglomerate::updatePolymerConnections(){
-    //TODO broken!!!!
     updatePolymersInConglomerate(); // Probs shouldn't have to rerun every time
     for(auto & j : polymers_in_conglomerate){ //Loop all polymers
         vector<Connection *> v;
@@ -210,7 +322,7 @@ vector<Connection *> Conglomerate::getTailBindingConnections(){
     return tail_binding_connections;
 }
 
-void Conglomerate::updateTailBindingSites(){//TODO this
+void Conglomerate::updateTailBindingSites(){
     //Tail unbinding sites that are next to a free binding site
     //Need to also check neighbouring polymers - dont double count
     //Make a list of all connections rather than counting?
@@ -267,7 +379,6 @@ void Conglomerate::updateTailBindingSites(){//TODO this
             }
         }
 
-
     }
     tail_binding_sites = tail_binding_sites/2;
     vector<int> repeats;
@@ -289,33 +400,62 @@ bool Conglomerate::tailConnectionOptions(Connection *con, Polymer * p, int direc
     vector<int> ind = con->getIndexes(); // get indexes in connection
     Polymer * connected_polymer;
     int connected_index;
+    int this_index;
 
     for(int ite=0; ite<2; ite++){
-        if(poly[ite]!=p){
+        if(*poly[ite]==*p){
+            this_index=ind[ite]; //This is the index on polymer which is connected to p
+        } else {
             connected_polymer=poly[ite]; //This is the polymer connected to p
             connected_index=ind[ite]; //This is the index on polymer which is connected to p
         }
     }
 
-    if(direction == 1){
+    if(direction == 1){ //If we are at the end of the polymer then we cant bind
         if(connected_index == connected_polymer->getLength()-1){
             return false;
         }
-    } else {
+    } else { //If we are at the end of the polymer then we cant bind
         if(connected_index == 0){
             return false;
         }
     }
 
+    int connected_polymer_number; //Find the polymer we are trying to bind to
+    for(int i=0; i<polymers_in_conglomerate.size(); i++){
+        if(*polymers_in_conglomerate[i]==*connected_polymer){
+            connected_polymer_number = i;
+            break;
+        }
+    }
+
+    for(int i=0; i<polymer_connection_indexes[connected_polymer_number].size(); i++){
+        if(i<polymer_connection_indexes[connected_polymer_number][i]==connected_index+direction){
+            //a connection exists on the desired monomer and so no tail can bind
+            return false;
+        }
+    }
+
+    if(connected_polymer->getSequence()[connected_index+direction]!=p->getSequence()[this_index-direction]){
+        //If the types are not the same then they cannot bind
+        return false;
+    }
+
+    /*
+     * This is for looping
     for(auto & elem : connections){ //Search all connections for one on the neighbouring position
         for(int ite=0; ite<2; ite++){
             if(elem->getPolymers()[ite]==connected_polymer && elem->getIndexes()[ite]==connected_index+direction){
-                // If a connection exists,then we check the connection to see if there is a free site on that
-                // This has to loop as a junction with any number of polymers can exist
+
+
+                //This has to loop as a junction with any number of polymers can exist
                 return tailConnectionOptions( elem, elem->getPolymers()[ite], direction, original_site);
             }
         }
     }
+    */
+
+
 
     //If there is no connection then a new one can be made
     tuple<Polymer *, int > two = make_tuple(connected_polymer, connected_index+direction);
@@ -324,38 +464,39 @@ bool Conglomerate::tailConnectionOptions(Connection *con, Polymer * p, int direc
 }
 
 
-void Conglomerate::updateValidNeighbours() {
+void Conglomerate::updateValidNeighboursBinding() {
     //Go through connections
     //Find connections at the end or beginning of a polymer
     //Check the neighbour - other polymers?
     //Divide number by two
-    valid_neighbours=0;
+    valid_neighbours_binding=0;
+    valid_unconnected_neighbours.clear();
 
     for(auto & elem : connections){
         for(int i=0; i<2; i++){
             if(elem->getIndexes()[i]==0){
                 //At beginning of a polymer
-                if(validNeighbourOptions(elem, elem->getPolymers()[i], 1, elem->getPolymers()[i])){
-                    valid_neighbours++;
+                if(validNeighbourBindingOptions(elem, elem->getPolymers()[i], 1, elem->getPolymers()[i])){
+                    valid_neighbours_binding++;
                 }
             }
             if(elem->getIndexes()[i]==elem->getPolymers()[i]->getLength()-1){
                 //At end of polymer
-                if(validNeighbourOptions(elem, elem->getPolymers()[i], -1, elem->getPolymers()[i])){
-                    valid_neighbours++;
+                if(validNeighbourBindingOptions(elem, elem->getPolymers()[i], -1, elem->getPolymers()[i])){
+                    valid_neighbours_binding++;
                 }
             }
         }
     }
-    valid_neighbours = valid_neighbours/2;
+    valid_neighbours_binding = valid_neighbours_binding/2;
 }
 
-int Conglomerate::getValidNeighbours(){
-    return valid_neighbours;
+int Conglomerate::getValidNeighboursBinding(){
+    return valid_neighbours_binding;
 }
 
-bool Conglomerate::validNeighbourOptions(Connection * con, Polymer * p, int direction, Polymer * original_polymer) {
-    vector<Polymer *> poly = con->getPolymers(); // get polymers in connection //TODO 10 repeated lines
+bool Conglomerate::validNeighbourBindingOptions(Connection * con, Polymer * p, int direction, Polymer * original_polymer) {
+    vector<Polymer *> poly = con->getPolymers(); // get polymers in connection
     vector<int> ind = con->getIndexes(); // get indexes in connection
     Polymer * connected_polymer;
     int connected_index;
@@ -371,7 +512,10 @@ bool Conglomerate::validNeighbourOptions(Connection * con, Polymer * p, int dire
         for(int ite=0; ite<2; ite++){
             if(elem->getPolymers()[ite]==connected_polymer && elem->getIndexes()[ite]==connected_index+direction){
                 // If a connection exists,then we check the connection to see if it's at the end of the polymer
-                if(ite==0){
+
+                /*
+                 * Checks for looping
+                 * if(ite==0){
                     if(*elem->getPolymers()[1]==*original_polymer){
                         return false;
                     }
@@ -379,34 +523,43 @@ bool Conglomerate::validNeighbourOptions(Connection * con, Polymer * p, int dire
                     if(*elem->getPolymers()[0]==*original_polymer){
                         return false;
                     }
-                }
+                }*/
+
+
                 if(direction==1){
                     if(ite==0){
                         if(elem->getIndexes()[1]==elem->getPolymers()[1]->getLength()-1){
+                            UnconnectedNeighbours * neighbours = new UnconnectedNeighbours(elem->getPolymers()[1], p);
+                            valid_unconnected_neighbours.push_back(neighbours);
                             return true;
                         }
                     } else {
                         if(elem->getIndexes()[0]==elem->getPolymers()[0]->getLength()-1){
+                            UnconnectedNeighbours * neighbours = new UnconnectedNeighbours(elem->getPolymers()[0], p);
+                            valid_unconnected_neighbours.push_back(neighbours);
                             return true;
                         }
                     }
                 } else {
                     if(ite==0){
                         if(elem->getIndexes()[1]==0){
+                            UnconnectedNeighbours * neighbours = new UnconnectedNeighbours(p, elem->getPolymers()[1]);
+                            valid_unconnected_neighbours.push_back(neighbours);
                             return true;
                         }
                     } else {
                         if(elem->getIndexes()[0]==0){
+                            UnconnectedNeighbours * neighbours = new UnconnectedNeighbours(p, elem->getPolymers()[0]);
+                            valid_unconnected_neighbours.push_back(neighbours);
                             return true;
                         }
                     }
                 }
 
                 //If a connection exists but it's not the end of the polymer, we check on the connection
+                // This is for looping
+                //return validNeighbourBindingOptions(elem, elem->getPolymers()[ite], direction, original_polymer);
 
-                return validNeighbourOptions(elem, elem->getPolymers()[ite], direction, original_polymer);
-
-                //Todo - find a way to save the valid neighbours
             }
         }
     }
@@ -415,7 +568,49 @@ bool Conglomerate::validNeighbourOptions(Connection * con, Polymer * p, int dire
     return false;
 }
 
-void Conglomerate::remove(){
-    //TODO this
+void Conglomerate::updateValidNeighboursUnbinding(){
+    updatePolymersInConglomerate();
+    updatePolymerConnections();
+    valid_neighbours_unbinding=0;
+    valid_connected_neighbours.clear();
+
+    for(int j=0; j<polymer_connection_indexes.size(); j++){
+        int longness = polymer_connection_indexes[j].size();
+        for(int i=0; i<longness-1; i++){
+            if(polymer_connection_indexes[j][i]+1==polymer_connection_indexes[j][i+1]){
+                valid_neighbours_unbinding++;
+                ConnectedNeighbours * neighbours = new ConnectedNeighbours(polymers_in_conglomerate[j], i, i+1);
+                valid_connected_neighbours.push_back(neighbours);
+            }
+        }
+    }
+}
+
+int Conglomerate::getValidNeighboursUnbinding(){
+    return valid_neighbours_unbinding;
+}
+
+vector<ConnectedNeighbours *> Conglomerate::getValidConnectedNeighbours(){
+    return valid_connected_neighbours;
+}
+
+vector<UnconnectedNeighbours *> Conglomerate::getValidUnconnectedNeighbours(){
+    return valid_unconnected_neighbours;
+}
+
+bool Conglomerate::operator==(Conglomerate c){
+    if(index==c.getIndex()){
+        vector<Connection *> cons = c.getConnections();
+        if(connections.size()==cons.size()) {
+            for (int i = 0; i < connections.size(); i++) {
+                if(!(*connections[i]==*cons[i])){
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+    return false;
 }
 

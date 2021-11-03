@@ -18,10 +18,13 @@ private:
     int index ;
     vector<int> sequence;
     int length;
+    int family;
 public:
-    explicit Polymer(vector<int> s);
+    explicit Polymer(int fam, vector<int> s);
 
     int getIndex();
+
+    int getFamily();
 
     void setIndex(int ind);
 
@@ -34,8 +37,6 @@ public:
     Polymer * cutPolymer(int index);
 
     bool operator==(Polymer p);
-
-    void remove();
 };
 
 #endif //TESTTWO_POLYMER_H

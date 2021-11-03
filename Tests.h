@@ -20,8 +20,8 @@ private:
 
 public:
     Tests();
-    bool runTests();
-    bool testSystemInitialisation();
+    //bool runTests();
+    /*bool testSystemInitialisation();
     bool testChangeMonomerCount();
     bool testChangeDimerCount();
     bool testPolymerInitialisation();
@@ -29,10 +29,8 @@ public:
     bool testPolymerEquals();
     bool testAddPolymer();
     bool testCutPolymer();
-    bool testRemovePolymer();
     bool testConnectionInitialisation();
     bool testConnectionEquals();
-    bool testConnectionRemove();
     bool testConglomerateInitialisation();
     bool testUpdatePolymersInConglomerate();
     bool testUpdateTemplateBond();
@@ -43,7 +41,7 @@ public:
     bool testTailConnectionOptions();
     bool testUpdateValidNeighbour();
     bool testValidNeighbourOptions();
-    bool testSystemGetters();
+    bool testSystemGetters();*/
 };
 
 

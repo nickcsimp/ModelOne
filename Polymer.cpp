@@ -8,13 +8,18 @@
 #include "Polymer.h"
 using namespace std;
 
-Polymer::Polymer(vector<int> s) {
+Polymer::Polymer(int fam, vector<int> s) {
+    family=fam;
     sequence = s;
     length = s.size();
 }
 
 int Polymer::getIndex(){
     return index;
+}
+
+int Polymer::getFamily(){
+    return family;
 }
 
 void Polymer::setIndex(int ind) {
@@ -38,8 +43,6 @@ void Polymer::addPolymer(Polymer * poly, int pos){
         sequence.insert(sequence.end(), seq.begin(), seq.end());
     }
     length = length + seq.size();
-    //polymer sorting out
-    poly->remove();
 }
 
 Polymer * Polymer::cutPolymer(int index){
@@ -50,7 +53,7 @@ Polymer * Polymer::cutPolymer(int index){
     sequence.erase(sequence.begin()+index, sequence.end());
     length = index;
 
-    return new Polymer(new_seq);
+    return new Polymer(family, new_seq);
 }
 
 bool Polymer::operator==(Polymer p) {
@@ -66,10 +69,4 @@ bool Polymer::operator==(Polymer p) {
         }
     }
     return false;
-}
-
-//TODO add a != operator?
-//TODO index automation
-void Polymer::remove(){
-    //TODO this
 }

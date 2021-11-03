@@ -10,7 +10,7 @@ Tests::Tests(){
     srand(time(NULL));
 }
 
-bool Tests::runTests() {
+/*bool Tests::runTests() {
     if(!testSystemInitialisation()){
         cout << "Failed: testSystemInitialisation";
         return false;
@@ -51,11 +51,6 @@ bool Tests::runTests() {
         return false;
     }
 
-    if(!testRemovePolymer()){
-        cout << "Failed: testRemovePolymer()";
-        return false;
-    }
-
     if(!testConnectionInitialisation()){
         cout << "Failed: testConnectionInitialisation()";
         return false;
@@ -66,10 +61,6 @@ bool Tests::runTests() {
         return false;
     }
 
-    if(!testConnectionRemove()){
-        cout << "Failed: testConnectionRemove()";
-        return false;
-    }
 
     if(!testConglomerateInitialisation()){
         cout << "Failed: testConglomerateInitialisation()";
@@ -128,8 +119,9 @@ bool Tests::runTests() {
 
     cout << "Tests passed" << endl;
     return true;
-}
+}*/
 
+/*
 bool Tests::testSystemInitialisation(){
     int monomer_test_number=100;
     System * system = new System(monomer_test_number);
@@ -266,11 +258,6 @@ bool Tests::testCutPolymer(){
 
 }
 
-bool Tests::testRemovePolymer(){
-    //Todo this
-    return true;
-}
-
 bool Tests::testConnectionInitialisation(){
     vector<int> s = {1,2,1,1,2};
     Polymer * pOne = new Polymer(s);
@@ -356,11 +343,6 @@ bool Tests::testConnectionEquals(){
         return false;
     }
 
-    return true;
-}
-
-bool Tests::testConnectionRemove(){
-    //Todo this
     return true;
 }
 
@@ -1010,5 +992,5 @@ bool Tests::testSystemGetters(){
         return false; //Better test probs needed
     }
     return true;
-}
+}*/
 

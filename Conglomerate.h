@@ -6,6 +6,8 @@
 using namespace std;
 #include "Polymer.h"
 #include "Connection.h"
+#include "UnconnectedNeighbours.h"
+#include "ConnectedNeighbours.h"
 
 #ifndef TESTTWO_CONGLOMERATE_H
 #define TESTTWO_CONGLOMERATE_H
@@ -14,6 +16,9 @@ using namespace std;
 class Conglomerate{
 private:
     int index;
+
+    int number_of_families;
+    int number_of_monomer_types;
 
     vector<Connection *> connections; //All connections in conglomerate - most important
 
@@ -35,14 +40,18 @@ private:
 
     int template_bonds; //available template bonds
 
-    int valid_neighbours;
+    vector<vector<int>> available_template_bonds;
+
+    int valid_neighbours_binding;
+    vector<UnconnectedNeighbours *> valid_unconnected_neighbours;
+
+    int valid_neighbours_unbinding;
+    vector<ConnectedNeighbours *> valid_connected_neighbours;
 public:
 
-    Conglomerate(vector<Connection *> con);
+    Conglomerate(vector<Connection *> con, int family_count, int monomer_type_count);
 
-    Conglomerate(Polymer *p, int index, int monomer_type);
-
-    Conglomerate(Polymer * p_one, int index_one, Polymer * p_two, int index_two);
+    Conglomerate(Polymer * polymer, int family_count, int monomer_type_count);
 
     int getIndex();
 
@@ -52,15 +61,25 @@ public:
 
     void addConnection(Connection* con);
 
-    void removeConnection(Connection* con);
+    void addConnections(vector<Connection*> cons);
+
+    bool removeConnection(Connection* con);
+
+    vector<vector<Connection *>> updateConnectivity();
 
     vector<Connection *> getConnections();
 
     void updatePolymersInConglomerate();
 
+    vector<tuple<Polymer*, int>> getPossibleSites(int type, int family);
+
     void updateTemplateBond();
 
+    void updateAvailableTemplateBonds();
+
     int getTemplateBonds();
+
+    vector<vector<int>> getAvailableTemplateBonds();
 
     int getBackboneBonds();
 
@@ -88,13 +107,21 @@ public:
 
     bool tailConnectionOptions(Connection *con, Polymer * p, int direction, tuple<Polymer *, int > original_site);
 
-    void updateValidNeighbours();
+    void updateValidNeighboursBinding();
 
-    int getValidNeighbours();
+    int getValidNeighboursBinding();
 
-    bool validNeighbourOptions(Connection * con, Polymer * p, int direction, Polymer * original_polymer);
+    bool validNeighbourBindingOptions(Connection * con, Polymer * p, int direction, Polymer * original_polymer);
 
-    void remove();
+    void updateValidNeighboursUnbinding();
+
+    int getValidNeighboursUnbinding();
+
+    bool operator==(Conglomerate c);
+
+    vector<ConnectedNeighbours *> getValidConnectedNeighbours();
+
+    vector<UnconnectedNeighbours *> getValidUnconnectedNeighbours();
 };
 
 #endif //TESTTWO_CONGLOMERATE_H

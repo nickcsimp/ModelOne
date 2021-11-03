@@ -41,7 +41,3 @@ bool Connection::operator==(Connection c){
     }
     return false;
 }
-
-void Connection::remove(){
-    //TODO this
-}

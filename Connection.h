@@ -21,8 +21,6 @@ public:
     vector<int> getIndexes();
 
     bool operator==(Connection c);
-
-    void remove();
 };
 
 #endif //TESTTWO_CONNECTION_H
