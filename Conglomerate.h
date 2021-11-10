@@ -53,6 +53,8 @@ public:
 
     Conglomerate(Polymer * polymer, int family_count, int monomer_type_count);
 
+    void update();
+
     int getIndex();
 
     void setIndex(int ind);
@@ -63,7 +65,9 @@ public:
 
     void addConnections(vector<Connection*> cons);
 
-    bool removeConnection(Connection* con);
+    vector<Conglomerate *> removeConnection(Connection* con);
+
+    vector<Polymer *> getTree(Polymer * p, vector<Polymer *> connected_polymers);
 
     vector<vector<Connection *>> updateConnectivity();
 
@@ -73,7 +77,7 @@ public:
 
     vector<tuple<Polymer*, int>> getPossibleSites(int type, int family);
 
-    void updateTemplateBond();
+    //void updateTemplateBond();
 
     void updateAvailableTemplateBonds();
 
@@ -122,6 +126,10 @@ public:
     vector<ConnectedNeighbours *> getValidConnectedNeighbours();
 
     vector<UnconnectedNeighbours *> getValidUnconnectedNeighbours();
+
+    Polymer * joinPolymers(UnconnectedNeighbours * neighbours);
+
+    Polymer * separatePolymers(ConnectedNeighbours * neighbours);
 };
 
 #endif //TESTTWO_CONGLOMERATE_H

@@ -20,10 +20,11 @@ using namespace std;
 
 int main() {
     Tests *tests = new Tests();
-   // tests->runTests();
+    tests->runTests();
+
 
     double current_time = 0;
-    int end_time = 100;
+    int end_time = 100000000;
     double total_rate;
 
     int number_of_families = 2;
@@ -45,12 +46,13 @@ int main() {
     System * system = new System(number_of_families, number_of_types, monomers, init_temp);
 
     while(current_time<end_time){
+        //system->print();
+
         //We calculate all rates in conglomerates and externally
         system->updateRates();
 
         //We get the total rate of all transitions
         total_rate = system->getTotalRate();
-        total_rate = 5;
 
         //We generate a random number from the exponential distribution
         random_device rd;
@@ -60,20 +62,21 @@ int main() {
 
         //Update time
         current_time += random_time;
+        //cout << current_time << endl;
 
         //Get specific external and conglomerate transition rates
         //rates[rates.size()-1] will be external rate (last one in vector)
         vector<double> rates = system->getSpecificRates();
 
         //Generate a random number for ratio
-        double random_ratio = gen()/gen.max();
-
+        double rand = gen();
+        double rando = gen.max();
         //Loop rates and find the first that is larger than the random number
         double current_number = 0;
         int chosen_conglomerate = -1;
         for(int i=0; i<rates.size(); i++){
             current_number += rates[i];
-            if(random_ratio <= current_number/total_rate){
+            if(rand/rando <= current_number/total_rate){
                 chosen_conglomerate = i;
                 break;
             }
@@ -81,25 +84,19 @@ int main() {
 
         //Check that something has been chosen
         if(chosen_conglomerate==-1){
-            cout << "random numbers gone wild" << endl;
+            cout << "random numbers gone wild 1" << endl;
             return 0;
         }
-
         //If the chosen conglomerate is actually external transitions then find the right external transition
-        if(chosen_conglomerate == rates.size()){
+        if(chosen_conglomerate == rates.size()-1){
             system->chooseExternalTransition();
         } else { //If not find the transition in the chosen conglomerate
             system->chooseInternalTransition(chosen_conglomerate);
         }
+        //system->print();
     }
+
     delete system;
     return 0;
 
-    /*Todo:
-     * join two conglomerates
-     * join two polymers
-     * break two polymers
-     * connectivity
-     * make better
-     */
 }

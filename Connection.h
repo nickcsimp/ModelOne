@@ -20,6 +20,10 @@ public:
 
     vector<int> getIndexes();
 
+    void setIndex(int which_polymer, int new_index);
+
+    void changePolymer(int which_polymer, Polymer * new_polymer);
+
     bool operator==(Connection c);
 };
 

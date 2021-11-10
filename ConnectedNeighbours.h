@@ -18,6 +18,7 @@ public:
     ConnectedNeighbours(Polymer * poly, int indOne, int indTwo);
     Polymer * getPolymer();
     vector<int> getIndexes();
+    bool operator==(ConnectedNeighbours neighbours);
 };
 
 

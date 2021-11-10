@@ -16,6 +16,8 @@ public:
     UnconnectedNeighbours(Polymer* polyOne, Polymer* polyTwo);
 
     vector<Polymer*> getPolymers();
+
+    bool operator==(UnconnectedNeighbours neighbour);
 };
 
 

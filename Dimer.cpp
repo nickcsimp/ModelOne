@@ -7,6 +7,10 @@ Dimer::Dimer(int monomer_type, int famOne, int famTwo){
     type = monomer_type;
     familyOne = famOne;
     familyTwo = famTwo;
+    if(famOne==famTwo){
+        cout << "ERROR: families cannot be the same in dimers" << endl;
+        //TODO: error capture
+    }
 }
 int Dimer::getType(){
     return type;

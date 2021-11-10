@@ -56,6 +56,57 @@ Polymer * Polymer::cutPolymer(int index){
     return new Polymer(family, new_seq);
 }
 
+vector<tuple<Polymer *, int>> Polymer::getConnections(){
+    return connections;
+}
+
+void Polymer::addConnection(Polymer * p){
+    //connections holds the polymer that is connected, and the number of connections between the two polymers
+
+    if(*this == *p){
+        cout << "ERROR: Polymers cannot self connect" << endl;
+        return;
+    }
+
+    int conCount = 0;
+    for(int i=0; i<connections.size(); i++) { //Loop connections on polymer
+        conCount+= get<1>(connections[i]);
+    }
+
+    if(conCount==length){
+        cout << "ERROR: Cannot add connection to this polymer" << endl;
+        return;
+    }
+    bool not_connected = true;
+    for(int i=0; i<connections.size(); i++){ //Loop connections on polymer
+        if(*p==*get<0>(connections[i])){ // If this polymer is already connected
+            int count = get<1>(connections[i]); //find number of connections between polymers
+            connections[i] = make_tuple(p, count+1); //Add another connection
+            not_connected = false;
+        }
+    }
+    if(not_connected){
+        connections.push_back(make_tuple(p, 1)); //If they aren't already connected, we make a new element with new polymer and 1 connection
+    }
+}
+
+bool Polymer::removeConnection(Polymer * p){ //Returns true if no connections remain
+    for(int i=0; i<connections.size(); i++){
+        if(*get<0>(connections[i])==*p){
+            int count = get<1>(connections[i]);
+            if(count==1) {
+                connections.erase(connections.begin() + i);
+                return true;
+            } else {
+                connections[i] = make_tuple(p, count-1);
+                return false;
+            }
+        }
+    }
+    cout << "ERROR: No connection to be removed" << endl;
+    return false;
+}
+
 bool Polymer::operator==(Polymer p) {
     if (p.getLength() == length) {
         vector<int> seq = p.getSequence();
@@ -63,6 +114,9 @@ bool Polymer::operator==(Polymer p) {
             if(sequence[i]!=seq[i]){
                 return false;
             }
+        }
+        if(family!=p.getFamily()){
+            return false;
         }
         if(p.getIndex()==index) { //This is probs all thats needed
             return true;

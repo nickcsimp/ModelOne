@@ -18,6 +18,42 @@ vector<int> Connection::getIndexes(){
     return output;
 }
 
+void Connection::changePolymer(int which_polymer, Polymer * new_polymer){
+    if(which_polymer==0) {
+        if(*get<0>(two)==*new_polymer){
+            cout << "ERROR: Connections cannot be made on the same polymer" << endl;
+            return;
+        }
+        one = make_tuple(new_polymer,get<1>(one));
+    } else if (which_polymer==1) {
+        if(*get<0>(one)==*new_polymer){
+            cout << "ERROR: Connections cannot be made on the same polymer" << endl;
+            return;
+        }
+        two = make_tuple(new_polymer, get<1>(two));
+    }
+}
+
+void Connection::setIndex(int which_polymer, int new_index){
+    if(new_index<0){
+        cout << "ERROR: Connection cannot be made with index less than 0" << endl;
+        return;
+    }
+    if(which_polymer==0) {
+        if(new_index>=get<0>(one)->getLength()){
+            cout << "ERROR: Connection cannot be made with index greater than polymer length" << endl;
+            return;
+        }
+        one = make_tuple(get<0>(one), new_index);
+    } else if (which_polymer==1) {
+        if(new_index>=get<0>(two)->getLength()){
+            cout << "ERROR: Connection cannot be made with index greater than polymer length" << endl;
+            return;
+        }
+        two = make_tuple(get<0>(two), new_index);
+    }
+}
+
 bool Connection::operator==(Connection c){
     vector<Polymer *> p = c.getPolymers();
     vector<int> i = c.getIndexes();

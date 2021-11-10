@@ -20,28 +20,54 @@ private:
 
 public:
     Tests();
-    //bool runTests();
+    bool runTests();
+
     /*bool testSystemInitialisation();
     bool testChangeMonomerCount();
     bool testChangeDimerCount();
-    bool testPolymerInitialisation();
     bool testPolymerParameters();
-    bool testPolymerEquals();
-    bool testAddPolymer();
-    bool testCutPolymer();
-    bool testConnectionInitialisation();
-    bool testConnectionEquals();
-    bool testConglomerateInitialisation();
-    bool testUpdatePolymersInConglomerate();
-    bool testUpdateTemplateBond();
-    bool testUpdateBackboneBond();
-    bool testUpdatePolymerConnections();
-    bool testUpdateTailUnbindingSites();
+
     bool testUpdateTailBindingSites();
     bool testTailConnectionOptions();
     bool testUpdateValidNeighbour();
     bool testValidNeighbourOptions();
     bool testSystemGetters();*/
+
+    bool testPolymerInitialisation();
+    bool testAddPolymer();
+    bool testPolymerEquals();
+    bool testCutPolymer();
+    bool testPolymerAddConnection();
+    bool testPolymerRemoveConnection();
+
+    bool testConnectionInitialisation();
+    bool testConnectionEquals();
+    bool testEditConnection();
+
+    bool testConnectedNeighboursInitialisation();
+    bool testConnectedNeighboursEquals();
+
+    bool testUnconnectedNeighboursInitialisation();
+    bool testUnconnectedNeighboursEquals();
+
+    bool testDimerInitialisation();
+    bool testDimerEquals();
+
+    bool testUpdatePolymersInConglomerate();
+    bool testUpdatePolymerConnections();
+    bool testUpdateAvailableTemplateBonds();
+    bool testGetPossibleSites();
+    bool testUpdateTailUnbindingSites();
+    bool testUpdateTailBindingSites();
+    bool testConnectionOptions();
+    bool testUpdateValidNeighboursBinding();
+    bool testUpdateValidNeighboursUnbinding();
+    bool testConglomerateEquals();
+    bool testJoinPolymer();
+    bool testSeparatePolymer();
+
+    //bool testConglomerateInitialisation();
+    bool testUpdateRates();
 };
 
 
