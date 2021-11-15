@@ -34,9 +34,15 @@ private:
     vector<Connection *> tail_unbinding_connections;
     int tail_unbinding_sites;
 
+    vector<Connection *> head_unbinding_connections;
+    int head_unbinding_sites;
+
     //Need to know which tails can bind
     vector<Connection *> tail_binding_connections;
     int tail_binding_sites;
+
+    vector<Connection *> head_binding_connections;
+    int head_binding_sites;
 
     int template_bonds; //available template bonds
 
@@ -97,9 +103,13 @@ public:
 
     int getTailUnbindingSites();
 
+    int getHeadUnbindingSites();
+
     int getTailBindingSites();
 
     vector<Connection *> getTailUnbindingConnections();
+
+    vector<Connection *> getHeadUnbindingConnections();
 
     vector<Connection *> getTailBindingConnections();
 
@@ -109,7 +119,11 @@ public:
 
     void updateTailBindingSites();
 
-    bool tailConnectionOptions(Connection *con, Polymer * p, int direction, tuple<Polymer *, int > original_site);
+    vector<Connection *> getHeadBindingConnections();
+
+    int getHeadBindingSites();
+
+    bool tailConnectionOptions(Connection *con, Polymer * p, int direction, tuple<Polymer *, int > original_site, bool head);
 
     void updateValidNeighboursBinding();
 

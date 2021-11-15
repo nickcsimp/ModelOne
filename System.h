@@ -11,8 +11,10 @@
 #include "Dimer.h"
 using namespace std;
 
-#define template_unbind_rate 1
-#define template_bind_rate 1
+#define template_tail_unbind_rate 1
+#define template_tail_bind_rate 1
+#define template_head_unbind_rate 1
+#define template_head_bind_rate 1
 #define backbone_bind_rate 1
 #define backbone_unbind_rate 1
 
@@ -27,7 +29,7 @@ private:
     vector<Dimer *> dimers;
     int number_of_families;
     int number_of_monomer_types;
-    vector<vector<int>> number_of_monomers;
+    vector<vector<int>> number_of_monomers; //type, family
 
     vector<Polymer *> polymers;
     vector<Conglomerate *> conglomerates;
@@ -71,6 +73,8 @@ public:
     double getTotalRate();
 
     vector<double> getSpecificRates();
+
+    tuple<vector<tuple<Polymer *, int>>, vector<tuple<Polymer *, int>>> headOrTail(vector<tuple<Polymer *, int>> input);
 
     bool chooseExternalTransition();
 

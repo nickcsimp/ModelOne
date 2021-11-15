@@ -11,7 +11,9 @@
 using namespace std;
 #define three_prime 0
 #define five_prime 1
-#define template_unbind_rate 1
+
+#define template_tail_unbind_rate 1
+#define template_head_unbind_rate 1
 #define template_bind_rate 1
 #define backbone_bind_rate 1
 #define backbone_unbind_rate 1
@@ -28,26 +30,21 @@ int main() {
     double total_rate;
 
     int number_of_families = 2;
-    int number_of_types = 2;
+    int number_of_types = 1;
     vector<vector<int>> monomers;
     vector<int> typeOne;
-    vector<int> typeTwo;
     typeOne.push_back(100);
     typeOne.push_back(100);
-    typeTwo.push_back(100);
-    typeTwo.push_back(100);
 
     monomers.push_back(typeOne);
-    monomers.push_back(typeTwo);
 
-    Polymer * init_temp= new Polymer(0, {0,1,0,1,0,1});
+    Polymer * init_temp= new Polymer(0, {0,0,0,0,0,0});
 
     //Need an initial template sequence here going into system
     System * system = new System(number_of_families, number_of_types, monomers, init_temp);
 
     while(current_time<end_time){
         //system->print();
-
         //We calculate all rates in conglomerates and externally
         system->updateRates();
 
@@ -100,3 +97,13 @@ int main() {
     return 0;
 
 }
+
+/*TODO:
+ * Monomer-conglomerate happens with new cong size 1 and no new connection
+ * Neighbour binding is what causes memory problem
+ * Sort out system functions man
+ * Rates
+ * Concentrations think about
+ * Parameter sweep
+ * Export nicely
+*/

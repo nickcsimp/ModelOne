@@ -1531,7 +1531,14 @@ bool Tests::testUpdateTailUnbindingSites(){
     int sites = con->getTailUnbindingSites();
     vector<Connection *> connections = con->getTailUnbindingConnections();
 
-    if(sites!=3 || connections.size() != 3){
+    int head_sites = con->getHeadUnbindingSites();
+    vector<Connection *> head_connections = con->getHeadUnbindingConnections();
+
+    if(sites!=1 || connections.size() != 1){
+        return false;
+    }
+
+    if(head_sites!=2 || head_connections.size() != 2){
         return false;
     }
 
@@ -1539,17 +1546,22 @@ bool Tests::testUpdateTailUnbindingSites(){
     bool dos = false;
     bool tres = false;
 
-    for(auto & con : connections){
+    for(auto & con : head_connections){
         if(*con==*conOne){
             uno = true;
         }
-        if(*con==*conThree){
-            dos = true;
-        }
+
         if(*con==*conFour){
             tres = true;
         }
     }
+
+    for(auto & con : connections){
+        if(*con==*conThree){
+            dos = true;
+        }
+    }
+
     if(!uno || !dos || !tres){
         return false;
     }
@@ -1591,6 +1603,13 @@ bool Tests::testUpdateTailBindingSites(){
 
     int sites = con->getTailBindingSites();
     vector<Connection *> connections = con->getTailBindingConnections();
+
+    int head_sites = con->getHeadBindingSites();
+    vector<Connection *> head_connections = con->getHeadBindingConnections();
+
+    if(head_sites !=0 || head_connections.size()!=0){
+        return false;
+    }
 
     if(sites!=2 || connections.size() != 2){
         return false;

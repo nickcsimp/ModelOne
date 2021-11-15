@@ -24,7 +24,7 @@ Conglomerate::Conglomerate(Polymer * polymer, int family_count, int monomer_type
     //update();
 }
 
-void Conglomerate::update(){
+void Conglomerate::update(){ //TODO test
     updatePolymersInConglomerate();
     updatePolymerConnections();
     updateAvailableTemplateBonds();
@@ -83,7 +83,7 @@ vector<Conglomerate *> Conglomerate::removeConnection(Connection* con){
     return new_conglomerates;
 }
 
-vector<Polymer *> Conglomerate::getTree(Polymer * p, vector<Polymer *> connected_polymers){
+vector<Polymer *> Conglomerate::getTree(Polymer * p, vector<Polymer *> connected_polymers){ //TODO test
 
     vector<tuple<Polymer *, int>> cons = p->getConnections();
     for(auto & con : cons){ //Loop all connections
@@ -220,10 +220,14 @@ void Conglomerate::updateAvailableTemplateBonds(){
 }
 
 vector<tuple<Polymer *, int>> Conglomerate::getPossibleSites(int type, int family){
+    cout << endl << "-------------------------" << endl;
+
     vector<tuple<Polymer *, int>> output;
     for(int i=0; i<polymers_in_conglomerate.size(); i++){
+        cout << "Polymer: " << polymers_in_conglomerate[i]->getIndex() << endl;
         if(family == polymers_in_conglomerate[i]->getFamily()) {
             vector<int> seq = polymers_in_conglomerate[i]->getSequence();
+            cout << "Connections: " << endl;
             for (int k = 0; k < seq.size(); k++) {
                 bool there_is_a_connection = false;
                 for (int j = 0; j < polymer_connection_indexes[i].size(); j++) {
@@ -233,12 +237,14 @@ vector<tuple<Polymer *, int>> Conglomerate::getPossibleSites(int type, int famil
                 }
                 if (!there_is_a_connection) {
                     if(seq[k]==type){
+                        cout << k << endl;
                         tuple<Polymer *, int> site = make_tuple(polymers_in_conglomerate[i], k);
                         output.push_back(site);
                     }
                 }
             }
         }
+        cout << endl;
     }
     return output;
 }
@@ -311,47 +317,101 @@ vector<vector<int>> Conglomerate::getPolymerConnectionIndexes(){
 void Conglomerate::updateTailUnbindingSites(){
     tail_unbinding_sites=0;
     tail_unbinding_connections.clear();
+
+    head_unbinding_sites=0;
+    head_unbinding_connections.clear();
+
     updatePolymersInConglomerate(); //This bloody guy again
     updatePolymerConnections();
 
-    // Go through all polymers
+    for(auto & elem : connections) {
+        int p_one_ind = elem->getIndexes()[0];
+        int p_one_length = elem->getPolymers()[0]->getLength();
+        int p_two_ind = elem->getIndexes()[1];
+        int p_two_length = elem->getPolymers()[1]->getLength();
 
-    for(int i=0; i<polymer_connections.size(); i++) {
+        int p_one_number = -1;
+        int p_two_number = -1;
 
-        vector<Connection *> cons = polymer_connections[i];
-
-        // If there are 0, 1, or 2 connections on one polymer then all connections must be unbindable
-        if (polymer_connections[i].size() < 3) {
-            tail_unbinding_sites = tail_unbinding_sites + polymer_connections[i].size();
-        } else { // If there are more than two connections
-            // We check to see how many are surrounded by template bonds
-            int middle_connections=0;
-            for (int k = 2; k < polymer_connections[i].size(); k++) {
-                if (polymer_connection_indexes[i][k-2] == polymer_connection_indexes[i][k]-2) {
-                    middle_connections++;
-                    cons.erase(cons.begin()+k-1);
-                }
+        for (int i = 0; i < polymers_in_conglomerate.size(); i++) {
+            if (*polymers_in_conglomerate[i] == *elem->getPolymers()[0]) {
+                p_one_number = i;
             }
-            tail_unbinding_sites=tail_unbinding_sites+polymer_connections[i].size()-middle_connections;
+            if (*polymers_in_conglomerate[i] == *elem->getPolymers()[1]) {
+                p_two_number = i;
+            }
         }
 
-        for(auto & elem : cons){
-            bool in_vector = false;
-            for(auto & elemen : tail_unbinding_connections){
-                if(*elem==*elemen){
-                    in_vector=true;
+        if (p_one_number < 0 || p_two_number < 0) {
+            cout << "ERROR" << endl;
+        }
+        if (p_one_ind == p_one_length - 1 || p_two_ind == p_two_length - 1) {
+            //Leading edge
+            head_unbinding_connections.push_back(elem);
+            head_unbinding_sites++;
+        } else {
+            //lagging edge or middle
+            bool middle = false;
+            for (int j = 0; j < polymer_connection_indexes[p_one_number].size(); j++) {
+                if (polymer_connection_indexes[p_one_number][j] == p_one_ind) {
+                    if (polymer_connection_indexes[p_one_number][j - 1] == p_one_ind - 1) {
+                        if (polymer_connection_indexes[p_one_number][j + 1] == p_one_ind + 1) {
+                            //Middle connection!!!
+                            middle = true;
+                        }
+                    }
                 }
             }
-            if(!in_vector) {
+            for (int j = 0; j < polymer_connection_indexes[p_two_number].size(); j++) {
+                if (polymer_connection_indexes[p_one_number][j] == p_two_ind) {
+                    if (polymer_connection_indexes[p_one_number][j - 1] == p_two_ind - 1) {
+                        if (polymer_connection_indexes[p_one_number][j + 1] == p_two_ind + 1) {
+                            //Middle connection!!!
+                            middle = true;
+                        }
+                    }
+                }
+            }
+            if (!middle) {
+                //lagging edge
                 tail_unbinding_connections.push_back(elem);
+                tail_unbinding_sites++;
+            } else {
             }
         }
     }
-    tail_unbinding_sites=tail_unbinding_sites/2;
+
+    vector<int> repeats;
+    for(int j=0; j<head_unbinding_connections.size(); j++){
+        for(int i=j+1; i<head_unbinding_connections.size(); i++){
+            if(*head_unbinding_connections[j]==*head_unbinding_connections[i]){
+                repeats.push_back(i);
+            }
+        }
+    }
+    for(int i=repeats.size(); i>0; i--) {
+        head_unbinding_connections.erase(head_unbinding_connections.begin() + i);
+    }
+    repeats.clear();
+    for(int j=0; j<tail_unbinding_connections.size(); j++){
+        for(int i=j+1; i<tail_unbinding_connections.size(); i++){
+            if(*tail_unbinding_connections[j]==*tail_unbinding_connections[i]){
+                repeats.push_back(i);
+            }
+        }
+    }
+    for(int i=repeats.size(); i>0; i--) {
+        tail_unbinding_connections.erase(tail_unbinding_connections.begin() + i);
+    }
+
 }
 
 int Conglomerate::getTailUnbindingSites(){
     return tail_unbinding_sites;
+}
+
+int Conglomerate::getHeadUnbindingSites(){
+    return head_unbinding_sites;
 }
 
 int Conglomerate::getTailBindingSites(){
@@ -362,8 +422,20 @@ vector<Connection *> Conglomerate::getTailUnbindingConnections(){
     return tail_unbinding_connections;
 }
 
+vector<Connection *> Conglomerate::getHeadUnbindingConnections(){
+    return head_unbinding_connections;
+}
+
 vector<Connection *> Conglomerate::getTailBindingConnections(){
     return tail_binding_connections;
+}
+
+vector<Connection *> Conglomerate::getHeadBindingConnections(){
+    return head_binding_connections;
+}
+
+int Conglomerate::getHeadBindingSites(){
+    return head_binding_sites;
 }
 
 void Conglomerate::updateTailBindingSites(){
@@ -377,6 +449,8 @@ void Conglomerate::updateTailBindingSites(){
 
     tail_binding_sites = 0;
     tail_binding_connections.clear();
+    head_binding_sites = 0;
+    head_binding_connections.clear();
 
     updatePolymersInConglomerate(); //This bloody guy again
     updatePolymerConnections();
@@ -392,31 +466,38 @@ void Conglomerate::updateTailBindingSites(){
             if(j==0 && ind!=0){
                 //tail site ind-1; direction +1
                 tuple<Polymer *, int> possible_binding_site = make_tuple(polymers_in_conglomerate[i], ind-1);
-                if(tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], 1, possible_binding_site)){
-                    tail_binding_sites++;
+                if(tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], 1, possible_binding_site, false)){
+                    tail_binding_sites++; //lagging
                 }
             } else if(j>0){
                 if(polymer_connection_indexes[i][j-1]!=ind-1){ // If the neighbour is also connected then there is no tail before
                     //tail site ind-1; direction +1
                     tuple<Polymer *, int> possible_binding_site = make_tuple(polymers_in_conglomerate[i], ind-1);
-                    if(tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], 1, possible_binding_site)){
-                        tail_binding_sites++;
+                    if(tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], 1, possible_binding_site, false)){
+                        tail_binding_sites++; //lagging
                     }
                 }
             }
 
             if(j==longness-1 && ind!=polymers_in_conglomerate[i]->getLength()-1) {
-                //tail site ind+1; direction -1
                 tuple<Polymer *, int> possible_binding_site = make_tuple(polymers_in_conglomerate[i], ind + 1);
-                if (tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], -1,
-                                          possible_binding_site)) {
+                if(j==longness-1 && ind==polymers_in_conglomerate[i]->getLength()-2){
+                    //Leading edge binding
+                    if (tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], -1,
+                                              possible_binding_site, true)) {
+                        head_binding_sites++;
+                    }
+                }
+                else if (tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], -1,
+                                          possible_binding_site, false)) {
+                    //tail site ind+1; direction -1
                     tail_binding_sites++;
                 }
             } else if(j<longness-1){
                 if(polymer_connection_indexes[i][j+1]!=ind+1){
                     //tail site ind+1; direction -1
                     tuple<Polymer *, int> possible_binding_site = make_tuple(polymers_in_conglomerate[i], ind+1);
-                    if(tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], -1, possible_binding_site)){
+                    if(tailConnectionOptions(polymer_connections[i][j], polymers_in_conglomerate[i], -1, possible_binding_site, false)){
                         tail_binding_sites++;
                     }
                 }
@@ -425,6 +506,8 @@ void Conglomerate::updateTailBindingSites(){
 
     }
     tail_binding_sites = tail_binding_sites/2;
+    head_binding_sites = head_binding_sites/2;
+
     vector<int> repeats;
     for(int j=0; j<tail_binding_connections.size(); j++){
         for(int i=j+1; i<tail_binding_connections.size(); i++){
@@ -436,9 +519,22 @@ void Conglomerate::updateTailBindingSites(){
     for(int i=repeats.size(); i>0; i--) {
         tail_binding_connections.erase(tail_binding_connections.begin() + i);
     }
+
+    repeats.clear();
+    for(int j=0; j<head_binding_connections.size(); j++){
+        for(int i=j+1; i<head_binding_connections.size(); i++){
+            if(*head_binding_connections[j]==*head_binding_connections[i]){
+                repeats.push_back(i);
+            }
+        }
+    }
+    for(int i=repeats.size(); i>0; i--) {
+        head_binding_connections.erase(head_binding_connections.begin() + i);
+    }
+
 }
 
-bool Conglomerate::tailConnectionOptions(Connection *con, Polymer * p, int direction, tuple<Polymer *, int > original_site){
+bool Conglomerate::tailConnectionOptions(Connection *con, Polymer * p, int direction, tuple<Polymer *, int > original_site, bool head){
 
     vector<Polymer *> poly = con->getPolymers(); // get polymers in connection
     vector<int> ind = con->getIndexes(); // get indexes in connection
@@ -485,6 +581,11 @@ bool Conglomerate::tailConnectionOptions(Connection *con, Polymer * p, int direc
         return false;
     }
 
+    if(connected_index == connected_polymer->getLength()-2 && direction == 1){
+        //If the polymer we are connecting would be at the head we need to make a head connection
+        head = true;
+    }
+
     /*
      * This is for looping
     for(auto & elem : connections){ //Search all connections for one on the neighbouring position
@@ -500,10 +601,13 @@ bool Conglomerate::tailConnectionOptions(Connection *con, Polymer * p, int direc
     */
 
 
-
     //If there is no connection then a new one can be made
     tuple<Polymer *, int > two = make_tuple(connected_polymer, connected_index+direction);
-    tail_binding_connections.push_back(new Connection(original_site, two));
+    if(head){
+        head_binding_connections.push_back(new Connection(original_site, two));
+    } else {
+        tail_binding_connections.push_back(new Connection(original_site, two));
+    }
     return true;
 }
 
