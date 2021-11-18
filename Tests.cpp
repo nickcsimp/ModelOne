@@ -11,710 +11,306 @@ Tests::Tests(){
 }
 
 bool Tests::runTests() {
+    cout << "Test Update Rates" << endl;
     if(!testUpdateRates()){
         cout << "Failed: testUpdateRates";
     }
+    cout << "Test Polymer Initialisation" << endl;
     if(!testPolymerInitialisation()){
         cout << "Failed: testPolymerInitialisation()";
         return false;
     }
 
+    cout << "Test Add Polymer" << endl;
     if(!testAddPolymer()){
         cout << "Failed: testAddPolymer()";
         return false;
     }
 
+    cout << "Test Polymer Equals" << endl;
     if(!testPolymerEquals()){
         cout << "Failed: testPolymerEquals()";
         return false;
     }
 
+    cout << "Test CutPolymer" << endl;
     if(!testCutPolymer()){
         cout << "Failed: testCutPolymer()";
         return false;
     }
 
+    cout << "Test PolymerAddConnection" << endl;
     if(!testPolymerAddConnection()){
         cout << "Failed: testPolymerAddConnection()";
         return false;
     }
 
+    cout << "Test PolymerRemoveConnection" << endl;
     if(!testPolymerRemoveConnection()){
         cout << "Failed: testPolymerRemoveConnection()";
         return false;
     }
 
+    cout << "Test ConnectionInitialisation" << endl;
     if(!testConnectionInitialisation()){
         cout << "Failed: testConnectionInitialisation()";
         return false;
     }
 
+    cout << "Test ConnectionEquals" << endl;
     if(!testConnectionEquals()){
         cout << "Failed: testConnectionEquals()";
         return false;
     }
 
+    cout << "Test EditConnection" << endl;
     if(!testEditConnection()){
         cout << "Failed: testEditConnection()";
         return false;
     }
 
+    cout << "Test ConnectedNeighboursInitialisation" << endl;
     if(!testConnectedNeighboursInitialisation()){
         cout << "Failed: testConnectedNeighboursInitialisation()";
         return false;
     }
 
+    cout << "Test ConnectedNeighbours Equals" << endl;
     if(!testConnectedNeighboursEquals()){
         cout << "Failed: testConnectedNeighboursEquals()";
         return false;
     }
 
+    cout << "Test UnconnectedNeighboursInitialisation" << endl;
     if(!testUnconnectedNeighboursInitialisation()){
         cout << "Failed: testUnconnectedNeighboursInitialisation()";
         return false;
     }
 
+    cout << "Test UnconnectedNeighbours Equals" << endl;
     if(!testUnconnectedNeighboursEquals()){
         cout << "Failed: testUnconnectedNeighboursEquals()";
         return false;
     }
+    cout << "Test DimerInitialisation" << endl;
     if(!testDimerInitialisation()){
         cout << "Failed: testDimerInitialisation()";
         return false;
     }
+
+    cout << "Test Dimer Equals" << endl;
     if(!testDimerEquals()){
         cout << "Failed: testDimerEquals()";
         return false;
     }
 
+    cout << "Test UpdatePolymersInConglomerate" << endl;
     if(!testUpdatePolymersInConglomerate()){
         cout << "Failed: testUpdatePolymersInConglomerate()";
         return false;
     }
 
+    cout << "Test UpdatePolymerConnections" << endl;
     if(!testUpdatePolymerConnections()){
         cout << "Failed: testUpdatePolymerConnections()";
         return false;
     }
 
+    cout << "Test UpdateAvailableTemplateBonds" << endl;
     if(!testUpdateAvailableTemplateBonds()){
         cout << "Failed: testUpdateAvailableTemplateBonds()";
         return false;
     }
 
+    cout << "Test GetPossibleSites" << endl;
     if(!testGetPossibleSites()){
         cout << "Failed: testGetPossibleSites()";
         return false;
     }
 
+    cout << "Test UpdateTailUnbindingSites" << endl;
     if(!testUpdateTailUnbindingSites()){
         cout << "Failed: testUpdateTailUnbindingSites()";
         return false;
     }
 
+    cout << "Test UpdateTailBindingSites" << endl;
     if(!testUpdateTailBindingSites()){
         cout << "Failed: testUpdateTailBindingSites()";
         return false;
     }
 
+    cout << "Test ConnectionOptions" << endl;
     if(!testConnectionOptions()){
         cout << "Failed:testConnectionOptions()";
         return false;
     }
 
+    cout << "Test UpdateValidNeighboursBinding" << endl;
     if(!testUpdateValidNeighboursBinding()){
         cout << "Failed:testUpdateValidNeighboursBinding()";
         return false;
     }
 
+    cout << "Test UpdateValidNeighboursUnbinding" << endl;
     if(!testUpdateValidNeighboursUnbinding()){
         cout << "Failed:testUpdateValidNeighboursUnbinding()";
         return false;
     }
 
+    cout << "Test ConglomerateEquals" << endl;
     if(!testConglomerateEquals()){
         cout << "Failed:testConglomerateEquals()";
         return false;
     }
 
+    cout << "Test JoinPolymer" << endl;
     if(!testJoinPolymer()){
         cout << "Failed:testJoinPolymer()";
         return false;
     }
 
+    cout << "Test SeparatePolymers" << endl;
     if(!testSeparatePolymer()){
         cout << "Failed:testSeparatePolymer()";
         return false;
     }
-/*
 
-    if(!testConglomerateInitialisation()){
-        cout << "Failed: testConglomerateInitialisation()";
+    cout << "Test GetTree" << endl;
+    if(!testGetTree()){
+        cout << "Failed:testGetTree()";
+        return false;
+    }
+    cout << "Test UpdateConnectivity" << endl;
+    if(!testUpdateConnectivity()){
+        cout << "Failed:testUpdateConnectivity()";
+        return false;
+    }
+    cout << "Test RemoveConnection" << endl;
+    if(!testRemoveConnection()){
+        cout << "Failed:testRemoveConnection()";
         return false;
     }
 
-    if(!testSystemInitialisation()){
-        cout << "Failed: testSystemInitialisation";
+    cout << "Test Monomer Rebind" << endl;
+    if(!testMonomerRebind()){
+        cout << "Failed:testMonomerRebind()";
         return false;
     }
 
-    if(!testChangeMonomerCount()){
-        cout << "Failed: testChangeMonomerCount";
+    cout << "Test Choose Bond" << endl;
+    if(!testChooseBond()){
+        cout << "Failed:testChooseBond()";
         return false;
     }
 
-    if(!testChangeDimerCount()){
-        cout << "Failed: testChangeDimerCount";
+    cout << "Test Get Everything" << endl;
+    if(!testGetEverything()){
+        cout << "Failed:testGetEverything()";
         return false;
     }
 
-    if(!testPolymerParameters()){
-        cout << "Failed: testPolymerParameters()";
+    cout << "Test Get Available HeadTail Sites" << endl;
+    if(!testGetAvailableHeadTailSites()){
+        cout << "Failed:testGetAvailableHeadTailSites()";
+        return false;
+    }
+
+    cout << "Test Get Head Binding" << endl;
+    if(!testGetHeadBinding()){
+        cout << "Failed:testGetHeadBinding()";
+        return false;
+    }
+
+    cout << "Test Get Tail Binding" << endl;
+    if(!testGetTailBinding()){
+        cout << "Failed:testGetTailBinding()";
+        return false;
+    }
+
+    cout << "Test Get Head Unbinding" << endl;
+    if(!testGetHeadUnbinding()){
+        cout << "Failed:testGetHeadUnbinding()";
+        return false;
+    }
+
+    cout << "Test Get Tail Unbinding" << endl;
+    if(!testGetTailUnbinding()){
+        cout << "Failed:testGetTailUnbinding()";
+        return false;
+    }
+
+    cout << "Test Get Connected Neighbours" << endl;
+    if(!testGetConnectedNeighbours()){
+        cout << "Failed:testGetConnectedNeighbours()";
+        return false;
+    }
+
+    cout << "Test Get Unconnected Neighbours" << endl;
+    if(!testGetUnconnectedNeighbours()){
+        cout << "Failed:testGetUnconnectedNeighbours()";
+        return false;
+    }
+
+    cout << "Test Get Rates" << endl;
+    if(!testGetRates()){
+        cout << "Failed:testGetRates()";
         return false;
     }
 
 
-    if(!testUpdateTemplateBond()){
-        cout << "Failed: testUpdateTemplateBond()";
+    cout << "Test Choose Head Binding" << endl;
+    if(!testChooseHeadBinding()){
+        cout << "Failed:testChooseHeadBinding()";
         return false;
     }
 
-    if(!testUpdateBackboneBond()){
-        cout << "Failed: testUpdateBackboneBond()";
+    cout << "Test Choose Tail Binding" << endl;
+    if(!testChooseTailUnbinding()){
+        cout << "Failed:testChooseTailBinding()";
         return false;
     }
 
-    if(!testUpdatePolymerConnections()){
-        cout << "Failed: testUpdatePolymerConnections()";
+    cout << "Test Choose Head Unbinding" << endl;
+    if(!testChooseHeadUnbinding()){
+        cout << "Failed:testChooseHeadUnbinding()";
+        return false;
+    }
+
+    cout << "Test Choose Tail Unbinding" << endl;
+    if(!testChooseTailUnbinding()){
+        cout << "Failed:testChooseTailUnbinding()";
+        return false;
+    }
+
+    cout << "Test Choose Neighbours Unbind" << endl;
+    if(!testChooseNeighboursUnbind()){
+        cout << "Failed:testChooseNeighboursUnbind()";
+        return false;
+    }
+
+    cout << "Test Choose Neighbours Bind" << endl;
+    if(!testChooseNeighboursBind()){
+        cout << "Failed:testChooseNeighboursBind()";
+        return false;
+    }
+
+    cout << "Test Choose Head Connection" << endl;
+    if(!testChooseHeadConnection()){
+        cout << "Failed:testChooseHeadConnection()";
+        return false;
+    }
+
+    cout << "Test Choose Tail Connection" << endl;
+    if(!testChooseTailConnection()){
+        cout << "Failed:testChooseTailConnection()";
         return false;
     }
 
 
-    if(!testTailConnectionOptions()){
-        cout << "Failed: testTailConnectionOptions()";
-        return false;
-    }
-
-    if(!testUpdateValidNeighbour()){
-        cout << "Failed: testUpdateValidNeighbour()";
-        return false;
-    }
-
-    if(!testValidNeighbourOptions()){
-        cout << "Failed: testValidNeighbourOptions()";
-        return false;
-    }
-
-    if(!testSystemGetters()){
-        cout << "Failed: testSystemGetters()";
-        return false;
-    }
-    */
     cout << "Tests passed" << endl;
     return true;
 }
-
-/*
-bool Tests::testSystemInitialisation(){
-    int monomer_test_number=100;
-    System * system = new System(monomer_test_number);
-    return system->getMonomers()==monomer_test_number;
-}
-
-
-bool Tests::testChangeMonomerCount(){
-    int monomer_test_number=100;
-    int increase=20;
-    int decrease=-50;
-    System * system = new System(monomer_test_number);
-    system->changeMonomerCount(increase);
-    if(system->getMonomers()!=monomer_test_number+increase){
-        return false;
-    }
-    system->changeMonomerCount(decrease);
-    if(system->getMonomers()!=monomer_test_number+increase+decrease){
-        return false;
-    }
-    return true;
-}
-
-bool Tests::testChangeDimerCount(){
-    int monomer_test_number=100;
-    int increase=50;
-    int decrease=-20;
-    System * system = new System(monomer_test_number);
-    system->changeDimerCount(increase);
-    if(system->getDimers()!=increase){
-        return false;
-    }
-    system->changeDimerCount(decrease);
-    if(system->getDimers()!=increase+decrease){
-        return false;
-    }
-    return true;
-}
-
-bool Tests::testPolymerParameters(){
-    vector<int> s = {1, 2, 1, 3, 1, 2, 1};
-    Polymer * p = new Polymer(s);
-    int length = s.size();
-    int index=5;
-    p->setIndex(index);
-    if(p->getIndex()!=index){
-        return false;
-    }
-
-    if(p->getLength()!=length){
-        return false;
-    }
-
-    return true;
-}
-
-
-bool Tests::testUpdateTemplateBond(){
-    vector<Polymer*> polymers;
-    vector<Connection*> connections;
-    vector<tuple<Polymer *, int>> sites;
-    for(int i=0; i< 10; i++) {
-        vector<int> s;
-        for (int j = 0; j < 10; j++) {
-            s.push_back(rand() % 10);
-        }
-        Polymer *p = new Polymer(s);
-        p->setIndex(i);
-        polymers.push_back(p);
-        s.clear();
-        if (i == 0){
-            for(int j=0; j<10; j++){
-                sites.push_back(make_tuple(p, j));
-            }
-        } else {
-            sites.push_back(make_tuple(p, 0));
-        }
-    }
-
-    for(int i=0; i<9; i++){
-        connections.push_back(new Connection(sites[i], sites[i+10]));
-    }
-    Conglomerate * conglomerate = new Conglomerate(connections);
-    conglomerate->setIndex(10);
-    conglomerate->updateTemplateBond();
-    int available_template_bonds = conglomerate->getTemplateBonds();
-
-    if(available_template_bonds!=82){
-        return false;
-    }
-    return true;
-}
-
-bool Tests::testUpdateBackboneBond(){
-    vector<Polymer*> polymers;
-    vector<Connection*> connections;
-    vector<tuple<Polymer *, int>> sites;
-    for(int i=0; i< 10; i++) {
-        vector<int> s;
-        for (int j = 0; j < 10; j++) {
-            s.push_back(rand() % 10);
-        }
-        Polymer *p = new Polymer(s);
-        p->setIndex(i);
-        polymers.push_back(p);
-        s.clear();
-        if (i == 0){
-            for(int j=0; j<10; j++){
-                sites.push_back(make_tuple(p, j));
-            }
-        } else {
-            sites.push_back(make_tuple(p, 0));
-        }
-    }
-
-    for(int i=0; i<9; i++){
-        connections.push_back(new Connection(sites[i], sites[i+10]));
-    }
-    Conglomerate * conglomerate = new Conglomerate(connections);
-    conglomerate->setIndex(10);
-    conglomerate->updateBackboneBonds();
-    int backbone_bonds = conglomerate->getBackboneBonds();
-
-    if(backbone_bonds!=90){
-        return false;
-    }
-    return true;
-}
-
-bool Tests::testUpdatePolymerConnections() {
-    vector<Polymer *> polymers;
-    vector<Connection *> connections;
-    vector<tuple<Polymer *, int>> sites;
-    for (int i = 0; i < 10; i++) {
-        vector<int> s;
-        for (int j = 0; j < 10; j++) {
-            s.push_back(rand() % 10);
-        }
-        Polymer *p = new Polymer(s);
-        p->setIndex(i);
-        polymers.push_back(p);
-        s.clear();
-        if (i == 0) {
-            for (int j = 0; j < 10; j++) {
-                sites.push_back(make_tuple(p, j));
-            }
-        } else {
-            sites.push_back(make_tuple(p, 0));
-        }
-    }
-
-    for (int i = 0; i < 9; i++) {
-        connections.push_back(new Connection(sites[i], sites[i + 10]));
-    }
-    Conglomerate *conglomerate = new Conglomerate(connections);
-    conglomerate->setIndex(10);
-    conglomerate->updatePolymerConnections();
-    vector<vector<Connection * >> cons = conglomerate->getPolymerConnections();
-    vector<vector<int>> inds = conglomerate->getPolymerConnectionIndexes();
-
-    vector<int> nought = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-    vector<int> rest = {0};
-
-    vector<vector<Connection * >> correctConnections;
-    vector<vector<int>> correctIndexes;
-    correctIndexes.push_back(nought);
-    correctConnections.push_back(connections);
-
-    for (int i = 1; i < 10; i++) {
-        correctIndexes.push_back(rest);
-        vector<Connection *> v = {connections[i - 1]};
-        correctConnections.push_back(v);
-    }
-
-    if(cons.size()!=correctConnections.size() || inds.size()!=correctIndexes.size()){
-        return false;
-    }
-
-    for (int i = 0; i < cons.size(); i++) { //Loop polymers in cons
-        for (int j = 0; j < cons[i].size(); j++) { //Loop connections in polymer
-            if (!(*cons[i][j] == *correctConnections[i][j])) { //If they're not as theyre supposed to be
-                return false; //It fails
-            }
-            if(inds[i][j]!=correctIndexes[i][j]){
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-
-bool Tests::testTailConnectionOptions(){
-    vector<int> seq = {0,1,2,3,4};
-    Polymer * pOne = new Polymer(seq);
-    pOne->setIndex(0);
-
-    Polymer * pTwo = new Polymer(seq);
-    pTwo->setIndex(1);
-
-    Polymer * pThree = new Polymer(seq);
-    pTwo->setIndex(2);
-
-    tuple<Polymer *, int> oneNought = make_tuple(pOne, 0);
-    tuple<Polymer *, int> oneOne = make_tuple(pOne, 1);
-
-    tuple<Polymer *, int> twoFour = make_tuple(pTwo, 4);
-    tuple<Polymer *, int> twoThree = make_tuple(pTwo, 3);
-    tuple<Polymer *, int> twoTwo = make_tuple(pTwo, 2);
-    tuple<Polymer *, int> twoOne = make_tuple(pTwo, 1);
-
-    tuple<Polymer *, int> threeFour = make_tuple(pThree, 4);
-    tuple<Polymer *, int> threeThree = make_tuple(pThree, 3);
-
-    tuple<Polymer *, int> threeOne = make_tuple(pThree, 1);
-    tuple<Polymer *, int> threeNought = make_tuple(pThree, 0);
-
-    vector<Connection *> connections;
-    connections.push_back(new Connection(oneNought, twoFour));
-    connections.push_back(new Connection(oneOne, twoThree));
-
-    Conglomerate * conglomerate = new Conglomerate(connections);
-
-    if(!(conglomerate->tailConnectionOptions(connections[1], pOne, -1, oneOne))){
-        return false;
-    }
-
-    Connection * connection_to_be_removed = new Connection(twoTwo, threeThree);
-    Connection * connection_two_be_removed = new Connection(twoOne, threeFour);
-
-    conglomerate->addConnection(connection_to_be_removed);
-    conglomerate->addConnection(connection_two_be_removed);
-
-    if(!(conglomerate->tailConnectionOptions(connections[1], pOne, -1, oneOne))){
-        return false;
-    }
-
-    conglomerate->removeConnection(connection_to_be_removed);
-    conglomerate->removeConnection(connection_two_be_removed);
-
-    Connection * connection_to_be_added = new Connection(twoTwo, threeNought);
-    Connection * connection_two_be_added = new Connection(twoOne, threeOne);
-
-    conglomerate->addConnection(connection_to_be_added);
-    conglomerate->addConnection(connection_two_be_added);
-
-    if(conglomerate->tailConnectionOptions(connections[1], pOne, -1, oneOne)){
-        return false;
-    }
-
-    return true;
-}
-
-bool Tests::testUpdateValidNeighbour(){
-    vector<int> seq = {0,1,2,3,4,5};
-    Polymer * pOne = new Polymer(seq);
-    pOne->setIndex(0);
-
-    tuple<Polymer *, int> oneNought = make_tuple(pOne, 0);
-    tuple<Polymer *, int> oneOne = make_tuple(pOne, 1);
-    tuple<Polymer *, int> oneTwo = make_tuple(pOne, 2);
-    tuple<Polymer *, int> oneThree = make_tuple(pOne, 3);
-    tuple<Polymer *, int> oneFour = make_tuple(pOne, 4);
-    tuple<Polymer *, int> oneFive = make_tuple(pOne, 5);
-
-    seq = {0,1,2};
-    Polymer * pTwo = new Polymer(seq);
-    pTwo->setIndex(1);
-
-    tuple<Polymer *, int> twoTwo = make_tuple(pTwo, 2);
-    tuple<Polymer *, int> twoOne = make_tuple(pTwo, 1);
-    tuple<Polymer *, int> twoNought = make_tuple(pTwo, 0);
-
-    Polymer * pThree = new Polymer(seq);
-    pThree->setIndex(2);
-
-    tuple<Polymer *, int> threeTwo = make_tuple(pThree, 2);
-    tuple<Polymer *, int> threeOne = make_tuple(pThree, 1);
-    tuple<Polymer *, int> threeNought = make_tuple(pThree, 0);
-
-    seq = {0,1,2,3,4};
-    Polymer * pFour = new Polymer(seq);
-    pFour->setIndex(3);
-
-
-    tuple<Polymer *, int> fourFour = make_tuple(pFour, 4);
-    tuple<Polymer *, int> fourThree = make_tuple(pFour, 3);
-    tuple<Polymer *, int> fourTwo = make_tuple(pFour, 2);
-    tuple<Polymer *, int> fourOne = make_tuple(pFour, 1);
-    tuple<Polymer *, int> fourNought = make_tuple(pFour, 0);
-
-    Connection * important_connection = new Connection(oneThree, twoTwo);
-    vector<Connection *> connections;
-    connections.push_back(important_connection);
-    connections.push_back(new Connection(oneNought, threeTwo));
-    connections.push_back(new Connection(oneOne, threeOne));
-    connections.push_back(new Connection(oneTwo, threeNought));
-    connections.push_back(new Connection(oneFour, twoOne));
-    connections.push_back(new Connection(oneFive, twoNought));
-    Conglomerate * conglomerate = new Conglomerate(connections);
-
-    conglomerate->updatePolymersInConglomerate();
-    conglomerate->updatePolymerConnections();
-
-    conglomerate->updateValidNeighbours();
-
-    int valid_neighbours = conglomerate->getValidNeighbours();
-
-    if(valid_neighbours!=1){
-        return false;
-    }
-
-    connections.clear();
-    connections.push_back(important_connection);
-    connections.push_back(new Connection(oneFour, twoOne));
-    connections.push_back(new Connection(oneFive, twoNought));
-    connections.push_back(new Connection(oneNought, fourFour));
-    connections.push_back(new Connection(oneOne, fourThree));
-    connections.push_back(new Connection(oneTwo, fourTwo));
-    conglomerate = new Conglomerate(connections);
-
-    conglomerate->updatePolymersInConglomerate();
-    conglomerate->updatePolymerConnections();
-
-    conglomerate->updateValidNeighbours();
-
-    valid_neighbours = conglomerate->getValidNeighbours();
-
-    if(valid_neighbours!=0){
-        return false;
-    }
-
-    conglomerate->addConnection(new Connection(threeNought, fourOne));
-    conglomerate->addConnection(new Connection(threeOne, fourNought));
-
-    conglomerate->updatePolymersInConglomerate();
-    conglomerate->updatePolymerConnections();
-
-    conglomerate->updateValidNeighbours();
-
-    valid_neighbours = conglomerate->getValidNeighbours();
-
-    if(valid_neighbours!=1){
-        return false;
-    }
-    return true;
-}
-
-bool Tests::testValidNeighbourOptions(){
-    vector<int> seq = {0,1,2,3,4,5};
-    Polymer * pOne = new Polymer(seq);
-    pOne->setIndex(0);
-
-    tuple<Polymer *, int> oneNought = make_tuple(pOne, 0);
-    tuple<Polymer *, int> oneOne = make_tuple(pOne, 1);
-    tuple<Polymer *, int> oneTwo = make_tuple(pOne, 2);
-    tuple<Polymer *, int> oneThree = make_tuple(pOne, 3);
-    tuple<Polymer *, int> oneFour = make_tuple(pOne, 4);
-    tuple<Polymer *, int> oneFive = make_tuple(pOne, 5);
-
-    seq = {0,1,2};
-    Polymer * pTwo = new Polymer(seq);
-    pTwo->setIndex(1);
-
-    tuple<Polymer *, int> twoTwo = make_tuple(pTwo, 2);
-    tuple<Polymer *, int> twoOne = make_tuple(pTwo, 1);
-    tuple<Polymer *, int> twoNought = make_tuple(pTwo, 0);
-
-    Polymer * pThree = new Polymer(seq);
-    pThree->setIndex(2);
-
-    tuple<Polymer *, int> threeTwo = make_tuple(pThree, 2);
-    tuple<Polymer *, int> threeOne = make_tuple(pThree, 1);
-    tuple<Polymer *, int> threeNought = make_tuple(pThree, 0);
-
-    seq = {0,1,2,3,4};
-    Polymer * pFour = new Polymer(seq);
-    pFour->setIndex(3);
-
-
-    tuple<Polymer *, int> fourFour = make_tuple(pFour, 4);
-    tuple<Polymer *, int> fourThree = make_tuple(pFour, 3);
-    tuple<Polymer *, int> fourTwo = make_tuple(pFour, 2);
-    tuple<Polymer *, int> fourOne = make_tuple(pFour, 1);
-    tuple<Polymer *, int> fourNought = make_tuple(pFour, 0);
-
-    Connection * important_connection = new Connection(oneThree, twoTwo);
-    vector<Connection *> connections;
-    connections.push_back(important_connection);
-    connections.push_back(new Connection(oneNought, threeTwo));
-    connections.push_back(new Connection(oneOne, threeOne));
-    connections.push_back(new Connection(oneTwo, threeNought));
-    connections.push_back(new Connection(oneFour, twoOne));
-    connections.push_back(new Connection(oneFive, twoNought));
-    Conglomerate * conglomerate = new Conglomerate(connections);
-
-    conglomerate->updatePolymersInConglomerate();
-    conglomerate->updatePolymerConnections();
-
-    if(!conglomerate->validNeighbourOptions(important_connection, pTwo, -1, pTwo)){
-        return false;
-    }
-
-    connections.clear();
-    connections.push_back(important_connection);
-    connections.push_back(new Connection(oneFour, twoOne));
-    connections.push_back(new Connection(oneFive, twoNought));
-    connections.push_back(new Connection(oneNought, fourFour));
-    connections.push_back(new Connection(oneOne, fourThree));
-    connections.push_back(new Connection(oneTwo, fourTwo));
-    conglomerate = new Conglomerate(connections);
-
-    conglomerate->updatePolymersInConglomerate();
-    conglomerate->updatePolymerConnections();
-
-    if(conglomerate->validNeighbourOptions(important_connection, pTwo, -1, pTwo)){
-        return false;
-    }
-
-    conglomerate->addConnection(new Connection(threeNought, fourOne));
-    conglomerate->addConnection(new Connection(threeOne, fourNought));
-
-    conglomerate->updatePolymersInConglomerate();
-    conglomerate->updatePolymerConnections();
-
-    if(!conglomerate->validNeighbourOptions(important_connection, pTwo, -1, pTwo)){
-        return false;
-    }
-
-    return true;
-}
-
-bool Tests::testSystemGetters(){
-    vector<Polymer *> polymers;
-    for(int i=0; i<10; i++){
-        vector<int> seq;
-        for(int j=0; j<10; j++){
-            seq.push_back(rand()%10);
-        }
-        Polymer * p = new Polymer(seq);
-        p->setIndex(i);
-        polymers.push_back(p);
-    }
-    tuple<Polymer *, int> noughtNought = make_tuple(polymers[0], 0);
-    tuple<Polymer *, int> noughtOne = make_tuple(polymers[0], 1);
-    tuple<Polymer *, int> noughtSeven= make_tuple(polymers[0], 7);
-    tuple<Polymer *, int> noughtEight = make_tuple(polymers[0], 8);
-
-    tuple<Polymer *, int> oneThree = make_tuple(polymers[1], 3);
-
-    tuple<Polymer *, int> twoFive = make_tuple(polymers[2], 5);
-    tuple<Polymer *, int> twoFour = make_tuple(polymers[2], 4);
-
-    tuple<Polymer *, int> threeThree = make_tuple(polymers[3], 3);
-    tuple<Polymer *, int> threeFour = make_tuple(polymers[3], 3);
-    tuple<Polymer *, int> threeNine = make_tuple(polymers[3], 9);
-
-    vector<Connection *> conOne;
-    conOne.push_back(new Connection(noughtNought, threeThree));
-    conOne.push_back(new Connection(noughtOne, threeFour));
-    conOne.push_back(new Connection(noughtSeven, twoFive));
-    conOne.push_back(new Connection(noughtEight, twoFour));
-    conOne.push_back(new Connection(oneThree, threeNine));
-    Conglomerate * conglomerateOne = new Conglomerate(conOne);
-    conglomerateOne->setIndex(1);
-
-    tuple<Polymer *, int> sixThree = make_tuple(polymers[6], 3);
-    tuple<Polymer *, int> sixFour = make_tuple(polymers[6], 4);
-
-    tuple<Polymer *, int> fiveNought = make_tuple(polymers[5], 0);
-    tuple<Polymer *, int> fiveEight = make_tuple(polymers[5], 8);
-    tuple<Polymer *, int> fiveNine = make_tuple(polymers[5], 9);
-
-
-    tuple<Polymer *, int> fourSix = make_tuple(polymers[4], 6);
-
-    vector<Connection *> conTwo;
-    conTwo.push_back(new Connection(fourSix, fiveNought));
-    conTwo.push_back(new Connection(fiveEight, sixFour));
-    conTwo.push_back(new Connection(fiveNine, sixThree));
-    Conglomerate * conglomerateTwo = new Conglomerate(conTwo);
-    conglomerateTwo->setIndex(2);
-
-    System * system = new System(100);
-    for(int i=0; i<10; i++){
-        system->addPolymer(polymers[i]);
-    }
-
-    system->addConglomerate(conglomerateOne);
-    system->addConglomerate(conglomerateTwo);
-
-    vector<Polymer *> poly = system->getPolymers();
-    vector<Conglomerate *> conglomy = system->getConglomerates();
-
-    if(poly.size()!=10 || conglomy.size()!=2){
-        return false; //Better test probs needed
-    }
-    return true;
-}*/
 
 bool Tests::testPolymerInitialisation(){
     vector<int> s = {1, 2, 1, 3, 1, 2, 1};
@@ -2108,61 +1704,225 @@ bool Tests::testSeparatePolymer(){
     return true;
 }
 
-/*bool Tests::testConglomerateInitialisation(){
+bool Tests::testGetTree(){
+    Polymer * pOn = new Polymer(0, {1,0,1,0,1});
+    pOn->setIndex(0);
 
-    Polymer * polymer = new Polymer(0, {1,1,1,1,1,1});
-    polymer->setIndex(0);
-    Conglomerate * c = new Conglomerate(polymer, 2, 2);
+    Polymer * pTw = new Polymer(1, {1,0,1,0,1});
+    pTw->setIndex(1);
 
-    if(c->getConnections().size()!=0){
+    Polymer * pThre = new Polymer(0, {1,0,1,0,1});
+    pThre->setIndex(2);
+
+    tuple<Polymer *, int> tOn = make_tuple(pOn, 2);
+    tuple<Polymer *, int> tTw = make_tuple(pOn, 3);
+    tuple<Polymer *, int> tThre = make_tuple(pOn, 4);
+
+    tuple<Polymer *, int> tFou = make_tuple(pTw, 0);
+    tuple<Polymer *, int> tNin = make_tuple(pTw, 1);
+    tuple<Polymer *, int> tFiv = make_tuple(pTw, 2);
+    tuple<Polymer *, int> tSi = make_tuple(pTw, 3);
+    tuple<Polymer *, int> tSeve = make_tuple(pTw, 4);
+
+    tuple<Polymer *, int> tEigh = make_tuple(pThre, 0);
+    tuple<Polymer *, int> tTe = make_tuple(pThre, 1);
+
+    Connection * conOn = new Connection(tOn, tSeve);
+    Connection * conTw = new Connection(tTw, tSi);
+    Connection * conThre = new Connection(tThre, tFiv);
+    Connection * conFou = new Connection(tNin, tEigh);
+    Connection * conFiv = new Connection(tFou, tTe);
+
+    Conglomerate * co = new Conglomerate({conOn, conTw, conThre, conFou}, 2, 2);
+
+    co->updatePolymersInConglomerate();
+    co->updatePolymerConnections();
+
+    vector<Polymer *> p = co->getTree(pOn, {pOn});
+
+    if(p.size()!=3){
         return false;
     }
 
-    if(c->getPolymersInConglomerate().size()!=1){
+    bool uno = false;
+    bool dos = false;
+    bool tres = false;
+
+    for(auto & poly : p){
+        if(*poly==*pOn){
+            uno = true;
+        }
+
+        if(*poly==*pTw){
+            dos = true;
+        }
+
+        if(*poly==*pThre){
+            tres = true;
+        }
+    }
+
+    if(!uno || !dos || !tres){
         return false;
     }
 
-    if(!(*c->getPolymersInConglomerate()[0]==*polymer)){
+
+    vector<Polymer *> pol = co->getTree(pTw, {pTw});
+
+    if(pol.size()!=3){
         return false;
     }
 
-    if(c->getAvailableTemplateBonds().size()!=2){
+    uno = false;
+    dos = false;
+    tres = false;
+
+    for(auto & poly : pol){
+        if(*poly==*pOn){
+            uno = true;
+        }
+
+        if(*poly==*pTw){
+            dos = true;
+        }
+
+        if(*poly==*pThre){
+            tres = true;
+        }
+    }
+
+    if(!uno || !dos || !tres){
         return false;
     }
 
-    if(c->getAvailableTemplateBonds()[0].size()!=2 || c->getAvailableTemplateBonds()[1].size()!=2){
+    Polymer * pOne = new Polymer(0, {1,0,1,0,1});
+    pOne->setIndex(0);
+
+    Polymer * pTwo = new Polymer(1, {1,0,1,0,1});
+    pTwo->setIndex(1);
+
+    Polymer * pThree = new Polymer(0, {1,0,1,0,1});
+    pThree->setIndex(2);
+
+    tuple<Polymer *, int> tOne = make_tuple(pOne, 2);
+    tuple<Polymer *, int> tTwo = make_tuple(pOne, 3);
+    tuple<Polymer *, int> tThree = make_tuple(pOne, 4);
+
+    tuple<Polymer *, int> tFour = make_tuple(pTwo, 0);
+    tuple<Polymer *, int> tNine = make_tuple(pTwo, 1);
+    tuple<Polymer *, int> tFive = make_tuple(pTwo, 2);
+    tuple<Polymer *, int> tSix = make_tuple(pTwo, 3);
+    tuple<Polymer *, int> tSeven = make_tuple(pTwo, 4);
+
+    tuple<Polymer *, int> tEight = make_tuple(pThree, 0);
+    tuple<Polymer *, int> tTen = make_tuple(pThree, 1);
+
+    Connection * conOne = new Connection(tOne, tSeven);
+    Connection * conTwo = new Connection(tTwo, tSix);
+    Connection * conThree = new Connection(tThree, tFive);
+    Connection * conFour = new Connection(tNine, tEight);
+    Connection * conFive = new Connection(tFour, tTen);
+
+    Conglomerate * con = new Conglomerate({conOne, conTwo, conThree}, 2, 2);
+
+    con->updatePolymersInConglomerate();
+    con->updatePolymerConnections();
+
+    vector<Polymer *> po = con->getTree(pOne, {pOne});
+
+    if(po.size()!=2){
         return false;
     }
 
-    if(c->getAvailableTemplateBonds()[0][0]!=0 || c->getAvailableTemplateBonds()[0][1]!=0){
+    uno = false;
+    dos = false;
+
+    for(auto & poly : po){
+        if(*poly==*pOne){
+            uno = true;
+        }
+
+        if(*poly==*pTwo){
+            dos = true;
+        }
+    }
+
+    if(!uno || !dos){
         return false;
     }
 
-    if(c->getAvailableTemplateBonds()[1][0]!=6 || c->getAvailableTemplateBonds()[1][1]!=0){
+    return true;
+
+
+}
+
+bool Tests::testUpdateConnectivity(){
+    Polymer * pOn = new Polymer(0, {1,0,1,0,1});
+    pOn->setIndex(0);
+
+    Polymer * pTw = new Polymer(1, {1,0,1,0,1});
+    pTw->setIndex(1);
+
+    Polymer * pThre = new Polymer(0, {1,0,1,0,1});
+    pThre->setIndex(2);
+
+    tuple<Polymer *, int> tOn = make_tuple(pOn, 2);
+    tuple<Polymer *, int> tTw = make_tuple(pOn, 3);
+    tuple<Polymer *, int> tThre = make_tuple(pOn, 4);
+
+    tuple<Polymer *, int> tFou = make_tuple(pTw, 0);
+    tuple<Polymer *, int> tNin = make_tuple(pTw, 1);
+    tuple<Polymer *, int> tFiv = make_tuple(pTw, 2);
+    tuple<Polymer *, int> tSi = make_tuple(pTw, 3);
+    tuple<Polymer *, int> tSeve = make_tuple(pTw, 4);
+
+    tuple<Polymer *, int> tEigh = make_tuple(pThre, 0);
+    tuple<Polymer *, int> tTe = make_tuple(pThre, 1);
+
+    Connection * conOn = new Connection(tOn, tSeve);
+    Connection * conTw = new Connection(tTw, tSi);
+    Connection * conThre = new Connection(tThre, tFiv);
+    Connection * conFou = new Connection(tNin, tEigh);
+    Connection * conFiv = new Connection(tFou, tTe);
+
+    Conglomerate * co = new Conglomerate({conOn, conTw, conThre, conFou}, 2, 2);
+
+    co->updatePolymersInConglomerate();
+    co->updatePolymerConnections();
+
+    vector<vector<Connection *>> output = co->updateConnectivity();
+
+    if(output.size()!=1){
+        return false;
+    }
+    if(output[0].size()!=4){
         return false;
     }
 
-    if(c->getValidNeighboursBinding()!=0){
-        return false;
+    bool uno = false;
+    bool dos = false;
+    bool tres = false;
+    bool cuatro = false;
+
+    for(auto & con : output[0]){
+        if(*con == *conOn){
+            uno = true;
+        }
+
+        if(*con == *conTw){
+            dos = true;
+        }
+
+        if(*con == *conThre){
+            tres = true;
+        }
+
+        if(*con == *conFou){
+            cuatro = true;
+        }
     }
 
-    if(c->getValidNeighboursUnbinding()!=0){
-        return false;
-    }
-
-    if(c->getTailUnbindingSites()!=0){
-        return false;
-    }
-
-    if(c->getTailBindingSites()!=0){
-        return false;
-    }
-
-    if(c->getPolymerConnections().size()!=1){
-        return false;
-    }
-
-    if(c->getPolymerConnections()[0].size()!=0){
+    if(!uno || !dos || !tres || !cuatro){
         return false;
     }
 
@@ -2171,89 +1931,2298 @@ bool Tests::testSeparatePolymer(){
     pOne->setIndex(0);
 
     Polymer * pTwo = new Polymer(1, {1,0,1,0,1});
-    pOne->setIndex(1);
+    pTwo->setIndex(1);
 
     Polymer * pThree = new Polymer(0, {1,0,1,0,1});
-    pOne->setIndex(2);
+    pThree->setIndex(2);
 
-    tuple<Polymer *, int> tOne = make_tuple(pOne, 0);
-    tuple<Polymer *, int> tTwo = make_tuple(pOne, 1);
-    tuple<Polymer *, int> tThree = make_tuple(pOne, 2);
+    Polymer * pFour = new Polymer(0, {1,0,1,0,1});
+    pFour->setIndex(3);
+
+    tuple<Polymer *, int> tOne = make_tuple(pOne, 2);
+    tuple<Polymer *, int> tTwo = make_tuple(pOne, 3);
+    tuple<Polymer *, int> tThree = make_tuple(pOne, 4);
 
     tuple<Polymer *, int> tFour = make_tuple(pTwo, 0);
+    tuple<Polymer *, int> tNine = make_tuple(pTwo, 1);
     tuple<Polymer *, int> tFive = make_tuple(pTwo, 2);
     tuple<Polymer *, int> tSix = make_tuple(pTwo, 3);
     tuple<Polymer *, int> tSeven = make_tuple(pTwo, 4);
 
-    tuple<Polymer *, int> tEight = make_tuple(pThree, 4);
+    tuple<Polymer *, int> tEight = make_tuple(pThree, 0);
+    tuple<Polymer *, int> tTen = make_tuple(pThree, 1);
+
+    tuple<Polymer *, int> tEleven = make_tuple(pFour, 4);
+    tuple<Polymer *, int> tTwelve = make_tuple(pFour, 3);
 
     Connection * conOne = new Connection(tOne, tSeven);
     Connection * conTwo = new Connection(tTwo, tSix);
     Connection * conThree = new Connection(tThree, tFive);
-    Connection * conFour = new Connection(tFour, tEight);
+    Connection * conFour = new Connection(tEleven, tEight);
+    Connection * conFive = new Connection(tTwelve, tTen);
 
-    Conglomerate * con = new Conglomerate({conOne, conTwo, conThree, conFour}, 2, 2);
+    Conglomerate * con = new Conglomerate({conOne, conTwo, conThree, conFour, conFive}, 2, 2);
 
-    if(con->getConnections().size()!=4){
-        cout << 1 << endl;
+    con->updatePolymersInConglomerate();
+    con->updatePolymerConnections();
+
+    vector<vector<Connection *>> out = con->updateConnectivity();
+
+    if(out.size()!=2){
         return false;
     }
 
-    if(con->getPolymersInConglomerate().size()!=3){
-        cout << 2 << endl;
-        cout << con->getPolymersInConglomerate().size() << endl;
+    if(out[0].size()!=3){
         return false;
     }
 
-    if(con->getAvailableTemplateBonds().size()!=2){
-        cout << 3 << endl;
+    if(out[1].size()!=2){
         return false;
     }
 
-    if(con->getAvailableTemplateBonds()[0].size()!=2 || c->getAvailableTemplateBonds()[1].size()!=2){
-        cout << 4 << endl;
+    uno = false;
+    dos = false;
+    tres = false;
+    cuatro = false;
+    bool cinco = false;
+
+    for(auto & connect : out[0]){
+        if(*connect==*conOne){
+            uno = true;
+        }
+
+        if(*connect==*conTwo){
+            dos = true;
+        }
+
+        if(*connect==*conThree){
+            tres = true;
+        }
+    }
+
+    if(!uno || !dos || !tres){
         return false;
     }
 
-    if(con->getAvailableTemplateBonds()[0][0]!=3 || c->getAvailableTemplateBonds()[0][1]!=1){
-        cout << 5 << endl;
+    for(auto & connect : out[1]){
+        if(*connect==*conFour){
+            cuatro = true;
+        }
+
+        if(*connect==*conFive){
+            cinco = true;
+        }
+    }
+
+    if(!cuatro || !cinco){
         return false;
     }
 
-    if(con->getAvailableTemplateBonds()[1][0]!=3 || c->getAvailableTemplateBonds()[1][1]!=0){
-        cout << 6 << endl;
+    return true;
+}
+
+bool Tests::testRemoveConnection(){
+    Polymer * pOn = new Polymer(0, {1,0,1,0,1});
+    pOn->setIndex(0);
+
+    Polymer * pTw = new Polymer(1, {1,0,1,0,1});
+    pTw->setIndex(1);
+
+    Polymer * pThre = new Polymer(0, {1,0,1,0,1});
+    pThre->setIndex(2);
+
+    tuple<Polymer *, int> tOn = make_tuple(pOn, 2);
+    tuple<Polymer *, int> tTw = make_tuple(pOn, 3);
+    tuple<Polymer *, int> tThre = make_tuple(pOn, 4);
+
+    tuple<Polymer *, int> tFou = make_tuple(pTw, 0);
+    tuple<Polymer *, int> tNin = make_tuple(pTw, 1);
+    tuple<Polymer *, int> tFiv = make_tuple(pTw, 2);
+    tuple<Polymer *, int> tSi = make_tuple(pTw, 3);
+    tuple<Polymer *, int> tSeve = make_tuple(pTw, 4);
+
+    tuple<Polymer *, int> tEigh = make_tuple(pThre, 0);
+    tuple<Polymer *, int> tTe = make_tuple(pThre, 1);
+
+    Connection * conOn = new Connection(tOn, tSeve);
+    Connection * conTw = new Connection(tTw, tSi);
+    Connection * conThre = new Connection(tThre, tFiv);
+    Connection * conFou = new Connection(tNin, tEigh);
+    Connection * conFiv = new Connection(tFou, tTe);
+
+    Conglomerate * co = new Conglomerate({conOn, conTw, conThre, conFou}, 2, 2);
+
+    co->updatePolymersInConglomerate();
+    co->updatePolymerConnections();
+
+    vector<Conglomerate *> output = co->removeConnection(conFou);
+
+    if(output.size()!=1){
         return false;
     }
 
-    if(con->getValidNeighboursBinding()!=0){
-        cout << 7 << endl;
+    output[0]->setIndex(1);
+
+    Conglomerate * new_con = new Conglomerate(pThre, 2, 2);
+
+    new_con->setIndex(1);
+
+    if(!(*new_con==*output[0])){
+
         return false;
     }
 
-    if(con->getValidNeighboursUnbinding()!=2){
-        cout << 8 << endl;
+    Polymer * pMon = new Polymer(0, {0});
+    Polymer * pTue = new Polymer(1, {0});
+
+    tuple<Polymer *, int> tWed = make_tuple(pMon, 0);
+    tuple<Polymer *, int> tThu = make_tuple(pTue, 0);
+
+    Connection * cFri = new Connection(tWed, tThu);
+
+    Conglomerate * cSat = new Conglomerate({cFri}, 2, 1);
+    cSat->updatePolymersInConglomerate();
+    cSat->updatePolymerConnections();
+    cout << endl << "-----------------" << endl;
+    vector<Conglomerate *> vSun = cSat->removeConnection(cFri);
+
+    if(vSun.size()!=1){
+        cout << "One" << endl;
         return false;
     }
-
-    if(con->getTailUnbindingSites()!=2){
-        cout << 9 << endl;
-        return false;
-    }
-
-    if(con->getTailBindingSites()!=0){
-        cout << 10 << endl;
-        return false;
-    }
-
-    if(con->getPolymerConnections().size()!=3){
-        cout << 11 << endl;
+    Conglomerate * correct = new Conglomerate(pTue, 2, 1);
+    if(!(*vSun[0]==*correct)){
+        cout << "Two" << endl;
         return false;
     }
 
 
     return true;
+}
 
-}*/
+bool Tests::testMonomerRebind(){
+
+    vector<Conglomerate *> conglomerates;
+    int index = 0;
+    Polymer * monomer = new Polymer(1, {0});
+    monomer->setIndex(++index);
+    Conglomerate * moncong = new Conglomerate(monomer, 2, 1);
+    moncong->setIndex(++index);
+    Polymer * polymer = new Polymer(0, {0,0,0,0,0});
+    polymer->setIndex(++index);
+    Conglomerate * polcong = new Conglomerate(polymer, 2, 1);
+    polcong->setIndex(++index);
+
+    conglomerates.push_back(moncong);
+    conglomerates.push_back(polcong);
+
+    tuple<Polymer *, int> tup = make_tuple(monomer, 0);
+    tuple<Polymer *, int> tups = make_tuple(polymer, 2);
+
+    cout << "adding connection" << endl;
+    Connection * connie = new Connection(tup, tups);
+    polcong->addConnection(connie);
+
+    polcong->updatePolymersInConglomerate();
+    polcong->updatePolymerConnections();
+    polcong->updateAvailableTemplateBonds();
+    polcong->updateTailUnbindingSites();
+    polcong->updateTailBindingSites();
+    polcong->updateValidNeighboursBinding();
+    polcong->updateValidNeighboursUnbinding();
+    int cong_to_be_removed = -1;
+    for(int i=0; i<conglomerates.size(); i++){
+        if(*conglomerates[i]==*moncong){
+            cong_to_be_removed=i;
+        }
+    }
+    conglomerates.erase(conglomerates.begin()+cong_to_be_removed);
+
+    Conglomerate * moncongtwo = polcong->removeConnection(connie)[0];
+    moncongtwo->setIndex(++index);
+    conglomerates.push_back(moncongtwo);
+
+    polcong->addConnection(connie);
+    polcong->updatePolymersInConglomerate();
+    polcong->updatePolymerConnections();
+    polcong->updateAvailableTemplateBonds();
+    polcong->updateTailUnbindingSites();
+    polcong->updateTailBindingSites();
+    polcong->updateValidNeighboursBinding();
+    polcong->updateValidNeighboursUnbinding();
+    cong_to_be_removed = -1;
+    for(int i=0; i<conglomerates.size(); i++){
+        if(*conglomerates[i]==*moncongtwo){
+            cong_to_be_removed=i;
+        }
+    }
+    conglomerates.erase(conglomerates.begin()+cong_to_be_removed);
+
+    polcong->updateConglomerate();
+    return true;
+}
+
+bool Tests::testChooseBond(){
+
+    return true;
+}
+bool Tests::testGetRates(){
+
+    return true;
+}
+bool Tests::testGetEverything(){
+
+    return true;
+}
+bool Tests::testGetHeadBinding(){
+    int family_count = 2;
+    int monomer_type_count = 1;
+    vector<vector<int>> number_of_monomers;
+    Polymer * initial_template;
+
+    vector<int> type_one;
+    type_one.push_back(10);
+    type_one.push_back(10);
+    number_of_monomers.push_back(type_one);
+
+    initial_template = new Polymer(0, {0,0,0,0,0,0});
+
+    System * system = new System(family_count, monomer_type_count, number_of_monomers, initial_template);
+
+    system->getEverything();
+    vector<vector<Connection *>> head_binding = system->getHeadBinding();
+    vector<vector<Connection *>> tail_binding = system->getTailBinding();
+    vector<vector<Connection *>> head_unbinding = system->getHeadUnbinding();
+    vector<vector<Connection *>> tail_unbinding = system->getTailUnbinding();
+    vector<vector<ConnectedNeighbours *>> connected_neighbours = system->getConnectedNeighbours();
+    vector<vector<UnconnectedNeighbours *>> unconnected_neighbours = system->getUnconnectedNeighbours();
+    vector<vector<PotentialSite *>> available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    vector<vector<ExternalConnection *>> potential_head_connection = system->getPotentialHeadConnection();
+    vector<vector<ExternalConnection *>> potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=21){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=21){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(auto & elem : tail_binding){
+        if(elem.size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=21){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(auto & elem : head_unbinding){
+        if(elem.size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=21){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(auto & elem : tail_unbinding){
+        if(elem.size()!=0){
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=21){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(auto & elem : connected_neighbours){
+        if(elem.size()!=0){
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=21){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(auto & elem : unconnected_neighbours){
+        if(elem.size()!=0){
+            cout << 1.12 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=21){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=6){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=21){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=60){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=10) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if(potential_tail_connection.size()!=21){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    cout << 2 << endl;
+    vector<Conglomerate *> conglomerates = system->getConglomerates();
+    vector<Polymer *> polymers = system->getPolymers();
+
+    tuple<Polymer *, int> tOne = make_tuple(polymers[0] ,1);
+    tuple<Polymer *, int> tTwo = make_tuple(polymers[20] ,0);
+    Connection * conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->addConnection(conOne);
+
+    system->eraseConglomerate(20);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=20){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=20){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(auto & elem : tail_binding){
+        if(elem.size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=20){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=1){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=20){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(auto & elem : tail_unbinding){
+        if(elem.size()!=0){
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=20){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(auto & elem : connected_neighbours){
+        if(elem.size()!=0){
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=20){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(auto & elem : unconnected_neighbours){
+        if(elem.size()!=0){
+            cout << 1.12 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=20){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=5){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=20){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=45){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=9) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if(potential_tail_connection.size()!=20){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+    cout << 3 << endl;
+    tOne = make_tuple(polymers[0] ,0);
+    tTwo = make_tuple(polymers[19] ,0);
+    conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->addConnection(conOne);
+
+    system->eraseConglomerate(19);
+
+    system->getEverything();
+
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=19){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=19){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(auto & elem : tail_binding){
+        if(elem.size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=19){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=2){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=19){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(auto & elem : tail_unbinding){
+        if(elem.size()!=0){
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=19){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(auto & elem : connected_neighbours){
+        if(elem.size()!=0){
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=19){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=1){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=19){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=4){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=19){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=32){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=8) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if(potential_tail_connection.size()!=19){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    cout << 4 << endl;
+    tOne = make_tuple(polymers[0] ,3);
+    tTwo = make_tuple(polymers[18] ,0);
+    conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->addConnection(conOne);
+
+    system->eraseConglomerate(18);
+
+    system->getEverything();
+
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(auto & elem : tail_binding){
+        if(elem.size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=3){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(auto & elem : tail_unbinding){
+        if(elem.size()!=0){
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(auto & elem : connected_neighbours){
+        if(elem.size()!=0){
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=1){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=3){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=21){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    cout << 5 << endl;
+    UnconnectedNeighbours * conTwo = new UnconnectedNeighbours(polymers[20], polymers[19]);
+    conglomerates[0]->joinPolymers(conTwo);
+
+    cout << endl;
+    system->erasePolymer(19);
+    cout << "5.2" << endl;
+    system->getEverything();
+    cout << "5.3" << endl;
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(auto & elem : tail_binding){
+        if(elem.size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=2){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=1){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=2){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=3){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=21){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    cout << 6 << endl;
+    tOne = make_tuple(polymers[0] ,1);
+    tTwo = make_tuple(polymers[19] ,0);
+    conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->removeConnection(conOne);
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_binding.size(); elem++){
+        if(elem==0){
+            if(tail_binding[elem].size()!=1){
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if(tail_binding[elem].size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=2){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=0){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=0){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=5){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=38){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+
+    cout << 7 << endl;
+    tOne = make_tuple(polymers[0] ,1);
+    tTwo = make_tuple(polymers[19] ,0);
+    conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->addConnection(conOne);
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(auto & elem : head_binding){
+        if(elem.size()!=0){
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(auto & elem : tail_binding){
+        if(elem.size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=2){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=1){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=2){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=3){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=21){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+
+    cout << 8 << endl;
+    tOne = make_tuple(polymers[0] ,0);
+    tTwo = make_tuple(polymers[19] ,1);
+    conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->removeConnection(conOne);
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_binding.size(); elem++){
+        if(elem==0){
+            if(head_binding[elem].size()!=1){
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if(head_binding[elem].size()!=0){
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_binding.size(); elem++){
+        if(elem==0){
+            if(tail_binding[elem].size()!=0){
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if(tail_binding[elem].size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=1){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=1){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=0){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=5){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=38){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    cout << 9 << endl;
+    tOne = make_tuple(polymers[0] ,1);
+    tTwo = make_tuple(polymers[19] ,0);
+    conOne = new Connection(tOne, tTwo);
+
+    Conglomerate * new_cong = conglomerates[0]->removeConnection(conOne)[0];
+    system->addConglomerate(new_cong);
+    conglomerates.push_back(new_cong);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=19){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_binding.size(); elem++){
+        if(elem==0){
+            if(head_binding[elem].size()!=0){
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if(head_binding[elem].size()!=0){
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if(tail_binding.size()!=19){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_binding.size(); elem++){
+        if(elem==0){
+            if(tail_binding[elem].size()!=0){
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if(tail_binding[elem].size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=19){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=1){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=19){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=0){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=19){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=0){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=19){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=19){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=5){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(elem == available_head_tail_sites.size()-1) {
+            if(available_head_tail_sites[elem].size()!=2){
+                cout << "1.141" << endl;
+                return false;
+            }
+        } else {
+            if(available_head_tail_sites[elem].size()!=1){
+                cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+                cout << 1.15 << endl;
+                return false;
+            }
+        }
+    }
+
+    if(potential_head_connection.size()!=19){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=41){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=9) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if(potential_tail_connection.size()!=19){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(elem==0){
+            if(potential_tail_connection[elem].size()!=4){
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.20 << endl;
+                return false;
+            }
+        }
+    }
+
+    cout << 10 << endl;
+    tOne = make_tuple(polymers[0] ,0);
+    tTwo = make_tuple(polymers[19] ,1);
+    conOne = new Connection(tOne, tTwo);
+    conglomerates[0]->addConnection(conOne);
+    system->eraseConglomerate(system->getConglomerates().size()-1);
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_binding.size(); elem++){
+        if(elem==0){
+            if(head_binding[elem].size()!=0){
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if(head_binding[elem].size()!=0){
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_binding.size(); elem++){
+        if(elem==0){
+            if(tail_binding[elem].size()!=1){
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if(tail_binding[elem].size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=2){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=0){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=0){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=5){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if(available_head_tail_sites[elem].size()!=1){
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=38){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(potential_tail_connection[elem].size()!=0){
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    cout << 11 << endl;
+    tOne = make_tuple(polymers[0] ,1);
+    tTwo = make_tuple(polymers[19] ,0);
+    conOne = new Connection(tOne, tTwo);
+
+    conglomerates[0]->addConnection(conOne);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_binding.size(); elem++){
+        if(elem==0){
+            if(head_binding[elem].size()!=0){
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if(head_binding[elem].size()!=0){
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_binding.size(); elem++){
+        if(elem==0){
+            if(tail_binding[elem].size()!=0){
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if(tail_binding[elem].size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=2){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=1){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=2){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=0){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=3){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else {
+            if(available_head_tail_sites[elem].size()!=1){
+                cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+                cout << 1.15 << endl;
+                return false;
+            }
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=21){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(elem==0){
+            if(potential_tail_connection[elem].size()!=0){
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.20 << endl;
+                return false;
+            }
+        }
+    }
+
+    cout << 12 << endl;
+
+    ConnectedNeighbours * conThree = new ConnectedNeighbours(polymers[19], 0, 1);
+
+    Polymer * new_poly = conglomerates[0]->separatePolymers(conThree);
+    system->addPolymer(new_poly);
+    polymers.push_back(new_poly);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if(head_binding.size()!=18){
+        cout << 1.1 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_binding.size(); elem++){
+        if(elem==0){
+            if(head_binding[elem].size()!=0){
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if(head_binding[elem].size()!=0){
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if(tail_binding.size()!=18){
+        cout << 1.3 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_binding.size(); elem++){
+        if(elem==0){
+            if(tail_binding[elem].size()!=0){
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if(tail_binding[elem].size()!=0){
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if(head_unbinding.size()!=18){
+        cout << 1.5 << endl;
+        return false;
+    }
+    for(int elem=0; elem<head_unbinding.size(); elem++){
+        if(elem==0){
+            if(head_unbinding[elem].size()!=3){
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if(head_unbinding[elem].size()!=0){
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if(tail_unbinding.size()!=18){
+        cout << 1.7 << endl;
+        return false;
+    }
+    for(int elem=0; elem<tail_unbinding.size(); elem++){
+        if(elem==0){
+            if(tail_unbinding[elem].size()!=0){
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if(tail_unbinding[elem].size()!=0){
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if(connected_neighbours.size()!=18){
+        cout << 1.9 << endl;
+        return false;
+    }
+    for(int elem=0; elem<connected_neighbours.size(); elem++){
+        if(elem==0){
+            if(connected_neighbours[elem].size()!=0){
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if(connected_neighbours[elem].size()!=0){
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if(unconnected_neighbours.size()!=18){
+        cout << 1.11 << endl;
+        return false;
+    }
+    for(int elem=0; elem<unconnected_neighbours.size(); elem++){
+        if(elem==0){
+            if(unconnected_neighbours[elem].size()!=1){
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if(unconnected_neighbours[elem].size()!=0){
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if(available_head_tail_sites.size()!=18){
+        cout << 1.13 << endl;
+        return false;
+    }
+    for(int elem=0; elem<available_head_tail_sites.size(); elem++){
+        if(elem == 0){
+            if(available_head_tail_sites[elem].size()!=3){
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else {
+            if(available_head_tail_sites[elem].size()!=1){
+                cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+                cout << 1.15 << endl;
+                return false;
+            }
+        }
+    }
+
+    if(potential_head_connection.size()!=18){
+        cout << 1.16 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_head_connection.size(); elem++){
+        if(elem==0){
+            if(potential_head_connection[elem].size()!=21){
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if(elem<11){
+            if(potential_head_connection[elem].size()!=7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if(potential_head_connection[elem].size()!=0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if(potential_tail_connection.size()!=18){
+        cout << 1.18 << endl;
+        return false;
+    }
+    for(int elem=0; elem<potential_tail_connection.size(); elem++){
+        if(elem==0){
+            if(potential_tail_connection[elem].size()!=0){
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.20 << endl;
+                return false;
+            }
+        }
+    }
+
+
+
+
+    return true;
+}
+
+
+
+//TODO: think about how the removal of cong/poly will change index in vector
+
+bool Tests::testGetTailBinding(){
+
+    return true;
+}
+bool Tests::testGetHeadUnbinding(){
+
+    return true;
+}
+bool Tests::testGetTailUnbinding(){
+
+    return true;
+}
+bool Tests::testGetConnectedNeighbours(){
+
+    return true;
+}
+bool Tests::testGetUnconnectedNeighbours(){
+
+    return true;
+}
+bool Tests::testGetAvailableHeadTailSites(){
+
+    return true;
+}
+
+bool Tests::testChooseHeadBinding(){
+
+    return true;
+}
+bool Tests::testChooseTailBinding(){
+
+}
+bool Tests::testChooseHeadUnbinding(){
+
+    return true;
+}
+bool Tests::testChooseTailUnbinding(){
+
+    return true;
+}
+bool Tests::testChooseNeighboursUnbind(){
+
+    return true;
+}
+bool Tests::testChooseNeighboursBind(){
+
+    return true;
+}
+bool Tests::testChooseHeadConnection(){
+
+    return true;
+}
+bool Tests::testChooseTailConnection(){
+
+    return true;
+}
 
 bool Tests::testUpdateRates() {
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Polymer.h"
+
 using namespace std;
 #ifndef TESTTWO_CONNECTION_H
 #define TESTTWO_CONNECTION_H
@@ -14,7 +15,9 @@ private:
     tuple<Polymer *, int> one;
     tuple<Polymer *, int> two;
 public:
-    Connection(tuple<Polymer *, int> one, tuple<Polymer *, int> two) : one(one), two(two) {}
+    Connection(tuple<Polymer *, int> one, tuple<Polymer *, int> two) : one(one), two(two) {
+
+    }
 
     vector<Polymer *> getPolymers();
 

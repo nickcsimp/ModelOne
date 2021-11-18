@@ -60,6 +60,10 @@ vector<tuple<Polymer *, int>> Polymer::getConnections(){
     return connections;
 }
 
+void Polymer::clearConnections(){
+    connections.clear();
+}
+
 void Polymer::addConnection(Polymer * p){
     //connections holds the polymer that is connected, and the number of connections between the two polymers
 
@@ -67,13 +71,17 @@ void Polymer::addConnection(Polymer * p){
         cout << "ERROR: Polymers cannot self connect" << endl;
         return;
     }
-
-    int conCount = 0;
-    for(int i=0; i<connections.size(); i++) { //Loop connections on polymer
-        conCount+= get<1>(connections[i]);
+    int connection_count = 0;
+    for(auto & pol : connections){
+        connection_count+=get<1>(pol);
     }
 
-    if(conCount==length){
+    if(connection_count==length){
+        cout << "This polymer: " << index << " Other polymer: " <<  p->getIndex() << endl;
+        cout << "Length: " << length << endl;
+        for(auto & elem : connections){
+            cout << "Polymer: " << get<0>(elem)->getIndex() << " Number: " << get<1>(elem) << endl;
+        }
         cout << "ERROR: Cannot add connection to this polymer" << endl;
         return;
     }

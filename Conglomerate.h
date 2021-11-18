@@ -59,7 +59,7 @@ public:
 
     Conglomerate(Polymer * polymer, int family_count, int monomer_type_count);
 
-    void update();
+    void updateConglomerate();
 
     int getIndex();
 
@@ -107,21 +107,21 @@ public:
 
     int getTailBindingSites();
 
+    int getHeadBindingSites();
+
     vector<Connection *> getTailUnbindingConnections();
 
     vector<Connection *> getHeadUnbindingConnections();
 
     vector<Connection *> getTailBindingConnections();
 
+    vector<Connection *> getHeadBindingConnections();
+
     void makePolymerConnections();
 
     void updateTailUnbindingSites();
 
     void updateTailBindingSites();
-
-    vector<Connection *> getHeadBindingConnections();
-
-    int getHeadBindingSites();
 
     bool tailConnectionOptions(Connection *con, Polymer * p, int direction, tuple<Polymer *, int > original_site, bool head);
 
@@ -144,6 +144,8 @@ public:
     Polymer * joinPolymers(UnconnectedNeighbours * neighbours);
 
     Polymer * separatePolymers(ConnectedNeighbours * neighbours);
+
+    vector<tuple<Polymer *, int>> getHeadTailSites();
 };
 
 #endif //TESTTWO_CONGLOMERATE_H

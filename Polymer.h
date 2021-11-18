@@ -31,6 +31,8 @@ public:
 
     vector<int> getSequence();
 
+    void clearConnections();
+
     int getLength();
 
     void addPolymer(Polymer * poly, int pos);

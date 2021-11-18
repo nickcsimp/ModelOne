@@ -44,13 +44,16 @@ int main() {
     System * system = new System(number_of_families, number_of_types, monomers, init_temp);
 
     while(current_time<end_time){
-        //system->print();
+        cout << endl << "------------------" << endl;
         //We calculate all rates in conglomerates and externally
-        system->updateRates();
+        system->getEverything();
 
-        //We get the total rate of all transitions
-        total_rate = system->getTotalRate();
-
+        //Get rates
+        vector<int> rates = system->getRates();
+        double total_rate = 0;
+        for(auto & elem : rates){
+            total_rate+=elem;
+        }
         //We generate a random number from the exponential distribution
         random_device rd;
         mt19937 gen(rd());
@@ -61,49 +64,33 @@ int main() {
         current_time += random_time;
         //cout << current_time << endl;
 
-        //Get specific external and conglomerate transition rates
-        //rates[rates.size()-1] will be external rate (last one in vector)
-        vector<double> rates = system->getSpecificRates();
-
         //Generate a random number for ratio
         double rand = gen();
         double rando = gen.max();
         //Loop rates and find the first that is larger than the random number
         double current_number = 0;
-        int chosen_conglomerate = -1;
+        int chosen_transition = -1;
         for(int i=0; i<rates.size(); i++){
             current_number += rates[i];
             if(rand/rando <= current_number/total_rate){
-                chosen_conglomerate = i;
+                chosen_transition = i;
                 break;
             }
         }
 
         //Check that something has been chosen
-        if(chosen_conglomerate==-1){
+        if(chosen_transition==-1){
             cout << "random numbers gone wild 1" << endl;
             return 0;
         }
-        //If the chosen conglomerate is actually external transitions then find the right external transition
-        if(chosen_conglomerate == rates.size()-1){
-            system->chooseExternalTransition();
-        } else { //If not find the transition in the chosen conglomerate
-            system->chooseInternalTransition(chosen_conglomerate);
-        }
-        //system->print();
+
+        system->chooseBond(chosen_transition);
     }
 
     delete system;
     return 0;
 
+    //Todo: Check that system is doing things like i have in tests. Seems to be saving things wrong as updating is fine i think.
+    //TODO: think about how the removal of cong/poly will change index in vector
 }
 
-/*TODO:
- * Monomer-conglomerate happens with new cong size 1 and no new connection
- * Neighbour binding is what causes memory problem
- * Sort out system functions man
- * Rates
- * Concentrations think about
- * Parameter sweep
- * Export nicely
-*/
