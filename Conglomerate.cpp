@@ -96,14 +96,11 @@ vector<Conglomerate *> Conglomerate::removeConnection(Connection* con){
     bool separated = false;
     for(int i=0; i<connections.size(); i++){
         if(*con == *connections[i]){
-            cout << "Connection Found" << endl;
             connections.erase(connections.begin()+i);
             if(con->getPolymers()[0]->removeConnection(con->getPolymers()[1])){
-                cout << "Separated" << endl;
                 separated = true;
             }
             if(con->getPolymers()[1]->removeConnection(con->getPolymers()[0])){
-                cout << "Separated" << endl;
                 separated = true;
             }
             if(separated){
@@ -114,7 +111,6 @@ vector<Conglomerate *> Conglomerate::removeConnection(Connection* con){
     }
 
     if(connectivity.size()!=1 && separated){
-        cout << "Split" << endl;
         //A split has occured
         if(connectivity[0].size()==0) {
             connections = connectivity[1];
@@ -174,6 +170,7 @@ vector<Conglomerate *> Conglomerate::removeConnection(Connection* con){
 vector<Polymer *> Conglomerate::getTree(Polymer * p, vector<Polymer *> connected_polymers){
 
     vector<tuple<Polymer *, int>> cons = p->getConnections();
+
     for(auto & con : cons){ //Loop all connections
         Polymer * c = get<0>(con); //Get one of the polymers in the connection
         bool in_vector = false;
@@ -342,8 +339,26 @@ vector<tuple<Polymer *, int>> Conglomerate::getPossibleSites(int type, int famil
 vector<tuple<Polymer *, int>> Conglomerate::getHeadTailSites(){
     updatePolymersInConglomerate();
     updatePolymerConnections();
-
     vector<tuple<Polymer *, int>> output;
+
+    /*
+    for(int i=0; i<polymers_in_conglomerate.size(); i++){
+        int length = polymers_in_conglomerate[i]->getLength();
+        vector<int> connection_indexes = polymer_connection_indexes[i];
+        for(int j=0; j<length; j++){
+            bool free_site = true;
+            for(auto & ind : connection_indexes){
+                if(ind == j){
+                    free_site = false;
+                }
+            }
+            if(free_site){
+                tuple<Polymer *, int> site = make_tuple(polymers_in_conglomerate[i], j);
+                output.push_back(site);
+            }
+        }
+    }*/
+
 
     for(int i=0; i<polymers_in_conglomerate.size(); i++){
         vector<int> seq = polymers_in_conglomerate[i]->getSequence();
@@ -855,16 +870,13 @@ void Conglomerate::updateValidNeighboursUnbinding(){
         int longness = polymer_connection_indexes[j].size();
         for(int i=0; i<longness-1; i++){
             if(polymer_connection_indexes[j][i]+1==polymer_connection_indexes[j][i+1]){
-                cout << "Neighbours Found" << endl;
                 vector<Polymer *> po_pol_one = polymer_connections[j][i]->getPolymers();
                 vector<Polymer *> po_pol_two = polymer_connections[j][i+1]->getPolymers();
                 if(*po_pol_one[0]==*po_pol_two[0] && *po_pol_one[1]==*po_pol_two[1]){
-                    cout << "Validated" << endl;
                     valid_neighbours_unbinding++;
                     ConnectedNeighbours * neighbours = new ConnectedNeighbours(polymers_in_conglomerate[j], polymer_connection_indexes[j][i], polymer_connection_indexes[j][i+1]);
                     valid_connected_neighbours.push_back(neighbours);
                 } else if (*po_pol_one[0]==*po_pol_two[1] && *po_pol_one[1]==*po_pol_two[0]){
-                    cout << "Validated" << endl;
                     valid_neighbours_unbinding++;
                     ConnectedNeighbours * neighbours = new ConnectedNeighbours(polymers_in_conglomerate[j], polymer_connection_indexes[j][i], polymer_connection_indexes[j][i+1]);
                     valid_connected_neighbours.push_back(neighbours);
@@ -907,10 +919,9 @@ bool Conglomerate::operator==(Conglomerate c){
 }
 
 Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
-    cout << "Polymers being joined: " << neighbours->getPolymers()[0]->getIndex() << neighbours->getPolymers()[1]->getIndex() << endl;
-    Polymer * pOne = neighbours->getPolymers()[0];
+    Polymer * pOne = neighbours->getPolymers()[0]; //21
     int p_one_orig_length = pOne->getLength();
-    Polymer * pTwo = neighbours->getPolymers()[1];
+    Polymer * pTwo = neighbours->getPolymers()[1]; //20
     pOne->addPolymer(pTwo, three_prime); //increase length of pOne and add sequence
     int p_two_length = pTwo->getLength(); //Retain length of pTwo as all connections on pOne will be shifted by this length
 
@@ -919,25 +930,22 @@ Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
         vector<int> polymers_indexes = connection->getIndexes();
         for(int i=0; i<2; i++){
             if(*connected_polymers[i]==*pTwo){//Find all connections using pTwo
-                cout << "Connection being changed: " << endl;
-                cout << connection->getPolymers()[0]->getIndex() << ':' << connection->getIndexes()[0] << endl;
-                cout << connection->getPolymers()[1]->getIndex() << ':' << connection->getIndexes()[1] << endl << endl;
                 //We need to change the polymer of the connections as this polymer is being removed
                 connection->changePolymer(i, pOne);
                 connection->setIndex(i, polymers_indexes[i]+p_two_length);
-                cout << "Connection Found: ";
                 if(i==0) {
                     pOne->addConnection(connected_polymers[1]);
-                    cout << "Connection Made: " << endl;
+                    connected_polymers[1]->addConnection(pOne);
+                    connected_polymers[0]->removeConnection(connected_polymers[1]);
+                    connected_polymers[1]->removeConnection(connected_polymers[0]);
                 }
                 if(i==1) {
-                    pOne->addConnection(connected_polymers[0]);
-                    cout << "Connection Made: " << endl;
+                    pOne->addConnection(connected_polymers[0]); //21 add connection 1
+                    connected_polymers[0]->addConnection(pOne);
+                    connected_polymers[1]->removeConnection(connected_polymers[0]);
+                    connected_polymers[0]->removeConnection(connected_polymers[1]);
                 }
 
-                cout << "Connection being changed: " << endl;
-                cout << connection->getPolymers()[0]->getIndex() << ':' << connection->getIndexes()[0] << endl;
-                cout << connection->getPolymers()[1]->getIndex() << ':' << connection->getIndexes()[1] << endl << endl;
             }
         }
     }
@@ -950,7 +958,6 @@ Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
             break;
         }
     }
-    cout << "Polymer being removed: " << polymers_in_conglomerate[polymer_to_be_removed]->getIndex() << endl;
     //remove polymer from list
     if(polymer_to_be_removed>0){
         polymers_in_conglomerate.erase(polymers_in_conglomerate.begin() + polymer_to_be_removed);

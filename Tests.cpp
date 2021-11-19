@@ -11,10 +11,6 @@ Tests::Tests(){
 }
 
 bool Tests::runTests() {
-    cout << "Test Update Rates" << endl;
-    if(!testUpdateRates()){
-        cout << "Failed: testUpdateRates";
-    }
     cout << "Test Polymer Initialisation" << endl;
     if(!testPolymerInitialisation()){
         cout << "Failed: testPolymerInitialisation()";
@@ -198,112 +194,15 @@ bool Tests::runTests() {
         return false;
     }
 
-    cout << "Test Choose Bond" << endl;
-    if(!testChooseBond()){
-        cout << "Failed:testChooseBond()";
+    cout << "Test System Ability" << endl;
+    if(!testSystemAbility()){
+        cout << "Failed:testSystemAbility()";
         return false;
     }
 
-    cout << "Test Get Everything" << endl;
-    if(!testGetEverything()){
-        cout << "Failed:testGetEverything()";
-        return false;
-    }
-
-    cout << "Test Get Available HeadTail Sites" << endl;
-    if(!testGetAvailableHeadTailSites()){
-        cout << "Failed:testGetAvailableHeadTailSites()";
-        return false;
-    }
-
-    cout << "Test Get Head Binding" << endl;
-    if(!testGetHeadBinding()){
-        cout << "Failed:testGetHeadBinding()";
-        return false;
-    }
-
-    cout << "Test Get Tail Binding" << endl;
-    if(!testGetTailBinding()){
-        cout << "Failed:testGetTailBinding()";
-        return false;
-    }
-
-    cout << "Test Get Head Unbinding" << endl;
-    if(!testGetHeadUnbinding()){
-        cout << "Failed:testGetHeadUnbinding()";
-        return false;
-    }
-
-    cout << "Test Get Tail Unbinding" << endl;
-    if(!testGetTailUnbinding()){
-        cout << "Failed:testGetTailUnbinding()";
-        return false;
-    }
-
-    cout << "Test Get Connected Neighbours" << endl;
-    if(!testGetConnectedNeighbours()){
-        cout << "Failed:testGetConnectedNeighbours()";
-        return false;
-    }
-
-    cout << "Test Get Unconnected Neighbours" << endl;
-    if(!testGetUnconnectedNeighbours()){
-        cout << "Failed:testGetUnconnectedNeighbours()";
-        return false;
-    }
-
-    cout << "Test Get Rates" << endl;
-    if(!testGetRates()){
-        cout << "Failed:testGetRates()";
-        return false;
-    }
-
-
-    cout << "Test Choose Head Binding" << endl;
-    if(!testChooseHeadBinding()){
-        cout << "Failed:testChooseHeadBinding()";
-        return false;
-    }
-
-    cout << "Test Choose Tail Binding" << endl;
-    if(!testChooseTailUnbinding()){
-        cout << "Failed:testChooseTailBinding()";
-        return false;
-    }
-
-    cout << "Test Choose Head Unbinding" << endl;
-    if(!testChooseHeadUnbinding()){
-        cout << "Failed:testChooseHeadUnbinding()";
-        return false;
-    }
-
-    cout << "Test Choose Tail Unbinding" << endl;
-    if(!testChooseTailUnbinding()){
-        cout << "Failed:testChooseTailUnbinding()";
-        return false;
-    }
-
-    cout << "Test Choose Neighbours Unbind" << endl;
-    if(!testChooseNeighboursUnbind()){
-        cout << "Failed:testChooseNeighboursUnbind()";
-        return false;
-    }
-
-    cout << "Test Choose Neighbours Bind" << endl;
-    if(!testChooseNeighboursBind()){
-        cout << "Failed:testChooseNeighboursBind()";
-        return false;
-    }
-
-    cout << "Test Choose Head Connection" << endl;
-    if(!testChooseHeadConnection()){
-        cout << "Failed:testChooseHeadConnection()";
-        return false;
-    }
-
-    cout << "Test Choose Tail Connection" << endl;
-    if(!testChooseTailConnection()){
-        cout << "Failed:testChooseTailConnection()";
+    cout << "Test Perform Functions" << endl;
+    if(!testPerformFunctions()){
+        cout << "Failed:testPerformFunctions()";
         return false;
     }
 
@@ -2162,19 +2061,9 @@ bool Tests::testMonomerRebind(){
     return true;
 }
 
-bool Tests::testChooseBond(){
+bool Tests::testSystemAbility(){
 
-    return true;
-}
-bool Tests::testGetRates(){
-
-    return true;
-}
-bool Tests::testGetEverything(){
-
-    return true;
-}
-bool Tests::testGetHeadBinding(){
+    //Testing system initialisation
     int family_count = 2;
     int monomer_type_count = 1;
     vector<vector<int>> number_of_monomers;
@@ -2320,6 +2209,7 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing first monomer-conglomerate bond
     cout << 2 << endl;
     vector<Conglomerate *> conglomerates = system->getConglomerates();
     vector<Polymer *> polymers = system->getPolymers();
@@ -2470,6 +2360,8 @@ bool Tests::testGetHeadBinding(){
             return false;
         }
     }
+
+    //Testing second monomer-conglomerate bond
     cout << 3 << endl;
     tOne = make_tuple(polymers[0] ,0);
     tTwo = make_tuple(polymers[19] ,0);
@@ -2623,6 +2515,7 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing third monomer-conglomerate bond
     cout << 4 << endl;
     tOne = make_tuple(polymers[0] ,3);
     tTwo = make_tuple(polymers[18] ,0);
@@ -2776,13 +2669,15 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing backbone bonding
     cout << 5 << endl;
     UnconnectedNeighbours * conTwo = new UnconnectedNeighbours(polymers[20], polymers[19]);
-    conglomerates[0]->joinPolymers(conTwo);
 
+    conglomerates[0]->joinPolymers(conTwo);
     cout << endl;
     system->erasePolymer(19);
     cout << "5.2" << endl;
+
     system->getEverything();
     cout << "5.3" << endl;
     conglomerates = system->getConglomerates();
@@ -2939,11 +2834,14 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing tail unbind
     cout << 6 << endl;
     tOne = make_tuple(polymers[0] ,1);
     tTwo = make_tuple(polymers[19] ,0);
     conOne = new Connection(tOne, tTwo);
+
     conglomerates[0]->removeConnection(conOne);
+
     system->getEverything();
     conglomerates = system->getConglomerates();
     polymers = system->getPolymers();
@@ -3103,7 +3001,7 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
-
+    //Testing tail bind
     cout << 7 << endl;
     tOne = make_tuple(polymers[0] ,1);
     tTwo = make_tuple(polymers[19] ,0);
@@ -3264,7 +3162,7 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
-
+    //Testing head unbind
     cout << 8 << endl;
     tOne = make_tuple(polymers[0] ,0);
     tTwo = make_tuple(polymers[19] ,1);
@@ -3435,6 +3333,7 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing tail unbind - and conglomerate split
     cout << 9 << endl;
     tOne = make_tuple(polymers[0] ,1);
     tTwo = make_tuple(polymers[19] ,0);
@@ -3623,16 +3522,16 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing head bind of two separate conglomerates
     cout << 10 << endl;
-    tOne = make_tuple(polymers[0] ,0);
-    tTwo = make_tuple(polymers[19] ,1);
+    tOne = make_tuple(polymers[0] ,1);
+    tTwo = make_tuple(polymers[19] ,0);
     conOne = new Connection(tOne, tTwo);
     conglomerates[0]->addConnection(conOne);
     system->eraseConglomerate(system->getConglomerates().size()-1);
     system->getEverything();
     conglomerates = system->getConglomerates();
     polymers = system->getPolymers();
-
     head_binding = system->getHeadBinding();
     tail_binding = system->getTailBinding();
     head_unbinding = system->getHeadUnbinding();
@@ -3648,9 +3547,10 @@ bool Tests::testGetHeadBinding(){
         cout << 1.1 << endl;
         return false;
     }
+
     for(int elem=0; elem<head_binding.size(); elem++){
         if(elem==0){
-            if(head_binding[elem].size()!=0){
+            if(head_binding[elem].size()!=1){
                 cout << "1.21" << endl;
                 return false;
             }
@@ -3667,7 +3567,7 @@ bool Tests::testGetHeadBinding(){
     }
     for(int elem=0; elem<tail_binding.size(); elem++){
         if(elem==0){
-            if(tail_binding[elem].size()!=1){
+            if(tail_binding[elem].size()!=0){
                 cout << "1.41" << endl;
                 return false;
             }
@@ -3683,7 +3583,7 @@ bool Tests::testGetHeadBinding(){
     }
     for(int elem=0; elem<head_unbinding.size(); elem++){
         if(elem==0){
-            if(head_unbinding[elem].size()!=2){
+            if(head_unbinding[elem].size()!=1){
                 cout << 1.6 << endl;
                 return false;
             }
@@ -3699,7 +3599,7 @@ bool Tests::testGetHeadBinding(){
     }
     for(int elem=0; elem<tail_unbinding.size(); elem++){
         if(elem==0){
-            if(tail_unbinding[elem].size()!=0){
+            if(tail_unbinding[elem].size()!=1){
                 cout << 1.81 << endl;
                 return false;
             }
@@ -3794,13 +3694,12 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing tail rebind
     cout << 11 << endl;
-    tOne = make_tuple(polymers[0] ,1);
-    tTwo = make_tuple(polymers[19] ,0);
+    tOne = make_tuple(polymers[0] ,0);
+    tTwo = make_tuple(polymers[19] ,1);
     conOne = new Connection(tOne, tTwo);
-
     conglomerates[0]->addConnection(conOne);
-
     system->getEverything();
     conglomerates = system->getConglomerates();
     polymers = system->getPolymers();
@@ -3975,6 +3874,7 @@ bool Tests::testGetHeadBinding(){
         }
     }
 
+    //Testing backbone break
     cout << 12 << endl;
 
     ConnectedNeighbours * conThree = new ConnectedNeighbours(polymers[19], 0, 1);
@@ -4158,73 +4058,2007 @@ bool Tests::testGetHeadBinding(){
     }
 
 
-
-
     return true;
 }
 
+bool Tests::testPerformFunctions() {
+
+    //Testing system initialisation
+    int family_count = 2;
+    int monomer_type_count = 1;
+    vector<vector<int>> number_of_monomers;
+    Polymer *initial_template;
+
+    vector<int> type_one;
+    type_one.push_back(10);
+    type_one.push_back(10);
+    number_of_monomers.push_back(type_one);
+
+    initial_template = new Polymer(0, {0, 0, 0, 0, 0, 0});
+
+    System *system = new System(family_count, monomer_type_count, number_of_monomers, initial_template);
+
+    system->getEverything();
+    vector<vector<Connection *>> head_binding = system->getHeadBinding();
+    vector<vector<Connection *>> tail_binding = system->getTailBinding();
+    vector<vector<Connection *>> head_unbinding = system->getHeadUnbinding();
+    vector<vector<Connection *>> tail_unbinding = system->getTailUnbinding();
+    vector<vector<ConnectedNeighbours *>> connected_neighbours = system->getConnectedNeighbours();
+    vector<vector<UnconnectedNeighbours *>> unconnected_neighbours = system->getUnconnectedNeighbours();
+    vector<vector<PotentialSite *>> available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    vector<vector<ExternalConnection *>> potential_head_connection = system->getPotentialHeadConnection();
+    vector<vector<ExternalConnection *>> potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 21) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if (tail_binding.size() != 21) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (auto &elem: tail_binding) {
+        if (elem.size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 21) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (auto &elem: head_unbinding) {
+        if (elem.size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 21) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (auto &elem: tail_unbinding) {
+        if (elem.size() != 0) {
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 21) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (auto &elem: connected_neighbours) {
+        if (elem.size() != 0) {
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 21) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (auto &elem: unconnected_neighbours) {
+        if (elem.size() != 0) {
+            cout << 1.12 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 21) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 6) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 21) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 60) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 10) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if (potential_tail_connection.size() != 21) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing first monomer-conglomerate bond
+    cout << 2 << endl;
+    vector<Conglomerate *> conglomerates = system->getConglomerates();
+    vector<Polymer *> polymers = system->getPolymers();
+
+    tuple<Polymer *, int> tOne = make_tuple(polymers[0], 1);
+    tuple<Polymer *, int> tTwo = make_tuple(polymers[20], 0);
+    Connection *conOne = new Connection(tOne, tTwo);
+
+    ExternalConnection * conFour = new ExternalConnection(tOne, tTwo, conglomerates[0], conglomerates[20]);
+
+    system->performHeadConnection(conFour);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
 
 
-//TODO: think about how the removal of cong/poly will change index in vector
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
 
-bool Tests::testGetTailBinding(){
+    if (head_binding.size() != 20) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
-bool Tests::testGetHeadUnbinding(){
+    if (tail_binding.size() != 20) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (auto &elem: tail_binding) {
+        if (elem.size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
-bool Tests::testGetTailUnbinding(){
+    if (head_unbinding.size() != 20) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 1) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
-bool Tests::testGetConnectedNeighbours(){
+    if (tail_unbinding.size() != 20) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (auto &elem: tail_unbinding) {
+        if (elem.size() != 0) {
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
-bool Tests::testGetUnconnectedNeighbours(){
+    if (connected_neighbours.size() != 20) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (auto &elem: connected_neighbours) {
+        if (elem.size() != 0) {
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
-bool Tests::testGetAvailableHeadTailSites(){
+    if (unconnected_neighbours.size() != 20) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (auto &elem: unconnected_neighbours) {
+        if (elem.size() != 0) {
+            cout << 1.12 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
+    if (available_head_tail_sites.size() != 20) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 5) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
 
-bool Tests::testChooseHeadBinding(){
+    if (potential_head_connection.size() != 20) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 45) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 9) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
 
-    return true;
-}
-bool Tests::testChooseTailBinding(){
+    }
 
-}
-bool Tests::testChooseHeadUnbinding(){
+    if (potential_tail_connection.size() != 20) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
 
-    return true;
-}
-bool Tests::testChooseTailUnbinding(){
+    //Testing second monomer-conglomerate bond
+    cout << 3 << endl;
+    tOne = make_tuple(polymers[0], 0);
+    tTwo = make_tuple(polymers[19], 0);
 
-    return true;
-}
-bool Tests::testChooseNeighboursUnbind(){
+    conFour = new ExternalConnection(tOne, tTwo, conglomerates[0], conglomerates[19]);
 
-    return true;
-}
-bool Tests::testChooseNeighboursBind(){
+    system->performHeadConnection(conFour);
 
-    return true;
-}
-bool Tests::testChooseHeadConnection(){
+    system->getEverything();
 
-    return true;
-}
-bool Tests::testChooseTailConnection(){
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
 
-    return true;
-}
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
 
-bool Tests::testUpdateRates() {
+    if (head_binding.size() != 19) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if (tail_binding.size() != 19) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (auto &elem: tail_binding) {
+        if (elem.size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 19) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 2) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 19) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (auto &elem: tail_unbinding) {
+        if (elem.size() != 0) {
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 19) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (auto &elem: connected_neighbours) {
+        if (elem.size() != 0) {
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 19) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 1) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 19) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 4) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 19) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 32) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 8) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if (potential_tail_connection.size() != 19) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing third monomer-conglomerate bond
+    cout << 4 << endl;
+    tOne = make_tuple(polymers[0], 3);
+    tTwo = make_tuple(polymers[18], 0);
+
+    conFour = new ExternalConnection(tOne, tTwo, conglomerates[0], conglomerates[18]);
+
+    system->performHeadConnection(conFour);
+
+    system->getEverything();
+
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (auto &elem: tail_binding) {
+        if (elem.size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 3) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (auto &elem: tail_unbinding) {
+        if (elem.size() != 0) {
+            cout << 1.8 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (auto &elem: connected_neighbours) {
+        if (elem.size() != 0) {
+            cout << 1.10 << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 1) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 3) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 21) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing backbone bonding
+    cout << 5 << endl;
+    UnconnectedNeighbours *conTwo = new UnconnectedNeighbours(polymers[20], polymers[19]);
+
+    system->performNeighboursBind(conglomerates[0], conTwo);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (auto &elem: tail_binding) {
+        if (elem.size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 2) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 1) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 2) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 3) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 21) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing tail unbind
+    cout << 6 << endl;
+    tOne = make_tuple(polymers[0], 1);
+    tTwo = make_tuple(polymers[19], 0);
+    conOne = new Connection(tOne, tTwo);
+
+    system->performTailUnbinding(conglomerates[0], conOne);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << head_binding.size();
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_binding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_binding[elem].size() != 1) {
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if (tail_binding[elem].size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 2) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 0) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 0) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 5) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 38) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing tail bind
+    cout << 7 << endl;
+    tOne = make_tuple(polymers[0], 1);
+    tTwo = make_tuple(polymers[19], 0);
+    conOne = new Connection(tOne, tTwo);
+
+    system->performTailBinding(conglomerates[0], conOne);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (auto &elem: head_binding) {
+        if (elem.size() != 0) {
+            cout << 1.2 << endl;
+            return false;
+        }
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (auto &elem: tail_binding) {
+        if (elem.size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 2) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 1) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 2) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 3) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 21) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing head unbind
+    cout << 8 << endl;
+    tOne = make_tuple(polymers[0], 0);
+    tTwo = make_tuple(polymers[19], 1);
+    conOne = new Connection(tOne, tTwo);
+
+    system->performHeadUnbinding(conglomerates[0], conOne);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_binding.size(); elem++) {
+        if (elem == 0) {
+            if (head_binding[elem].size() != 1) {
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if (head_binding[elem].size() != 0) {
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_binding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_binding[elem].size() != 0) {
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if (tail_binding[elem].size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 1) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 1) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 0) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 5) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 38) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing tail unbind - and conglomerate split
+    cout << 9 << endl;
+    tOne = make_tuple(polymers[0], 1);
+    tTwo = make_tuple(polymers[19], 0);
+    conOne = new Connection(tOne, tTwo);
+
+    system->performTailUnbinding(conglomerates[0], conOne);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 19) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_binding.size(); elem++) {
+        if (elem == 0) {
+            if (head_binding[elem].size() != 0) {
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if (head_binding[elem].size() != 0) {
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if (tail_binding.size() != 19) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_binding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_binding[elem].size() != 0) {
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if (tail_binding[elem].size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 19) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 1) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 19) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 0) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 19) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 0) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 19) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 19) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 5) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (elem == available_head_tail_sites.size() - 1) {
+            if (available_head_tail_sites[elem].size() != 2) {
+                cout << "1.141" << endl;
+                return false;
+            }
+        } else {
+            if (available_head_tail_sites[elem].size() != 1) {
+                cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+                cout << 1.15 << endl;
+                return false;
+            }
+        }
+    }
+
+    if (potential_head_connection.size() != 19) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 41) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 9) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if (potential_tail_connection.size() != 19) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_tail_connection[elem].size() != 4) {
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.20 << endl;
+                return false;
+            }
+        }
+    }
+
+    //Testing tail bind of two separate conglomerates
+    cout << 10 << endl;
+    tOne = make_tuple(polymers[0], 1);
+    tTwo = make_tuple(polymers[19], 0);
+
+    conFour = new ExternalConnection(tOne, tTwo, conglomerates[0], conglomerates[conglomerates.size()-1]);
+    system->performTailConnection(conFour);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_binding.size(); elem++) {
+        if (elem == 0) {
+            if (head_binding[elem].size() != 1) {
+                cout << head_binding[elem].size() << endl;
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if (head_binding[elem].size() != 0) {
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_binding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_binding[elem].size() != 0) {
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if (tail_binding[elem].size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 1) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 1) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 0) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 5) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else if (available_head_tail_sites[elem].size() != 1) {
+            cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+            cout << 1.15 << endl;
+            return false;
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 38) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (potential_tail_connection[elem].size() != 0) {
+            cout << 1.20 << endl;
+            return false;
+        }
+    }
+
+    //Testing head rebind
+    cout << 11 << endl;
+    tOne = make_tuple(polymers[0], 0);
+    tTwo = make_tuple(polymers[19], 1);
+    conOne = new Connection(tOne, tTwo);
+
+    system->performHeadBinding(conglomerates[0], conOne);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_binding.size(); elem++) {
+        if (elem == 0) {
+            if (head_binding[elem].size() != 0) {
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if (head_binding[elem].size() != 0) {
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_binding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_binding[elem].size() != 0) {
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if (tail_binding[elem].size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 2) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 1) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 2) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 0) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 3) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else {
+            if (available_head_tail_sites[elem].size() != 1) {
+                cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+                cout << 1.15 << endl;
+                return false;
+            }
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 21) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.20 << endl;
+                return false;
+            }
+        }
+    }
+
+    //Testing backbone break
+    cout << 12 << endl;
+
+    ConnectedNeighbours *conThree = new ConnectedNeighbours(polymers[19], 0, 1);
+
+    system->performNeighboursUnbind(conglomerates[0], conThree);
+
+    system->getEverything();
+    conglomerates = system->getConglomerates();
+    polymers = system->getPolymers();
+
+    head_binding = system->getHeadBinding();
+    tail_binding = system->getTailBinding();
+    head_unbinding = system->getHeadUnbinding();
+    tail_unbinding = system->getTailUnbinding();
+    connected_neighbours = system->getConnectedNeighbours();
+    unconnected_neighbours = system->getUnconnectedNeighbours();
+    available_head_tail_sites = system->getAvailableHeadTailSites();
+    system->updatePotentialHeadTailSites();
+    potential_head_connection = system->getPotentialHeadConnection();
+    potential_tail_connection = system->getPotentialTailConnection();
+
+    if (head_binding.size() != 18) {
+        cout << 1.1 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_binding.size(); elem++) {
+        if (elem == 0) {
+            if (head_binding[elem].size() != 0) {
+                cout << "1.21" << endl;
+                return false;
+            }
+        } else if (head_binding[elem].size() != 0) {
+            cout << "1.22" << endl;
+            return false;
+        }
+
+    }
+
+    if (tail_binding.size() != 18) {
+        cout << 1.3 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_binding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_binding[elem].size() != 0) {
+                cout << "1.41" << endl;
+                return false;
+            }
+        } else if (tail_binding[elem].size() != 0) {
+            cout << 1.4 << endl;
+            return false;
+        }
+    }
+
+    if (head_unbinding.size() != 18) {
+        cout << 1.5 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < head_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (head_unbinding[elem].size() != 3) {
+                cout << 1.6 << endl;
+                return false;
+            }
+        } else if (head_unbinding[elem].size() != 0) {
+            cout << 1.6 << endl;
+            return false;
+        }
+    }
+
+    if (tail_unbinding.size() != 18) {
+        cout << 1.7 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < tail_unbinding.size(); elem++) {
+        if (elem == 0) {
+            if (tail_unbinding[elem].size() != 0) {
+                cout << 1.81 << endl;
+                return false;
+            }
+        } else if (tail_unbinding[elem].size() != 0) {
+            cout << 1.82 << endl;
+            return false;
+        }
+    }
+
+    if (connected_neighbours.size() != 18) {
+        cout << 1.9 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < connected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (connected_neighbours[elem].size() != 0) {
+                cout << connected_neighbours[elem].size() << endl;
+                cout << "1.10" << endl;
+                return false;
+            }
+        } else if (connected_neighbours[elem].size() != 0) {
+            cout << "1.101" << endl;
+            return false;
+        }
+    }
+
+    if (unconnected_neighbours.size() != 18) {
+        cout << 1.11 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < unconnected_neighbours.size(); elem++) {
+        if (elem == 0) {
+            if (unconnected_neighbours[elem].size() != 1) {
+                cout << 1.121 << endl;
+                return false;
+            }
+        } else if (unconnected_neighbours[elem].size() != 0) {
+            cout << 1.122 << endl;
+            return false;
+        }
+    }
+
+    if (available_head_tail_sites.size() != 18) {
+        cout << 1.13 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < available_head_tail_sites.size(); elem++) {
+        if (elem == 0) {
+            if (available_head_tail_sites[elem].size() != 3) {
+                cout << 1.14 << endl;
+                return false;
+            }
+        } else {
+            if (available_head_tail_sites[elem].size() != 1) {
+                cout << elem << ':' << available_head_tail_sites[elem].size() << endl;
+                cout << 1.15 << endl;
+                return false;
+            }
+        }
+    }
+
+    if (potential_head_connection.size() != 18) {
+        cout << 1.16 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_head_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_head_connection[elem].size() != 21) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else if (elem < 11) {
+            if (potential_head_connection[elem].size() != 7) {
+                cout << elem << ':' << potential_head_connection[elem].size() << endl;
+                cout << 1.171 << endl;
+                return false;
+            }
+        } else if (potential_head_connection[elem].size() != 0) {
+            cout << elem << ':' << potential_head_connection[elem].size() << endl;
+            cout << 1.172 << endl;
+            return false;
+        }
+    }
+
+    if (potential_tail_connection.size() != 18) {
+        cout << 1.18 << endl;
+        return false;
+    }
+    for (int elem = 0; elem < potential_tail_connection.size(); elem++) {
+        if (elem == 0) {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.17 << endl;
+                return false;
+            }
+        } else {
+            if (potential_tail_connection[elem].size() != 0) {
+                cout << 1.20 << endl;
+                return false;
+            }
+        }
+    }
+
 
     return true;
 }

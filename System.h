@@ -73,7 +73,7 @@ public:
     vector<Conglomerate *> getConglomerates(){return conglomerates;}
 
 
-    void chooseBond(int transition);
+    bool chooseBond(int transition);
     vector<int> getRates();
     void getEverything();
     vector<vector<Connection *>> getHeadBinding();
@@ -85,14 +85,22 @@ public:
     vector<vector<PotentialSite *>> getAvailableHeadTailSites();
     void updatePotentialHeadTailSites();
 
-    void chooseHeadBinding();
-    void chooseTailBinding();
-    void chooseHeadUnbinding();
-    void chooseTailUnbinding();
-    void chooseNeighboursUnbind();
-    void chooseNeighboursBind();
-    void chooseHeadConnection();
-    void chooseTailConnection();
+    bool chooseHeadBinding();
+    bool performHeadBinding(Conglomerate * conglomerate, Connection * connection);
+    bool chooseTailBinding();
+    bool performTailBinding(Conglomerate * conglomerate, Connection * connection);
+    bool chooseHeadUnbinding();
+    bool performHeadUnbinding(Conglomerate * conglomerate, Connection * connection);
+    bool chooseTailUnbinding();
+    bool performTailUnbinding(Conglomerate * conglomerate, Connection * connection);
+    bool chooseNeighboursUnbind();
+    bool performNeighboursUnbind(Conglomerate * conglomerate, ConnectedNeighbours * connection);
+    bool chooseNeighboursBind();
+    bool performNeighboursBind(Conglomerate * conglomerate, UnconnectedNeighbours * connection);
+    bool chooseHeadConnection();
+    bool performHeadConnection(ExternalConnection * connection);
+    bool chooseTailConnection();
+    bool performTailConnection(ExternalConnection * connection);
 
     void print();
 };

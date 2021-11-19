@@ -70,29 +70,9 @@ public:
     bool testRemoveConnection();
     bool testMonomerRebind();
 
-    bool testChooseBond();
-    bool testGetRates();
-    bool testGetEverything();
-    bool testGetHeadBinding();
-    bool testGetTailBinding();
-    bool testGetHeadUnbinding();
-    bool testGetTailUnbinding();
-    bool testGetConnectedNeighbours();
-    bool testGetUnconnectedNeighbours();
-    bool testGetAvailableHeadTailSites();
+    bool testPerformFunctions();
+    bool testSystemAbility();
 
-    bool testChooseHeadBinding();
-    bool testChooseTailBinding();
-    bool testChooseHeadUnbinding();
-    bool testChooseTailUnbinding();
-    bool testChooseNeighboursUnbind();
-    bool testChooseNeighboursBind();
-    bool testChooseHeadConnection();
-    bool testChooseTailConnection();
-
-
-    //bool testConglomerateInitialisation();
-    bool testUpdateRates();
 };
 
 
