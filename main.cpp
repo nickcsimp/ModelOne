@@ -24,7 +24,6 @@ int main() {
     Tests *tests = new Tests();
     tests->runTests();
 
-
     double current_time = 0;
     int end_time = 100000000;
     double total_rate;
@@ -83,14 +82,17 @@ int main() {
             cout << "random numbers gone wild 1" << endl;
             return 0;
         }
+        bool successful = system->chooseBond(chosen_transition);
 
-        system->chooseBond(chosen_transition);
+        if(!successful){
+            return 0;
+        }
     }
 
     delete system;
     return 0;
 
-    //Todo: Check that system is doing things like i have in tests. Seems to be saving things wrong as updating is fine i think.
-    //TODO: think about how the removal of cong/poly will change index in vector
+    //Todo: Tests now have a fit at my checking system - see whats wrong
+    //Todo: Keep writing error checks until one makes sense
 }
 
