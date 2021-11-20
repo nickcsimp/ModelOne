@@ -68,14 +68,14 @@ vector<int> System::getRates(){
     rates.push_back(number_potential_head_connections*template_head_bind_rate);
     rates.push_back(number_potential_tail_connections*template_tail_bind_rate);
 
-    /*cout << "Head Binding: " << number_head_binding << endl;
+    cout << "Head Binding: " << number_head_binding << endl;
     cout << "Tail Binding: " << number_tail_binding << endl;
     cout << "Head Unbinding: " << number_head_unbinding << endl;
     cout << "Tail Unbinding: " << number_tail_unbinding << endl;
     cout << "Connected Neighbours: " << number_connected_neighbours << endl;
-    cout << "Unconnected Neighbours: " << number_unconnected_neighbours << endl;*/
-    //cout << "Head Connections: " << number_potential_head_connections << endl;
-    //cout << "Tail Connections: " << number_potential_tail_connections << endl;
+    cout << "Unconnected Neighbours: " << number_unconnected_neighbours << endl;
+    cout << "Head Connections: " << number_potential_head_connections << endl;
+    cout << "Tail Connections: " << number_potential_tail_connections << endl;
     return rates;
 }
 
@@ -85,18 +85,27 @@ void System::getEverything(){
     for(auto & cong : conglomerates){
         cong->updateConglomerate();
     }
+
     head_binding = getHeadBinding();
+
     tail_binding = getTailBinding();
 
+
     head_unbinding = getHeadUnbinding();
+
     tail_unbinding = getTailUnbinding();
 
+
     connected_neighbours = getConnectedNeighbours();
+
     unconnected_neighbours = getUnconnectedNeighbours();
+
 
     available_head_tail_sites = getAvailableHeadTailSites();
 
+
     updatePotentialHeadTailSites();
+
 }
 
 
@@ -230,7 +239,7 @@ void System::updatePotentialHeadTailSites(){
                         can_connect=false;
                     } else {
                         vector<tuple<Polymer *, int>> listOne = available_head_tail_sites[cong][i]->getPolymer()->getConnections();
-                        vector<tuple<Polymer *, int>> listTwo = available_head_tail_sites[cong][j]->getPolymer()->getConnections();
+                        vector<tuple<Polymer *, int>> listTwo = available_head_tail_sites[congo][j]->getPolymer()->getConnections();
                         int countOne = 0;
                         for(auto & elem : listOne){
                             countOne += get<1>(elem);
@@ -242,7 +251,7 @@ void System::updatePotentialHeadTailSites(){
                         if(countOne>=available_head_tail_sites[cong][i]->getPolymer()->getLength()){
                             can_connect = false;
                         }
-                        if(countTwo>=available_head_tail_sites[cong][j]->getPolymer()->getLength()){
+                        if(countTwo>=available_head_tail_sites[congo][j]->getPolymer()->getLength()){
                             can_connect = false;
                         }
                     }
@@ -394,13 +403,25 @@ bool System::chooseHeadUnbinding(){
 }
 
 bool System::performHeadUnbinding(Conglomerate * conglomerate, Connection * connection){
+    bool connection_not_added = true;
+    bool connection_removed = true;
+
     vector<Conglomerate *> new_cong = conglomerate->removeConnection(connection);
     if(new_cong.size()!=0) {
         new_cong[0]->setIndex(++conglomerate_index);
         conglomerates.push_back(new_cong[0]);
+
+        for(auto & elem : new_cong[0]->getConnections()){
+            if(*elem == * connection){
+                connection_not_added = false;
+            }
+        }
+
+        if(!connection_not_added){
+            cout << "Connection added to new conglomerate" << endl;
+        }
     }
 
-    bool connection_removed = true;
     for(auto & elem : conglomerate->getConnections()){
         if(*elem == * connection){
             connection_removed = false;
@@ -411,16 +432,6 @@ bool System::performHeadUnbinding(Conglomerate * conglomerate, Connection * conn
         cout << "Connection not removed" << endl;
     }
 
-    bool connection_not_added = true;
-    for(auto & elem : new_cong[0]->getConnections()){
-        if(*elem == * connection){
-            connection_not_added = false;
-        }
-    }
-
-    if(!connection_not_added){
-        cout << "Connection added to new conglomerate" << endl;
-    }
     return (connection_removed && connection_not_added);
 }
 
@@ -458,13 +469,26 @@ bool System::chooseTailUnbinding(){
 }
 
 bool System::performTailUnbinding(Conglomerate * conglomerate, Connection * connection){
+    bool connection_not_added = true;
+    bool connection_removed = true;
+
     vector<Conglomerate *> new_cong = conglomerate->removeConnection(connection);
+    cout << new_cong.size() << endl;
     if(new_cong.size()!=0){
         new_cong[0]->setIndex(++conglomerate_index);
         conglomerates.push_back(new_cong[0]);
+
+        for(auto & elem : new_cong[0]->getConnections()){
+            if(*elem == * connection){
+                connection_not_added = false;
+            }
+        }
+
+        if(!connection_not_added){
+            cout << "Connection added to new conglomerate" << endl;
+        }
     }
 
-    bool connection_removed = true;
     for(auto & elem : conglomerate->getConnections()){
         if(*elem == * connection){
             connection_removed = false;
@@ -475,16 +499,6 @@ bool System::performTailUnbinding(Conglomerate * conglomerate, Connection * conn
         cout << "Connection not removed" << endl;
     }
 
-    bool connection_not_added = true;
-    for(auto & elem : new_cong[0]->getConnections()){
-        if(*elem == * connection){
-            connection_not_added = false;
-        }
-    }
-
-    if(!connection_not_added){
-        cout << "Connection added to new conglomerate" << endl;
-    }
     return (connection_removed && connection_not_added);
 }
 
@@ -610,7 +624,6 @@ bool System::performNeighboursBind(Conglomerate * conglomerate, UnconnectedNeigh
 }
 
 bool System::chooseHeadConnection(){
-    cout << "Head Connection" << endl;
     random_device rd;
     mt19937 gen(rd());
     double rand = gen();
@@ -620,6 +633,7 @@ bool System::chooseHeadConnection(){
     for(int j=0; j<potential_head_connections.size(); j++){
         total+=potential_head_connections[j].size();
     }
+    cout << "One" << endl;
     int chosen_conglomerate = -1;
     for(int i=0; i<potential_head_connections.size(); i++){
         current_number+=potential_head_connections[i].size();
@@ -628,6 +642,7 @@ bool System::chooseHeadConnection(){
             break;
         }
     }
+    cout << "Two" << endl;
     current_number = 0;
     int chosen_bond = -1;
     for(int i=0; i<potential_head_connections[chosen_conglomerate].size(); i++){
@@ -637,11 +652,14 @@ bool System::chooseHeadConnection(){
             break;
         }
     }
+    cout << "Three" << endl;
     return performHeadConnection(potential_head_connections[chosen_conglomerate][chosen_bond]);
 }
 
 bool System::performHeadConnection(ExternalConnection * connection){
-
+    cout << "Connection being added: ";
+    cout << connection->getPolymers()[0]->getIndex() << ':' << connection->getIndexes()[0] << endl;
+    cout << connection->getPolymers()[1]->getIndex() << ':' << connection->getIndexes()[1] << endl << endl;
     vector<Conglomerate *> congs = connection->getConglomerates();
     vector<Polymer *> polys = connection->getPolymers();
     vector<int> inds = connection->getIndexes();
@@ -651,6 +669,7 @@ bool System::performHeadConnection(ExternalConnection * connection){
 
     tuple<Polymer *, int> tup = make_tuple(polys[0], inds[0]);
     tuple<Polymer *, int> tups = make_tuple(polys[1], inds[1]);
+
     Connection * connection_to_be_made = new Connection(tup, tups);
     congs[0]->addConnection(connection_to_be_made);
 
@@ -662,6 +681,7 @@ bool System::performHeadConnection(ExternalConnection * connection){
     congs[0]->updateValidNeighboursBinding();
     congs[0]->updateValidNeighboursUnbinding();
 
+
     int cong_to_be_removed = -1;
     for(int i=0; i<conglomerates.size(); i++){
         if(*conglomerates[i]==*congs[1]){
@@ -669,6 +689,7 @@ bool System::performHeadConnection(ExternalConnection * connection){
         }
     }
     conglomerates.erase(conglomerates.begin()+cong_to_be_removed);
+
 
     bool connection_added = false;
 
@@ -685,6 +706,7 @@ bool System::performHeadConnection(ExternalConnection * connection){
             conglomerate_removed = false;
         }
     }
+
 
     return (conglomerate_removed && connection_added);
 
@@ -768,7 +790,7 @@ bool System::performTailConnection(ExternalConnection * connection){
 
 
 void System::print(){
-    cout << "Conglomerate Count: " << conglomerates.size() << endl;
+    /*cout << "Conglomerate Count: " << conglomerates.size() << endl;
     cout << "Polymer Count: " << polymers.size() << endl;
     vector<tuple<int, int>> hist;
     for(auto & cong : conglomerates){
@@ -789,6 +811,27 @@ void System::print(){
     cout << "Polymers in Conglomerate     |   Number of Conglomerates" << endl;
     for(auto & tup : hist){
         cout << "   " << get<0>(tup) << "   |     "  << get<1>(tup) << endl;
+    }*/
+
+    cout << "Polymers in template cong: " << conglomerates[0]->getPolymersInConglomerate().size() << endl;
+    cout << "Connections: " << endl;
+    for(auto & elem : conglomerates[0]->getConnections()){
+        cout << elem->getPolymers()[0]->getIndex() << ':' << elem->getIndexes()[0] << endl;
+        cout << elem->getPolymers()[1]->getIndex() << ':' << elem->getIndexes()[1] << endl << endl;
+    }
+    cout << "Polymer connections: " << endl;
+    for(auto & elem : conglomerates[0]->getPolymersInConglomerate()){
+        cout << "Polymer: " << elem->getIndex() << endl;
+        for(auto & element : elem->getConnections()){
+            cout << get<0>(element)->getIndex() << 'x' << get<1>(element) << endl;
+        }
     }
 }
 
+/*
+ * 8 free type 1
+ * 12 free type 0
+ * 2 on [0] type 0
+ *
+ * 8x14=80+32=112
+ */

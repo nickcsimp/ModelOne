@@ -3338,12 +3338,13 @@ bool Tests::testSystemAbility(){
     tOne = make_tuple(polymers[0] ,1);
     tTwo = make_tuple(polymers[19] ,0);
     conOne = new Connection(tOne, tTwo);
-
     Conglomerate * new_cong = conglomerates[0]->removeConnection(conOne)[0];
     system->addConglomerate(new_cong);
     conglomerates.push_back(new_cong);
 
+
     system->getEverything();
+
     conglomerates = system->getConglomerates();
     polymers = system->getPolymers();
 
@@ -4838,7 +4839,6 @@ bool Tests::testPerformFunctions() {
     conOne = new Connection(tOne, tTwo);
 
     system->performTailUnbinding(conglomerates[0], conOne);
-
     system->getEverything();
     conglomerates = system->getConglomerates();
     polymers = system->getPolymers();

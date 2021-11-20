@@ -47,6 +47,8 @@ int main() {
         //We calculate all rates in conglomerates and externally
         system->getEverything();
 
+        system->print();
+
         //Get rates
         vector<int> rates = system->getRates();
         double total_rate = 0;

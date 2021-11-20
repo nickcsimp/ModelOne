@@ -511,21 +511,38 @@ void Conglomerate::updateTailUnbindingSites(){
     }
 
     vector<int> repeats;
-    for(int j=0; j<head_unbinding_connections.size(); j++){
+    for(int j=0; j<head_unbinding_connections.size()-1; j++){
         for(int i=j+1; i<head_unbinding_connections.size(); i++){
             if(*head_unbinding_connections[j]==*head_unbinding_connections[i]){
-                repeats.push_back(i);
+                bool in_vector = false;
+                for(auto & repeat : repeats){
+                    if(repeat == i){
+                        in_vector = true;
+                    }
+                }
+                if(!in_vector) {
+                    repeats.push_back(i);
+                }
             }
         }
     }
+
     for(int i=repeats.size()-1; i>=0; i--) {
         head_unbinding_connections.erase(head_unbinding_connections.begin() + repeats[i]);
     }
     repeats.clear();
-    for(int j=0; j<tail_unbinding_connections.size(); j++){
+    for(int j=0; j<tail_unbinding_connections.size()-1; j++){
         for(int i=j+1; i<tail_unbinding_connections.size(); i++){
             if(*tail_unbinding_connections[j]==*tail_unbinding_connections[i]){
-                repeats.push_back(i);
+                bool in_vector = false;
+                for(auto & repeat : repeats){
+                    if(repeat == i){
+                        in_vector = true;
+                    }
+                }
+                if(!in_vector) {
+                    repeats.push_back(i);
+                }
             }
         }
     }
@@ -638,10 +655,18 @@ void Conglomerate::updateTailBindingSites(){
     head_binding_sites = head_binding_sites/2;
 
     vector<int> repeats;
-    for(int j=0; j<tail_binding_connections.size(); j++){
+    for(int j=0; j<tail_binding_connections.size()-1; j++){
         for(int i=j+1; i<tail_binding_connections.size(); i++){
             if(*tail_binding_connections[j]==*tail_binding_connections[i]){
-                repeats.push_back(i);
+                bool in_vector = false;
+                for(auto & repeat : repeats){
+                    if(repeat == i){
+                        in_vector = true;
+                    }
+                }
+                if(!in_vector) {
+                    repeats.push_back(i);
+                }
             }
         }
     }
@@ -650,10 +675,18 @@ void Conglomerate::updateTailBindingSites(){
     }
 
     repeats.clear();
-    for(int j=0; j<head_binding_connections.size(); j++){
+    for(int j=0; j<head_binding_connections.size()-1; j++){
         for(int i=j+1; i<head_binding_connections.size(); i++){
             if(*head_binding_connections[j]==*head_binding_connections[i]){
-                repeats.push_back(i);
+                bool in_vector = false;
+                for(auto & repeat : repeats){
+                    if(repeat == i){
+                        in_vector = true;
+                    }
+                }
+                if(!in_vector) {
+                    repeats.push_back(i);
+                }
             }
         }
     }
@@ -769,10 +802,18 @@ void Conglomerate::updateValidNeighboursBinding() {
 
     valid_neighbours_binding = valid_neighbours_binding/2;
     vector<int> repeats;
-    for(int j=0; j<valid_unconnected_neighbours.size(); j++){
+    for(int j=0; j<valid_unconnected_neighbours.size()-1; j++){
         for(int i=j+1; i<valid_unconnected_neighbours.size(); i++){
             if(*valid_unconnected_neighbours[j]==*valid_unconnected_neighbours[i]){
-                repeats.push_back(i);
+                bool in_vector = false;
+                for(auto & repeat : repeats){
+                    if(repeat == i){
+                        in_vector = true;
+                    }
+                }
+                if(!in_vector) {
+                    repeats.push_back(i);
+                }
             }
         }
     }
@@ -780,7 +821,6 @@ void Conglomerate::updateValidNeighboursBinding() {
     for(int i=repeats.size()-1; i>=0; i--) {
         valid_unconnected_neighbours.erase(valid_unconnected_neighbours.begin() + repeats[i]);
     }
-
 }
 
 int Conglomerate::getValidNeighboursBinding(){
@@ -797,6 +837,18 @@ bool Conglomerate::validNeighbourBindingOptions(Connection * con, Polymer * p, i
         if(!(*poly[ite]==*p)){
             connected_polymer=poly[ite]; //This is the polymer connected to p
             connected_index=ind[ite]; //This is the index on polymer which is connected to p
+        }
+    }
+
+    if(direction==1){
+        if(connected_index==connected_polymer->getLength()-1){
+            //No connection can be made
+            return false;
+        }
+    } else {
+        if(connected_index==0){
+            //No connection can be made
+            return false;
         }
     }
 
@@ -886,10 +938,18 @@ void Conglomerate::updateValidNeighboursUnbinding(){
     }
 
     vector<int> repeats;
-    for(int j=0; j<valid_connected_neighbours.size(); j++){
+    for(int j=0; j<valid_connected_neighbours.size()-1; j++){
         for(int i=j+1; i<valid_connected_neighbours.size(); i++){
             if(*valid_connected_neighbours[j]==*valid_connected_neighbours[i]){
-                repeats.push_back(i);
+                bool in_vector = false;
+                for(auto & repeat : repeats){
+                    if(repeat == i){
+                        in_vector = true;
+                    }
+                }
+                if(!in_vector) {
+                    repeats.push_back(i);
+                }
             }
         }
     }
@@ -919,31 +979,33 @@ bool Conglomerate::operator==(Conglomerate c){
 }
 
 Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
-    Polymer * pOne = neighbours->getPolymers()[0]; //21
+    Polymer * pOne = neighbours->getPolymers()[0]; //106
     int p_one_orig_length = pOne->getLength();
-    Polymer * pTwo = neighbours->getPolymers()[1]; //20
+    Polymer * pTwo = neighbours->getPolymers()[1]; //103
     pOne->addPolymer(pTwo, three_prime); //increase length of pOne and add sequence
     int p_two_length = pTwo->getLength(); //Retain length of pTwo as all connections on pOne will be shifted by this length
 
     for(auto & connection : connections){ //Loop all connections on conglomerate
-        vector<Polymer *> connected_polymers = connection->getPolymers();
+        vector<Polymer *> connected_polymers = connection->getPolymers(); //1, 103
         vector<int> polymers_indexes = connection->getIndexes();
+        bool fakeOne = true;
+        bool fakeTwo = true;
         for(int i=0; i<2; i++){
-            if(*connected_polymers[i]==*pTwo){//Find all connections using pTwo
+            if(*connected_polymers[i]==*pTwo){//Find all connections using pTwo connected[1]=103
                 //We need to change the polymer of the connections as this polymer is being removed
                 connection->changePolymer(i, pOne);
                 connection->setIndex(i, polymers_indexes[i]+p_two_length);
                 if(i==0) {
-                    pOne->addConnection(connected_polymers[1]);
-                    connected_polymers[1]->addConnection(pOne);
-                    connected_polymers[0]->removeConnection(connected_polymers[1]);
-                    connected_polymers[1]->removeConnection(connected_polymers[0]);
+                    pOne->addConnection(connected_polymers[1]); //106 add 1
+                    connected_polymers[1]->addConnection(pOne); //1 add 106
+                    fakeOne = connected_polymers[0]->removeConnection(connected_polymers[1]); //103 remove 1
+                    fakeTwo = connected_polymers[1]->removeConnection(connected_polymers[0]);//1 remove 103
                 }
                 if(i==1) {
-                    pOne->addConnection(connected_polymers[0]); //21 add connection 1
-                    connected_polymers[0]->addConnection(pOne);
-                    connected_polymers[1]->removeConnection(connected_polymers[0]);
-                    connected_polymers[0]->removeConnection(connected_polymers[1]);
+                    pOne->addConnection(connected_polymers[0]); //106 add 1
+                    connected_polymers[0]->addConnection(pOne); //1 add 106
+                    fakeOne = connected_polymers[1]->removeConnection(connected_polymers[0]); //103 remove 1
+                    fakeTwo = connected_polymers[0]->removeConnection(connected_polymers[1]); //1 remove 103
                 }
 
             }
@@ -1006,15 +1068,13 @@ Polymer * Conglomerate::separatePolymers(ConnectedNeighbours * neighbours){
                 //Change polymer connection list
                 if(i==0) {
                     pTwo->addConnection(connected_polymers[1]);
-                    if(pOne->removeConnection(connected_polymers[1])){
-                        updateConnectivity();
-                    }
+                    pOne->removeConnection(connected_polymers[1]);
+                    connected_polymers[0]->removeConnection(pOne);
                 }
                 if(i==1) {
                     pTwo->addConnection(connected_polymers[0]);
-                    if(pOne->removeConnection(connected_polymers[0])){
-                        updateConnectivity();
-                    }
+                    pOne->removeConnection(connected_polymers[0]);
+                    connected_polymers[1]->removeConnection(pOne);
                 }
             }
         }
