@@ -16,7 +16,7 @@ using namespace std;
 #define template_head_unbind_rate 1
 #define template_bind_rate 1
 #define backbone_bind_rate 1
-#define backbone_unbind_rate 1
+#define backbone_unbind_rate 0.1
 
 
 
@@ -25,7 +25,7 @@ int main() {
     tests->runTests();
 
     double current_time = 0;
-    int end_time = 100000000;
+    int end_time = 1000000;
     double total_rate;
 
     int number_of_families = 2;
@@ -43,11 +43,11 @@ int main() {
     System * system = new System(number_of_families, number_of_types, monomers, init_temp);
 
     while(current_time<end_time){
-        cout << endl << "------------------" << endl;
+        //cout << endl << "------------------" << endl;
         //We calculate all rates in conglomerates and externally
         system->getEverything();
 
-        system->print();
+        //system->print();
 
         //Get rates
         vector<int> rates = system->getRates();
@@ -87,9 +87,12 @@ int main() {
         bool successful = system->chooseBond(chosen_transition);
 
         if(!successful){
+            cout << "Failed" << endl;
             return 0;
         }
     }
+
+    system->print();
 
     delete system;
     return 0;

@@ -511,18 +511,30 @@ void Conglomerate::updateTailUnbindingSites(){
     }
 
     vector<int> repeats;
-    for(int j=0; j<head_unbinding_connections.size()-1; j++){
-        for(int i=j+1; i<head_unbinding_connections.size(); i++){
-            if(*head_unbinding_connections[j]==*head_unbinding_connections[i]){
-                bool in_vector = false;
-                for(auto & repeat : repeats){
-                    if(repeat == i){
-                        in_vector = true;
+    if(head_unbinding_connections.size()>0) {
+        for (int j = 0; j < head_unbinding_connections.size()-1; j++) {
+            for (int i = j + 1; i < head_unbinding_connections.size(); i++) {
+                if (*head_unbinding_connections[j] == *head_unbinding_connections[i]) {
+                    bool in_vector = false;
+                    for (auto &repeat: repeats) {
+                        if (repeat == i) {
+                            in_vector = true;
+                        }
+                    }
+                    if (!in_vector) {
+                        repeats.push_back(i);
                     }
                 }
-                if(!in_vector) {
-                    repeats.push_back(i);
-                }
+            }
+        }
+    }
+
+    for(int i = 0; i<repeats.size(); i++){
+        for(int j = 0; j<repeats.size()-1; j++){
+            if(repeats[j]>repeats[j+1]){
+                int temp = repeats[j];
+                repeats[j] = repeats[j+1];
+                repeats[j+1] = temp;
             }
         }
     }
@@ -530,24 +542,36 @@ void Conglomerate::updateTailUnbindingSites(){
     for(int i=repeats.size()-1; i>=0; i--) {
         head_unbinding_connections.erase(head_unbinding_connections.begin() + repeats[i]);
     }
+    
     repeats.clear();
-    for(int j=0; j<tail_unbinding_connections.size()-1; j++){
-        for(int i=j+1; i<tail_unbinding_connections.size(); i++){
-            if(*tail_unbinding_connections[j]==*tail_unbinding_connections[i]){
-                bool in_vector = false;
-                for(auto & repeat : repeats){
-                    if(repeat == i){
-                        in_vector = true;
+    if(tail_unbinding_connections.size()>0) {
+        for (int j = 0; j < tail_unbinding_connections.size()-1; j++) {
+            for (int i = j + 1; i < tail_unbinding_connections.size(); i++) {
+                if (*tail_unbinding_connections[j] == *tail_unbinding_connections[i]) {
+                    bool in_vector = false;
+                    for (auto &repeat: repeats) {
+                        if (repeat == i) {
+                            in_vector = true;
+                        }
                     }
-                }
-                if(!in_vector) {
-                    repeats.push_back(i);
+                    if (!in_vector) {
+                        repeats.push_back(i);
+                    }
                 }
             }
         }
-    }
-    for(int i=repeats.size()-1; i>=0; i--) {
-        tail_unbinding_connections.erase(tail_unbinding_connections.begin() + repeats[i]);
+        for(int i = 0; i<repeats.size(); i++){
+            for(int j = 0; j<repeats.size()-1; j++){
+                if(repeats[j]>repeats[j+1]){
+                    int temp = repeats[j];
+                    repeats[j] = repeats[j+1];
+                    repeats[j+1] = temp;
+                }
+            }
+        }
+        for (int i = repeats.size() - 1; i >= 0; i--) {
+            tail_unbinding_connections.erase(tail_unbinding_connections.begin() + repeats[i]);
+        }
     }
 
 }
@@ -655,43 +679,66 @@ void Conglomerate::updateTailBindingSites(){
     head_binding_sites = head_binding_sites/2;
 
     vector<int> repeats;
-    for(int j=0; j<tail_binding_connections.size()-1; j++){
-        for(int i=j+1; i<tail_binding_connections.size(); i++){
-            if(*tail_binding_connections[j]==*tail_binding_connections[i]){
-                bool in_vector = false;
-                for(auto & repeat : repeats){
-                    if(repeat == i){
-                        in_vector = true;
+    if(tail_binding_connections.size()>0) {
+        for (int j = 0; j < tail_binding_connections.size()-1; j++) {
+            for (int i = j + 1; i < tail_binding_connections.size(); i++) {
+                if (*tail_binding_connections[j] == *tail_binding_connections[i]) {
+                    bool in_vector = false;
+                    for (auto &repeat: repeats) {
+                        if (repeat == i) {
+                            in_vector = true;
+                        }
                     }
-                }
-                if(!in_vector) {
-                    repeats.push_back(i);
+                    if (!in_vector) {
+                        repeats.push_back(i);
+                    }
                 }
             }
         }
-    }
-    for(int i=repeats.size()-1; i>=0; i--) {
-        tail_binding_connections.erase(tail_binding_connections.begin() + repeats[i]);
+        for(int i = 0; i<repeats.size(); i++){
+            for(int j = 0; j<repeats.size()-1; j++){
+                if(repeats[j]>repeats[j+1]){
+                    int temp = repeats[j];
+                    repeats[j] = repeats[j+1];
+                    repeats[j+1] = temp;
+                }
+            }
+        }
+        for (int i = repeats.size() - 1; i >= 0; i--) {
+            tail_binding_connections.erase(tail_binding_connections.begin() + repeats[i]);
+        }
     }
 
+
     repeats.clear();
-    for(int j=0; j<head_binding_connections.size()-1; j++){
-        for(int i=j+1; i<head_binding_connections.size(); i++){
-            if(*head_binding_connections[j]==*head_binding_connections[i]){
-                bool in_vector = false;
-                for(auto & repeat : repeats){
-                    if(repeat == i){
-                        in_vector = true;
+    if(head_binding_connections.size()>0) {
+        for (int j = 0; j < head_binding_connections.size()-1; j++) {
+            for (int i = j + 1; i < head_binding_connections.size(); i++) {
+                if (*head_binding_connections[j] == *head_binding_connections[i]) {
+                    bool in_vector = false;
+                    for (auto &repeat: repeats) {
+                        if (repeat == i) {
+                            in_vector = true;
+                        }
                     }
-                }
-                if(!in_vector) {
-                    repeats.push_back(i);
+                    if (!in_vector) {
+                        repeats.push_back(i);
+                    }
                 }
             }
         }
-    }
-    for(int i=repeats.size()-1; i>=0; i--) {
-        head_binding_connections.erase(head_binding_connections.begin() + repeats[i]);
+        for(int i = 0; i<repeats.size(); i++){
+            for(int j = 0; j<repeats.size()-1; j++){
+                if(repeats[j]>repeats[j+1]){
+                    int temp = repeats[j];
+                    repeats[j] = repeats[j+1];
+                    repeats[j+1] = temp;
+                }
+            }
+        }
+        for (int i = repeats.size() - 1; i >= 0; i--) {
+            head_binding_connections.erase(head_binding_connections.begin() + repeats[i]);
+        }
     }
 
 }
@@ -801,25 +848,37 @@ void Conglomerate::updateValidNeighboursBinding() {
     }
 
     valid_neighbours_binding = valid_neighbours_binding/2;
-    vector<int> repeats;
-    for(int j=0; j<valid_unconnected_neighbours.size()-1; j++){
-        for(int i=j+1; i<valid_unconnected_neighbours.size(); i++){
-            if(*valid_unconnected_neighbours[j]==*valid_unconnected_neighbours[i]){
-                bool in_vector = false;
-                for(auto & repeat : repeats){
-                    if(repeat == i){
-                        in_vector = true;
+    if(valid_unconnected_neighbours.size()>0) {
+        vector<int> repeats;
+        for (int j = 0; j < valid_unconnected_neighbours.size()-1; j++) {
+            for (int i = j + 1; i < valid_unconnected_neighbours.size(); i++) {
+                if (*valid_unconnected_neighbours[j] == *valid_unconnected_neighbours[i]) {
+                    bool in_vector = false;
+                    for (auto &repeat: repeats) {
+                        if (repeat == i) {
+                            in_vector = true;
+                        }
                     }
-                }
-                if(!in_vector) {
-                    repeats.push_back(i);
+                    if (!in_vector) {
+                        repeats.push_back(i);
+                    }
                 }
             }
         }
-    }
-
-    for(int i=repeats.size()-1; i>=0; i--) {
-        valid_unconnected_neighbours.erase(valid_unconnected_neighbours.begin() + repeats[i]);
+        for(int i = 0; i<repeats.size(); i++){
+            for(int j = 0; j<repeats.size()-1; j++){
+                if(repeats[j]>repeats[j+1]){
+                    int temp = repeats[j];
+                    repeats[j] = repeats[j+1];
+                    repeats[j+1] = temp;
+                }
+            }
+        }
+        if(repeats.size()>0) {
+            for (int i = repeats.size() - 1; i >= 0; i--) {
+                valid_unconnected_neighbours.erase(valid_unconnected_neighbours.begin() + repeats[i]);
+            }
+        }
     }
 }
 
@@ -937,24 +996,35 @@ void Conglomerate::updateValidNeighboursUnbinding(){
         }
     }
 
-    vector<int> repeats;
-    for(int j=0; j<valid_connected_neighbours.size()-1; j++){
-        for(int i=j+1; i<valid_connected_neighbours.size(); i++){
-            if(*valid_connected_neighbours[j]==*valid_connected_neighbours[i]){
-                bool in_vector = false;
-                for(auto & repeat : repeats){
-                    if(repeat == i){
-                        in_vector = true;
+    if(valid_connected_neighbours.size()>0) {
+        vector<int> repeats;
+        for (int j = 0; j < valid_connected_neighbours.size()-1; j++) {
+            for (int i = j + 1; i < valid_connected_neighbours.size(); i++) {
+                if (*valid_connected_neighbours[j] == *valid_connected_neighbours[i]) {
+                    bool in_vector = false;
+                    for (auto &repeat: repeats) {
+                        if (repeat == i) {
+                            in_vector = true;
+                        }
                     }
-                }
-                if(!in_vector) {
-                    repeats.push_back(i);
+                    if (!in_vector) {
+                        repeats.push_back(i);
+                    }
                 }
             }
         }
-    }
-    for(int i=repeats.size()-1; i>=0; i--) {
-        valid_connected_neighbours.erase(valid_connected_neighbours.begin() + repeats[i]);
+        for(int i = 0; i<repeats.size(); i++){
+            for(int j = 0; j<repeats.size()-1; j++){
+                if(repeats[j]>repeats[j+1]){
+                    int temp = repeats[j];
+                    repeats[j] = repeats[j+1];
+                    repeats[j+1] = temp;
+                }
+            }
+        }
+        for (int i = repeats.size() - 1; i >= 0; i--) {
+            valid_connected_neighbours.erase(valid_connected_neighbours.begin() + repeats[i]);
+        }
     }
 
 }
@@ -979,33 +1049,33 @@ bool Conglomerate::operator==(Conglomerate c){
 }
 
 Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
-    Polymer * pOne = neighbours->getPolymers()[0]; //106
+    Polymer * pOne = neighbours->getPolymers()[0];
     int p_one_orig_length = pOne->getLength();
-    Polymer * pTwo = neighbours->getPolymers()[1]; //103
+    Polymer * pTwo = neighbours->getPolymers()[1];
     pOne->addPolymer(pTwo, three_prime); //increase length of pOne and add sequence
     int p_two_length = pTwo->getLength(); //Retain length of pTwo as all connections on pOne will be shifted by this length
 
     for(auto & connection : connections){ //Loop all connections on conglomerate
-        vector<Polymer *> connected_polymers = connection->getPolymers(); //1, 103
+        vector<Polymer *> connected_polymers = connection->getPolymers();
         vector<int> polymers_indexes = connection->getIndexes();
         bool fakeOne = true;
         bool fakeTwo = true;
         for(int i=0; i<2; i++){
-            if(*connected_polymers[i]==*pTwo){//Find all connections using pTwo connected[1]=103
+            if(*connected_polymers[i]==*pTwo){//Find all connections using pTwo
                 //We need to change the polymer of the connections as this polymer is being removed
                 connection->changePolymer(i, pOne);
-                connection->setIndex(i, polymers_indexes[i]+p_two_length);
+                connection->setIndex(i, polymers_indexes[i]+p_one_orig_length);
                 if(i==0) {
-                    pOne->addConnection(connected_polymers[1]); //106 add 1
-                    connected_polymers[1]->addConnection(pOne); //1 add 106
-                    fakeOne = connected_polymers[0]->removeConnection(connected_polymers[1]); //103 remove 1
-                    fakeTwo = connected_polymers[1]->removeConnection(connected_polymers[0]);//1 remove 103
+                    fakeOne = connected_polymers[0]->removeConnection(connected_polymers[1]);
+                    fakeTwo = connected_polymers[1]->removeConnection(connected_polymers[0]);
+                    pOne->addConnection(connected_polymers[1]);
+                    connected_polymers[1]->addConnection(pOne);
                 }
                 if(i==1) {
-                    pOne->addConnection(connected_polymers[0]); //106 add 1
-                    connected_polymers[0]->addConnection(pOne); //1 add 106
-                    fakeOne = connected_polymers[1]->removeConnection(connected_polymers[0]); //103 remove 1
-                    fakeTwo = connected_polymers[0]->removeConnection(connected_polymers[1]); //1 remove 103
+                    fakeOne = connected_polymers[1]->removeConnection(connected_polymers[0]);
+                    fakeTwo = connected_polymers[0]->removeConnection(connected_polymers[1]);
+                    pOne->addConnection(connected_polymers[0]);
+                    connected_polymers[0]->addConnection(pOne);
                 }
 
             }
@@ -1067,14 +1137,16 @@ Polymer * Conglomerate::separatePolymers(ConnectedNeighbours * neighbours){
 
                 //Change polymer connection list
                 if(i==0) {
-                    pTwo->addConnection(connected_polymers[1]);
                     pOne->removeConnection(connected_polymers[1]);
-                    connected_polymers[0]->removeConnection(pOne);
+                    connected_polymers[1]->removeConnection(pOne);
+                    pTwo->addConnection(connected_polymers[1]);
+                    connected_polymers[1]->addConnection(pTwo);
                 }
                 if(i==1) {
-                    pTwo->addConnection(connected_polymers[0]);
                     pOne->removeConnection(connected_polymers[0]);
-                    connected_polymers[1]->removeConnection(pOne);
+                    connected_polymers[0]->removeConnection(pOne);
+                    pTwo->addConnection(connected_polymers[0]);
+                    connected_polymers[0]->addConnection(pTwo);
                 }
             }
         }

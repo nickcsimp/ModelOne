@@ -77,12 +77,17 @@ void Polymer::addConnection(Polymer * p){
     }
 
     if(connection_count==length){
-        cout << "This polymer: " << index << " Other polymer: " <<  p->getIndex() << endl;
-        cout << "Length: " << length << endl;
+        cout << "This Polymer: " << index <<  " Length: " << length << endl;
+        cout << "Connections: ";
         for(auto & elem : connections){
-            cout << "Polymer: " << get<0>(elem)->getIndex() << " Number: " << get<1>(elem) << endl;
+            cout << get<0>(elem)->getIndex() <<'x' << get<1>(elem) << ' ';
         }
-        cout << "ERROR: Cannot add connection to this polymer" << endl;
+        cout << endl << "Connecting Polymer: " << p->getIndex() << " Length: " << p->getLength() << endl;
+        cout << "Connections: ";
+        for(auto & elem : p->getConnections()){
+            cout << get<0>(elem)->getIndex() <<'x' << get<1>(elem) << ' ';
+        }
+        cout << endl << "ERROR: Cannot add connection to this polymer" << endl;
         return;
     }
     bool not_connected = true;
@@ -110,6 +115,16 @@ bool Polymer::removeConnection(Polymer * p){ //Returns true if no connections re
                 return false;
             }
         }
+    }
+    cout << "This Polymer: " << index <<  " Length: " << length << endl;
+    cout << "Connections: ";
+    for(auto & elem : connections){
+        cout << get<0>(elem)->getIndex() <<'x' << get<1>(elem) << ' ';
+    }
+    cout << endl << "Connecting Polymer: " << p->getIndex() << " Length: " << p->getLength() << endl;
+    cout << "Connections: ";
+    for(auto & elem : p->getConnections()){
+        cout << get<0>(elem)->getIndex() <<'x' << get<1>(elem) << ' ';
     }
     cout << "ERROR: No connection to be removed" << endl;
     return false;

@@ -20,7 +20,7 @@ using namespace std;
 #define template_head_unbind_rate 1
 #define template_head_bind_rate 1
 #define backbone_bind_rate 1
-#define backbone_unbind_rate 1
+#define backbone_unbind_rate 0.1
 
 #ifndef TESTTWO_SYSTEM_H
 #define TESTTWO_SYSTEM_H
