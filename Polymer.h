@@ -19,7 +19,7 @@ private:
     vector<int> sequence;
     int length;
     int family;
-    vector<tuple<Polymer *, int>> connections;
+
 public:
     explicit Polymer(int fam, vector<int> s);
 
@@ -31,19 +31,11 @@ public:
 
     vector<int> getSequence();
 
-    void clearConnections();
-
     int getLength();
 
     void addPolymer(Polymer * poly, int pos);
 
     Polymer * cutPolymer(int index);
-
-    vector<tuple<Polymer *, int>> getConnections();
-
-    void addConnection(Polymer * p);
-
-    bool removeConnection(Polymer * p);
 
     bool operator==(Polymer p);
 };

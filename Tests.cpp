@@ -35,18 +35,6 @@ bool Tests::runTests() {
         return false;
     }
 
-    cout << "Test PolymerAddConnection" << endl;
-    if(!testPolymerAddConnection()){
-        cout << "Failed: testPolymerAddConnection()";
-        return false;
-    }
-
-    cout << "Test PolymerRemoveConnection" << endl;
-    if(!testPolymerRemoveConnection()){
-        cout << "Failed: testPolymerRemoveConnection()";
-        return false;
-    }
-
     cout << "Test ConnectionInitialisation" << endl;
     if(!testConnectionInitialisation()){
         cout << "Failed: testConnectionInitialisation()";
@@ -303,92 +291,6 @@ bool Tests::testCutPolymer(){
 
     return true;
 
-}
-
-bool Tests::testPolymerAddConnection() {
-    vector<int> seq = {1,2,3,4,5};
-    int fam = 0;
-    Polymer *p = new Polymer(fam, seq);
-    p->setIndex(0);
-
-    p->addConnection(p);
-    cout << "Error expected" << endl;
-
-    if(p->getConnections().size()!=0){
-        return false;
-    }
-
-    Polymer *q = new Polymer(fam+1, seq);
-    q->setIndex(1);
-
-    for(int i=0; i<5; i++){
-        p->addConnection(q);
-        q->addConnection(p);
-        vector<tuple<Polymer *, int>> pCon = p->getConnections();
-        vector<tuple<Polymer *, int>> qCon = q->getConnections();
-        if(!(*get<0>(pCon[0])==*q) || !(*get<0>(qCon[0])==*p)){
-            return false;
-        }
-        if(get<1>(pCon[0])!=i+1 || get<1>(qCon[0])!=i+1){
-            return false;
-        }
-    }
-    p->addConnection(q);
-    cout << "Error expected" << endl;
-    q->addConnection(p);
-    cout << "Error expected" << endl;
-    if(get<1>(p->getConnections()[0])!=5 || get<1>(q->getConnections()[0])!=5){
-        return false;
-    }
-
-
-    return true;
-}
-
-bool Tests::testPolymerRemoveConnection() {
-    vector<int> seq = {1,2,3,4,5};
-    int fam = 0;
-    Polymer *p = new Polymer(fam, seq);
-    p->setIndex(0);
-
-    Polymer *q = new Polymer(fam+1, seq);
-    q->setIndex(1);
-
-    for(int i=0; i<5; i++){
-        p->addConnection(q);
-        q->addConnection(p);
-    }
-
-    for(int i=4; i>0; i--){
-        p->removeConnection(q);
-        q->removeConnection(p);
-        vector<tuple<Polymer *, int>> pCon = p->getConnections();
-        vector<tuple<Polymer *, int>> qCon = q->getConnections();
-
-        if(!(*get<0>(pCon[0])==*q) || !(*get<0>(qCon[0])==*p)){
-            return false;
-        }
-        if(get<1>(pCon[0])!=i || get<1>(qCon[0])!=i){
-            return false;
-        }
-    }
-
-    if(!(p->removeConnection(q))){
-        return false;
-    }
-
-    if(!(q->removeConnection(p))){
-        return false;
-    }
-
-    p->removeConnection(q);
-    cout << "Error expected" << endl;
-    q->removeConnection(p);
-    cout << "Error expected" << endl;
-    if(p->getConnections().size()!=0 || q->getConnections().size()!=0){
-        return false;
-    }
-    return true;
 }
 
 
@@ -1636,7 +1538,6 @@ bool Tests::testGetTree(){
 
     co->updatePolymersInConglomerate();
     co->updatePolymerConnections();
-
     vector<Polymer *> p = co->getTree(pOn, {pOn});
 
     if(p.size()!=3){
@@ -1664,7 +1565,6 @@ bool Tests::testGetTree(){
     if(!uno || !dos || !tres){
         return false;
     }
-
 
     vector<Polymer *> pol = co->getTree(pTw, {pTw});
 
@@ -1726,7 +1626,6 @@ bool Tests::testGetTree(){
 
     con->updatePolymersInConglomerate();
     con->updatePolymerConnections();
-
     vector<Polymer *> po = con->getTree(pOne, {pOne});
 
     if(po.size()!=2){

@@ -26,14 +26,6 @@ Conglomerate::Conglomerate(vector<Connection *> con, int family_count, int monom
         if (!in_vector_two) {
             polymers_in_cong.push_back(c->getPolymers()[1]);
         }
-
-        for (auto &elem: polymers_in_cong) {
-            elem->clearConnections();
-        }
-    }
-    for(auto & c : con){
-        c->getPolymers()[0]->addConnection(c->getPolymers()[1]);
-        c->getPolymers()[1]->addConnection(c->getPolymers()[0]);
     }
     number_of_families = family_count;
     number_of_monomer_types = monomer_type_count;
@@ -73,16 +65,12 @@ vector<Polymer*> Conglomerate::getPolymersInConglomerate(){
 
 void Conglomerate::addConnection(Connection* con){
     connections.push_back(con);
-    con->getPolymers()[0]->addConnection(con->getPolymers()[1]);
-    con->getPolymers()[1]->addConnection(con->getPolymers()[0]);
     updatePolymersInConglomerate();
 }
 
 void Conglomerate::addConnections(vector<Connection*> cons){
     for(auto & con : cons){
         connections.push_back(con);
-        con->getPolymers()[0]->addConnection(con->getPolymers()[1]);
-        con->getPolymers()[1]->addConnection(con->getPolymers()[0]);
     }
 
     updatePolymersInConglomerate();
@@ -93,15 +81,16 @@ vector<Conglomerate *> Conglomerate::removeConnection(Connection* con){
 
     vector<Conglomerate *> new_conglomerates;
     vector<vector<Connection *>> connectivity;
-    bool separated = false;
+    bool separated = true;
     for(int i=0; i<connections.size(); i++){
         if(*con == *connections[i]){
             connections.erase(connections.begin()+i);
-            if(con->getPolymers()[0]->removeConnection(con->getPolymers()[1])){
-                separated = true;
-            }
-            if(con->getPolymers()[1]->removeConnection(con->getPolymers()[0])){
-                separated = true;
+            for(auto & connection : connections){
+                if(*connection->getPolymers()[0]==*con->getPolymers()[0] && *connection->getPolymers()[1]==*con->getPolymers()[1]){
+                    separated = false;
+                } else if(*connection->getPolymers()[1]==*con->getPolymers()[0] && *connection->getPolymers()[0]==*con->getPolymers()[1]){
+                    separated = false;
+                }
             }
             if(separated){
                 connectivity = updateConnectivity();
@@ -169,36 +158,53 @@ vector<Conglomerate *> Conglomerate::removeConnection(Connection* con){
 
 vector<Polymer *> Conglomerate::getTree(Polymer * p, vector<Polymer *> connected_polymers){
 
-    vector<tuple<Polymer *, int>> cons = p->getConnections();
-
-    for(auto & con : cons){ //Loop all connections
-        Polymer * c = get<0>(con); //Get one of the polymers in the connection
-        bool in_vector = false;
-        for(auto & elem : connected_polymers){
-            if(*elem == *c){
-                in_vector = true;
-            }
-        }
-        if(!in_vector){
-            connected_polymers.push_back(c); //add this polymer to the vector
-            vector<Polymer *> connected_connected_polymers = getTree(c, connected_polymers);
-            for(auto & poly : connected_connected_polymers){
-                bool in_list = false;
-                for(auto & p : connected_polymers){
-                    if(*p==*poly){
-                        in_list=true;
+        for(auto & con : connections) {
+            vector<Polymer *> connected_connected_polymers;
+            bool found = false;
+            if (*con->getPolymers()[0] == *p) {
+                found = true;
+                bool in_vector = false;
+                for(auto & elem : connected_polymers){
+                    if(*elem==*con->getPolymers()[1]){
+                        in_vector=true;
                     }
                 }
-                if(!in_list){
-                    connected_polymers.push_back(poly);
+                if(!in_vector) {
+                    connected_polymers.push_back(con->getPolymers()[1]);
+                    connected_connected_polymers = getTree(con->getPolymers()[1], connected_polymers);
+                }
+            }
+            if (*con->getPolymers()[1] == *p) {
+                found = true;
+                bool in_vector = false;
+                for(auto & elem : connected_polymers){
+                    if(*elem==*con->getPolymers()[0]){
+                        in_vector=true;
+                    }
+                }
+                if(!in_vector) {
+                    connected_polymers.push_back(con->getPolymers()[0]);
+                    connected_connected_polymers = getTree(con->getPolymers()[0], connected_polymers);
+                }
+            }
+            if (found) {
+                for (auto & poly: connected_connected_polymers) {
+                    bool in_list = false;
+                    for (auto & p: connected_polymers) {
+                        if (*p == *poly) {
+                            in_list = true;
+                        }
+                    }
+                    if (!in_list) {
+                        connected_polymers.push_back(poly);
+                    }
                 }
             }
         }
-    }
     return connected_polymers;
 }
 
-vector<vector<Connection *>> Conglomerate::updateConnectivity(){ //TODO test
+vector<vector<Connection *>> Conglomerate::updateConnectivity(){
     vector<vector<Connection *>> output;
     vector<vector<Polymer *>> p_con;
 
@@ -1065,19 +1071,6 @@ Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
                 //We need to change the polymer of the connections as this polymer is being removed
                 connection->changePolymer(i, pOne);
                 connection->setIndex(i, polymers_indexes[i]+p_one_orig_length);
-                if(i==0) {
-                    fakeOne = connected_polymers[0]->removeConnection(connected_polymers[1]);
-                    fakeTwo = connected_polymers[1]->removeConnection(connected_polymers[0]);
-                    pOne->addConnection(connected_polymers[1]);
-                    connected_polymers[1]->addConnection(pOne);
-                }
-                if(i==1) {
-                    fakeOne = connected_polymers[1]->removeConnection(connected_polymers[0]);
-                    fakeTwo = connected_polymers[0]->removeConnection(connected_polymers[1]);
-                    pOne->addConnection(connected_polymers[0]);
-                    connected_polymers[0]->addConnection(pOne);
-                }
-
             }
         }
     }
@@ -1134,20 +1127,6 @@ Polymer * Conglomerate::separatePolymers(ConnectedNeighbours * neighbours){
                 connection->changePolymer(i, pTwo);
                 //change index to remove length of first polymer
                 connection->setIndex(i, polymers_indexes[i]-p_one_length);
-
-                //Change polymer connection list
-                if(i==0) {
-                    pOne->removeConnection(connected_polymers[1]);
-                    connected_polymers[1]->removeConnection(pOne);
-                    pTwo->addConnection(connected_polymers[1]);
-                    connected_polymers[1]->addConnection(pTwo);
-                }
-                if(i==1) {
-                    pOne->removeConnection(connected_polymers[0]);
-                    connected_polymers[0]->removeConnection(pOne);
-                    pTwo->addConnection(connected_polymers[0]);
-                    connected_polymers[0]->addConnection(pTwo);
-                }
             }
         }
     }

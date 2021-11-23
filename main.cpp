@@ -16,7 +16,7 @@ using namespace std;
 #define template_head_unbind_rate 1
 #define template_bind_rate 1
 #define backbone_bind_rate 1
-#define backbone_unbind_rate 0.1
+#define backbone_unbind_rate 1
 
 
 
@@ -25,7 +25,7 @@ int main() {
     tests->runTests();
 
     double current_time = 0;
-    int end_time = 1000000;
+    int end_time = 1000;
     double total_rate;
 
     int number_of_families = 2;
@@ -41,6 +41,7 @@ int main() {
 
     //Need an initial template sequence here going into system
     System * system = new System(number_of_families, number_of_types, monomers, init_temp);
+    int count = 0;
 
     while(current_time<end_time){
         //cout << endl << "------------------" << endl;
@@ -58,16 +59,19 @@ int main() {
         //We generate a random number from the exponential distribution
         random_device rd;
         mt19937 gen(rd());
-        exponential_distribution<double> exp_distribution(1/total_rate);
-        double random_time = exp_distribution(gen);
+
+        double rand = gen();
+        double rando = gen.max();
+
+        double random_time = -1*log(rand/rando)/total_rate;
 
         //Update time
         current_time += random_time;
         //cout << current_time << endl;
 
         //Generate a random number for ratio
-        double rand = gen();
-        double rando = gen.max();
+        rand = gen();
+        rando = gen.max();
         //Loop rates and find the first that is larger than the random number
         double current_number = 0;
         int chosen_transition = -1;
@@ -87,17 +91,45 @@ int main() {
         bool successful = system->chooseBond(chosen_transition);
 
         if(!successful){
-            cout << "Failed" << endl;
+            system->print();
+            cout << "Failed choosing bond: " << chosen_transition << endl;
+
+            cout << "Head Binding: " << rates[0] << endl;
+            cout << "Tail Binding: " << rates[1] << endl;
+            cout << "Head Unbinding: " << rates[2] << endl;
+            cout << "Tail Unbinding: " << rates[3] << endl;
+            cout << "Connected Neighbours: " << rates[4] << endl;
+            cout << "Unconnected Neighbours: " << rates[5] << endl;
+            cout << "Head Connections: " << rates[6] << endl;
+            cout << "Tail Connections: " << rates[7] << endl;
             return 0;
         }
+        count++;
+        cout << "Transition count = " << count << endl;
     }
+
+    /*system->getEverything();
+
+    //system->print();
+
+    //Get rates
+    vector<int> rates = system->getRates();
+
+
 
     system->print();
 
+    cout << "Head Binding: " << rates[0] << endl;
+    cout << "Tail Binding: " << rates[1] << endl;
+    cout << "Head Unbinding: " << rates[2] << endl;
+    cout << "Tail Unbinding: " << rates[3] << endl;
+    cout << "Connected Neighbours: " << rates[4] << endl;
+    cout << "Unconnected Neighbours: " << rates[5] << endl;
+    cout << "Head Connections: " << rates[6] << endl;
+    cout << "Tail Connections: " << rates[7] << endl;*/
+
+    cout << "Transition count = " << count << endl;
     delete system;
     return 0;
-
-    //Todo: Tests now have a fit at my checking system - see whats wrong
-    //Todo: Keep writing error checks until one makes sense
 }
 

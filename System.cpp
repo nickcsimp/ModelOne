@@ -239,23 +239,6 @@ void System::updatePotentialHeadTailSites(){
                     } else if(available_head_tail_sites[cong][i]->getType()!=available_head_tail_sites[congo][j]->getType()){
                         //No connection
                         can_connect=false;
-                    } else {
-                        vector<tuple<Polymer *, int>> listOne = available_head_tail_sites[cong][i]->getPolymer()->getConnections();
-                        vector<tuple<Polymer *, int>> listTwo = available_head_tail_sites[congo][j]->getPolymer()->getConnections();
-                        int countOne = 0;
-                        for(auto & elem : listOne){
-                            countOne += get<1>(elem);
-                        }
-                        int countTwo = 0;
-                        for(auto & elem : listTwo){
-                            countTwo += get<1>(elem);
-                        }
-                        if(countOne>=available_head_tail_sites[cong][i]->getPolymer()->getLength()){
-                            can_connect = false;
-                        }
-                        if(countTwo>=available_head_tail_sites[congo][j]->getPolymer()->getLength()){
-                            can_connect = false;
-                        }
                     }
                     if(can_connect){
                         can_connect_number++;
@@ -614,10 +597,18 @@ bool System::performNeighboursBind(Conglomerate * conglomerate, UnconnectedNeigh
             index = polymer;
         }
     }
+
     polymers.erase(polymers.begin()+index);
+
+    conglomerate->updateConglomerate();
 
     bool polymer_removed = true;
     for(auto & poly : conglomerate->getPolymersInConglomerate()){
+        if(*poly == *removed_polymer){
+            polymer_removed = false;
+        }
+    }
+    for(auto & poly : polymers){
         if(*poly == *removed_polymer){
             polymer_removed = false;
         }
@@ -763,6 +754,10 @@ bool System::performTailConnection(ExternalConnection * connection){
             cong_to_be_removed=i;
         }
     }
+    if(cong_to_be_removed == -1){
+        cout << "Error: conglomerate not found to remove" << endl;
+        return false;
+    }
     conglomerates.erase(conglomerates.begin()+cong_to_be_removed);
 
     bool connection_added = false;
@@ -773,12 +768,19 @@ bool System::performTailConnection(ExternalConnection * connection){
         }
     }
 
-    bool conglomerate_removed = false;
+    bool conglomerate_removed = true;
 
     for(auto & cong : conglomerates){
         if(*congs[1] == *cong){
-            conglomerate_removed = true;
+            conglomerate_removed = false;
         }
+    }
+
+    if(!connection_added){
+        cout << "Connection not found" << endl;
+    }
+    if(!conglomerate_removed){
+        cout << "Conglomerate not removed" << endl;
     }
 
     return (conglomerate_removed && connection_added);
@@ -787,7 +789,7 @@ bool System::performTailConnection(ExternalConnection * connection){
 
 
 void System::print(){
-
+/*
     cout << "----------------" << endl << endl;
     cout << "Conglomerate Count: " << conglomerates.size() << endl;
     cout << "Polymer Count: " << polymers.size() << endl;
@@ -806,7 +808,85 @@ void System::print(){
 
     cout << "Average number of Polymers in a Conglomerate: " << congAve << endl;
     cout << "Average Polymer Length: " << polAve << endl;
+*/
+    for(auto & cong : conglomerates){
+        cout << "Conglomerate: " << cong->getIndex() << endl;
+        for(auto & con : cong->getConnections()){
+            cout << con->getPolymers()[0]->getIndex() << ':' << con->getIndexes()[0] << endl;
+            cout << con->getPolymers()[1]->getIndex() << ':' << con->getIndexes()[1] << endl << endl;
+        }
+        cout << endl;
+    }
 
+    for(auto & cong : conglomerates){
+        if(cong->getConnections().size()>0) {
+            vector<Connection *> connections_made;
+            cout << "Conglomerate: " << cong->getIndex() << endl;
+            for(auto & poly : cong->getPolymersInConglomerate()){
+                cout << "Polymer: " << poly->getIndex() << endl;
+                string output;
+                for(int i=0; i<poly->getLength(); i++){
+                    bool connected = false;
+                    for(auto & connection : cong->getConnections()){
+                        if(*connection->getPolymers()[0] == *poly && connection->getIndexes()[0] == i){
+                            //There is a connection
+                            connected = true;
+                            output = output + "|--| " + to_string(connection->getIndexes()[1]) + " on " + to_string(connection->getPolymers()[1]->getIndex()) + '\n';
+                        }
+                        if(*connection->getPolymers()[1] == *poly && connection->getIndexes()[1] == i){
+                            //There is a connection
+                            connected = true;
+
+                            output = output + "|--| " + to_string(connection->getIndexes()[0]) + " on " + to_string(connection->getPolymers()[0]->getIndex()) + '\n';
+                        }
+                    }
+                    if(!connected){
+                        output = output + "|- " + '\n';
+                    }
+                }
+                cout << output;
+            }
+        }
+        cout << "Head Binding Connections:" << endl;
+        for(auto & con : cong->getHeadBindingConnections()){
+            cout << con->getPolymers()[0]->getIndex() << ':' << con->getIndexes()[0] << endl;
+            cout << con->getPolymers()[1]->getIndex() << ':' << con->getIndexes()[1] << endl << endl;
+        }
+
+        cout << "Tail Binding Connections:" << endl;
+        for(auto & con : cong->getTailBindingConnections()){
+            cout << con->getPolymers()[0]->getIndex() << ':' << con->getIndexes()[0] << endl;
+            cout << con->getPolymers()[1]->getIndex() << ':' << con->getIndexes()[1] << endl << endl;
+        }
+
+        cout << "Head Unbinding Connections:" << endl;
+        for(auto & con : cong->getHeadUnbindingConnections()){
+            cout << con->getPolymers()[0]->getIndex() << ':' << con->getIndexes()[0] << endl;
+            cout << con->getPolymers()[1]->getIndex() << ':' << con->getIndexes()[1] << endl << endl;
+        }
+
+        cout << "Tail Unbinding Connections:" << endl;
+        for(auto & con : cong->getTailUnbindingConnections()){
+            cout << con->getPolymers()[0]->getIndex() << ':' << con->getIndexes()[0] << endl;
+            cout << con->getPolymers()[1]->getIndex() << ':' << con->getIndexes()[1] << endl << endl;
+        }
+
+        cout << "Connected Neighbours:" << endl;
+        for(auto & con : cong->getValidConnectedNeighbours()){
+            cout << "Polymer: " << con->getPolymer()->getIndex() << " Indexes: " << con->getIndexes()[0] << ',' << con->getIndexes()[1] << endl;
+        }
+
+        cout << "Unconnected Neighbours:" << endl;
+        for(auto & con : cong->getValidUnconnectedNeighbours()){
+            cout << "Polymer 1: " << con->getPolymers()[0]->getIndex() << " Polymer 2: " << con->getPolymers()[1]->getIndex() << endl;
+        }
+
+        cout << "Connection Sites:" << endl;
+        for(auto & con : cong->getHeadTailSites()){
+            cout << "Polymer: " << get<0>(con)->getIndex() << " Index: " << get<1>(con) << endl;
+        }
+
+    }
 
     /*cout << "Conglomerate Count: " << conglomerates.size() << endl;
     cout << "Polymer Count: " << polymers.size() << endl;

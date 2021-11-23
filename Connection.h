@@ -28,6 +28,12 @@ public:
     void changePolymer(int which_polymer, Polymer * new_polymer);
 
     bool operator==(Connection c);
+
+    ostream& operator<<(ostream& os){
+        os << get<0>(one)->getIndex() << ':' << get<1>(one) << endl;
+        os << get<0>(two)->getIndex() << ':' << get<1>(two) << endl << endl;
+        return os;
+    }
 };
 
 #endif //TESTTWO_CONNECTION_H

@@ -22,23 +22,10 @@ public:
     Tests();
     bool runTests();
 
-    /*bool testSystemInitialisation();
-    bool testChangeMonomerCount();
-    bool testChangeDimerCount();
-    bool testPolymerParameters();
-
-    bool testUpdateTailBindingSites();
-    bool testTailConnectionOptions();
-    bool testUpdateValidNeighbour();
-    bool testValidNeighbourOptions();
-    bool testSystemGetters();*/
-
     bool testPolymerInitialisation();
     bool testAddPolymer();
     bool testPolymerEquals();
     bool testCutPolymer();
-    bool testPolymerAddConnection();
-    bool testPolymerRemoveConnection();
 
     bool testConnectionInitialisation();
     bool testConnectionEquals();
