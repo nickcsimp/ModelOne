@@ -25,7 +25,7 @@ int main() {
     tests->runTests();
 
     double current_time = 0;
-    int end_time = 1000;
+    int end_time = 10;
     double total_rate;
 
     int number_of_families = 2;
@@ -108,7 +108,7 @@ int main() {
         cout << "Transition count = " << count << endl;
     }
 
-    /*system->getEverything();
+    system->getEverything();
 
     //system->print();
 
@@ -126,9 +126,8 @@ int main() {
     cout << "Connected Neighbours: " << rates[4] << endl;
     cout << "Unconnected Neighbours: " << rates[5] << endl;
     cout << "Head Connections: " << rates[6] << endl;
-    cout << "Tail Connections: " << rates[7] << endl;*/
+    cout << "Tail Connections: " << rates[7] << endl;
 
-    cout << "Transition count = " << count << endl;
     delete system;
     return 0;
 }

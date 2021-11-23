@@ -556,48 +556,6 @@ bool Tests::testUnconnectedNeighboursEquals(){
     return true;
 }
 
-bool Tests::testDimerInitialisation(){
-    Dimer * d = new Dimer(0, 1, 2);
-
-    if(d->getType()!=0){
-        return false;
-    }
-
-    if(d->getFamilies()[0]!=1 || d->getFamilies()[1]!=2){
-        return false;
-    }
-
-    Dimer * e = new Dimer(0, 1, 1);
-    cout << "Error expected" << endl;
-
-    return true;
-}
-
-bool Tests::testDimerEquals(){
-    Dimer * d = new Dimer(0, 1, 2);
-    Dimer * copy = new Dimer(0, 1, 2);
-    Dimer * diffType = new Dimer(1, 1, 2);
-    Dimer * diffFam = new Dimer(0, 1, 3);
-    Dimer * diffFamily = new Dimer(0, 0, 2);
-
-    if(!(*d==*copy)){
-        return false;
-    }
-
-    if(*d==*diffType){
-        return false;
-    }
-
-    if(*d==*diffFam){
-        return false;
-    }
-
-    if(*d==*diffFamily){
-        return false;
-    }
-    return true;
-}
-
 bool Tests::testUpdatePolymersInConglomerate(){
 
 

@@ -8,7 +8,6 @@
 
 #include "Polymer.h"
 #include "Conglomerate.h"
-#include "Dimer.h"
 #include "PotentialSite.h"
 #include "ExternalConnection.h"
 

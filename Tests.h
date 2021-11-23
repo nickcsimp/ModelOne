@@ -37,9 +37,6 @@ public:
     bool testUnconnectedNeighboursInitialisation();
     bool testUnconnectedNeighboursEquals();
 
-    bool testDimerInitialisation();
-    bool testDimerEquals();
-
     bool testUpdatePolymersInConglomerate();
     bool testUpdatePolymerConnections();
     bool testUpdateAvailableTemplateBonds();
