@@ -39,7 +39,6 @@ public:
 
     bool testUpdatePolymersInConglomerate();
     bool testUpdatePolymerConnections();
-    bool testUpdateAvailableTemplateBonds();
     bool testGetPossibleSites();
     bool testUpdateTailUnbindingSites();
     bool testUpdateTailBindingSites();

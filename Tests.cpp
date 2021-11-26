@@ -76,17 +76,6 @@ bool Tests::runTests() {
         cout << "Failed: testUnconnectedNeighboursEquals()";
         return false;
     }
-    cout << "Test DimerInitialisation" << endl;
-    if(!testDimerInitialisation()){
-        cout << "Failed: testDimerInitialisation()";
-        return false;
-    }
-
-    cout << "Test Dimer Equals" << endl;
-    if(!testDimerEquals()){
-        cout << "Failed: testDimerEquals()";
-        return false;
-    }
 
     cout << "Test UpdatePolymersInConglomerate" << endl;
     if(!testUpdatePolymersInConglomerate()){
@@ -97,12 +86,6 @@ bool Tests::runTests() {
     cout << "Test UpdatePolymerConnections" << endl;
     if(!testUpdatePolymerConnections()){
         cout << "Failed: testUpdatePolymerConnections()";
-        return false;
-    }
-
-    cout << "Test UpdateAvailableTemplateBonds" << endl;
-    if(!testUpdateAvailableTemplateBonds()){
-        cout << "Failed: testUpdateAvailableTemplateBonds()";
         return false;
     }
 
@@ -680,61 +663,6 @@ bool Tests::testUpdatePolymerConnections(){
     }
 
     if(!(*connections[2][0] == *conFour) || indexes[2][0] != 4){
-        return false;
-    }
-
-    return true;
-}
-
-bool Tests::testUpdateAvailableTemplateBonds(){
-    Polymer * pOne = new Polymer(0, {1,0,1,0,1});
-    pOne->setIndex(0);
-
-    Polymer * pTwo = new Polymer(1, {1,0,1,0,1});
-    pTwo->setIndex(1);
-
-    Polymer * pThree = new Polymer(0, {1,0,1,0,1});
-    pThree->setIndex(2);
-
-    tuple<Polymer *, int> tOne = make_tuple(pOne, 0);
-    tuple<Polymer *, int> tTwo = make_tuple(pOne, 1);
-    tuple<Polymer *, int> tThree = make_tuple(pOne, 2);
-
-    tuple<Polymer *, int> tFour = make_tuple(pTwo, 0);
-    tuple<Polymer *, int> tFive = make_tuple(pTwo, 2);
-    tuple<Polymer *, int> tSix = make_tuple(pTwo, 3);
-    tuple<Polymer *, int> tSeven = make_tuple(pTwo, 4);
-
-    tuple<Polymer *, int> tEight = make_tuple(pThree, 4);
-
-    Connection * conOne = new Connection(tOne, tSeven);
-    Connection * conTwo = new Connection(tTwo, tSix);
-    Connection * conThree = new Connection(tThree, tFive);
-    Connection * conFour = new Connection(tFour, tEight);
-
-    Conglomerate * con = new Conglomerate({conOne, conTwo, conThree, conFour}, 2, 2);
-
-    con->updateAvailableTemplateBonds();
-
-    vector<vector<int>> tempBonds = con->getAvailableTemplateBonds();
-
-    if(tempBonds.size()!=2){
-        return false;
-    }
-
-    if(tempBonds[0].size()!=2){
-        return false;
-    }
-
-    if(tempBonds[1].size()!=2){
-        return false;
-    }
-
-    if(tempBonds[0][0]!=3 || tempBonds[0][1]!=1){
-        return false;
-    }
-
-    if(tempBonds[1][0]!=3 || tempBonds[1][1]!=0){
         return false;
     }
 

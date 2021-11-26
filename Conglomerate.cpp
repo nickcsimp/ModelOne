@@ -384,25 +384,6 @@ vector<tuple<Polymer *, int>> Conglomerate::getHeadTailSites(){
     return output;
 }
 
-int Conglomerate::getTemplateBonds(){
-    return template_bonds;
-}
-
-vector<vector<int>> Conglomerate::getAvailableTemplateBonds(){
-    return available_template_bonds;
-}
-
-void Conglomerate::updateBackboneBonds(){
-    updatePolymersInConglomerate(); // Probs shouldn't have to rerun every time
-    backbone_bonds=0;
-    for(auto & elem : polymers_in_conglomerate){
-        backbone_bonds=backbone_bonds+elem->getLength()-1;
-    }
-}
-
-int Conglomerate::getBackboneBonds(){
-    return backbone_bonds;
-}
 
 void Conglomerate::updatePolymerConnections(){
     updatePolymersInConglomerate(); // Probs shouldn't have to rerun every time
@@ -1106,7 +1087,6 @@ Polymer * Conglomerate::joinPolymers(UnconnectedNeighbours * neighbours){
 
     valid_neighbours_binding--;
     valid_neighbours_unbinding+=2;
-    backbone_bonds++;
 
     return pTwo;
 }
@@ -1147,7 +1127,6 @@ Polymer * Conglomerate::separatePolymers(ConnectedNeighbours * neighbours){
 
     valid_neighbours_binding++;
     valid_neighbours_unbinding--;
-    backbone_bonds--;
 
     return pTwo;
 }

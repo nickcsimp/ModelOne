@@ -5,7 +5,17 @@
 #include "System.h"
 using namespace std;
 
-System::System(int family_count, int monomer_type_count, vector<vector<int>> monomer_count, Polymer * initial_template){
+System::System(int family_count, int monomer_type_count, vector<vector<int>> monomer_count, Polymer * initial_template, double energy[3], double rates[2], double effective_conc){
+
+    Ggen = energy[0];
+    Gspec = energy[1];
+    Gbb = energy[2];
+
+    k0 = rates[0];
+    k = rates[1];
+
+    conc_eff = effective_conc;
+
     polymer_index=0;
     conglomerate_index=0;
     polymers.clear();
@@ -34,6 +44,17 @@ System::System(int family_count, int monomer_type_count, vector<vector<int>> mon
         }
     }
 
+    //Todo check we dont want different values for the different families or types etc
+    vector<double> type_rates;
+    type_rates.push_back(k0*conc_eff); //head and tail binding
+    type_rates.push_back(k0*exp(Ggen+Gspec)); //head unbinding
+    type_rates.push_back(k0*exp(Gspec)); //tail unbinding
+    type_rates.push_back(k); //Backbone polymerisation
+    type_rates.push_back(k*exp(Gbb-Ggen)); //Backbone depolymerisation
+    type_rates.push_back(k0); //Head connections
+    type_rates.push_back(k0); //tail connections
+
+    transition_rates=type_rates;
 }
 
 
@@ -59,14 +80,14 @@ bool System::chooseBond(int transition){
 
 vector<int> System::getRates(){
     vector<int> rates;
-    rates.push_back(number_head_binding*template_head_bind_rate);
-    rates.push_back(number_tail_binding*template_tail_bind_rate);
-    rates.push_back(number_head_unbinding*template_head_unbind_rate);
-    rates.push_back(number_tail_unbinding*template_tail_unbind_rate);
-    rates.push_back(number_connected_neighbours*backbone_unbind_rate);
-    rates.push_back(number_unconnected_neighbours*backbone_bind_rate);
-    rates.push_back(number_potential_head_connections*template_head_bind_rate);
-    rates.push_back(number_potential_tail_connections*template_tail_bind_rate);
+    rates.push_back(number_head_binding*transition_rates[0]);
+    rates.push_back(number_tail_binding*transition_rates[0]);
+    rates.push_back(number_head_unbinding*transition_rates[1]);
+    rates.push_back(number_tail_unbinding*transition_rates[2]);
+    rates.push_back(number_connected_neighbours*transition_rates[4]);
+    rates.push_back(number_unconnected_neighbours*transition_rates[3]);
+    rates.push_back(number_potential_head_connections*transition_rates[5]);
+    rates.push_back(number_potential_tail_connections*transition_rates[6]);
 
     /*
     cout << "Head Binding: " << number_head_binding << endl;

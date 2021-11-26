@@ -24,7 +24,6 @@ private:
 
     //Need to know which backbone bonds exist and can break
     vector<Polymer *> polymers_in_conglomerate;
-    int backbone_bonds; //save bonds in same order as polymers?
 
     //Need to know which connections are on which polymers and where
     vector<vector<Connection *>> polymer_connections;
@@ -43,8 +42,6 @@ private:
 
     vector<Connection *> head_binding_connections;
     int head_binding_sites;
-
-    int template_bonds; //available template bonds
 
     vector<vector<int>> available_template_bonds;
 
@@ -83,17 +80,9 @@ public:
 
     vector<tuple<Polymer*, int>> getPossibleSites(int type, int family);
 
-    //void updateTemplateBond();
-
     void updateAvailableTemplateBonds();
 
-    int getTemplateBonds();
-
     vector<vector<int>> getAvailableTemplateBonds();
-
-    int getBackboneBonds();
-
-    void updateBackboneBonds();
 
     void updatePolymerConnections();
 
@@ -116,8 +105,6 @@ public:
     vector<Connection *> getTailBindingConnections();
 
     vector<Connection *> getHeadBindingConnections();
-
-    void makePolymerConnections();
 
     void updateTailUnbindingSites();
 

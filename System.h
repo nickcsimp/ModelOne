@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <cmath>
+#include <algorithm>
 
 #include "Polymer.h"
 #include "Conglomerate.h"
@@ -13,13 +15,6 @@
 
 
 using namespace std;
-
-#define template_tail_unbind_rate 1
-#define template_tail_bind_rate 1
-#define template_head_unbind_rate 1
-#define template_head_bind_rate 1
-#define backbone_bind_rate 1
-#define backbone_unbind_rate 1
 
 #ifndef TESTTWO_SYSTEM_H
 #define TESTTWO_SYSTEM_H
@@ -52,14 +47,25 @@ private:
 
     int number_of_families;
     int number_of_monomer_types;
-    vector<vector<int>> number_of_monomers; //type, family
+    vector<vector<int>> number_of_monomers;
 
     vector<Polymer *> polymers;
     vector<Conglomerate *> conglomerates;
 
+    vector<double> transition_rates;
+
+    double Ggen;
+    double Gspec;
+    double Gbb;
+
+    double k0;
+    double k;
+
+    double conc_eff;
+
 public:
 
-    System(int family_count, int monomer_type_count, vector<vector<int>> number_of_monomers, Polymer * initial_template);
+    System(int family_count, int monomer_type_count, vector<vector<int>> number_of_monomers, Polymer * initial_template, double energy[3], double rates[2], double effective_conc);
 
     void eraseConglomerate(int index){conglomerates.erase(conglomerates.begin()+index);}
     void erasePolymer(int index){polymers.erase(polymers.begin()+index);}
