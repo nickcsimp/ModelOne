@@ -76,6 +76,7 @@ bool System::chooseBond(int transition){
     } else if(transition==7){
         return chooseTailConnection();
     }
+    return -1;
 }
 
 vector<int> System::getRates(){
@@ -810,7 +811,7 @@ bool System::performTailConnection(ExternalConnection * connection){
 
 
 void System::print(){
-/*
+
     cout << "----------------" << endl << endl;
     cout << "Conglomerate Count: " << conglomerates.size() << endl;
     cout << "Polymer Count: " << polymers.size() << endl;
@@ -819,17 +820,39 @@ void System::print(){
     for(auto & cong : conglomerates){
         congAve+=cong->getPolymersInConglomerate().size();
     }
+
     congAve=congAve/conglomerates.size();
+
+    vector<int> polymer_histogram;
 
     double polAve = 0;
     for(auto & pol : polymers){
-        polAve+=pol->getLength();
+        int longness = pol->getLength();
+        polAve+=longness;
+        if(longness>polymer_histogram.size()){
+            int bigness = polymer_histogram.size();
+            for(int i=0; i<(longness-bigness); i++){
+                polymer_histogram.push_back(0);
+            }
+        }
+        polymer_histogram[longness-1]++;
     }
-    congAve=congAve/polymers.size();
+    polAve=polAve/polymers.size();
 
     cout << "Average number of Polymers in a Conglomerate: " << congAve << endl;
     cout << "Average Polymer Length: " << polAve << endl;
-*/
+
+    for(int j=0; j<polymer_histogram.size(); j++){
+        cout << j+1 << "  |";
+        for(int i=0; i<polymer_histogram[j]; i++){
+            cout << 'x';
+        }
+        cout << endl;
+    }
+
+
+
+/*
     for(auto & cong : conglomerates){
         cout << "Conglomerate: " << cong->getIndex() << endl;
         for(auto & con : cong->getConnections()){
@@ -909,7 +932,7 @@ void System::print(){
 
     }
 
-    /*cout << "Conglomerate Count: " << conglomerates.size() << endl;
+    cout << "Conglomerate Count: " << conglomerates.size() << endl;
     cout << "Polymer Count: " << polymers.size() << endl;
     vector<tuple<int, int>> hist;
     for(auto & cong : conglomerates){

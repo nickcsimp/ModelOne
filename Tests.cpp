@@ -1857,7 +1857,12 @@ bool Tests::testSystemAbility(){
 
     initial_template = new Polymer(0, {0,0,0,0,0,0});
 
-    System * system = new System(family_count, monomer_type_count, number_of_monomers, initial_template);
+    double energies[3] = {1, 1, 1};
+    double raties[2] = {1, 1};
+    double conco = 1;
+
+
+    System * system = new System(family_count, monomer_type_count, number_of_monomers, initial_template, energies, raties, conco);
 
     system->getEverything();
     vector<vector<Connection *>> head_binding = system->getHeadBinding();
@@ -3749,7 +3754,12 @@ bool Tests::testPerformFunctions() {
 
     initial_template = new Polymer(0, {0, 0, 0, 0, 0, 0});
 
-    System *system = new System(family_count, monomer_type_count, number_of_monomers, initial_template);
+    double energies[3] = {1, 1, 1};
+    double raties[2] = {1, 1};
+    double conco = 1;
+
+
+    System * system = new System(family_count, monomer_type_count, number_of_monomers, initial_template, energies, raties, conco);
 
     system->getEverything();
     vector<vector<Connection *>> head_binding = system->getHeadBinding();

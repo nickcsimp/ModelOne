@@ -22,19 +22,24 @@ using namespace std;
 
 
 int main() {
-    Tests *tests = new Tests();
-    tests->runTests();
+    /*Tests *tests = new Tests();
+    tests->runTests();*/
 
-    double g_gen[] = {-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1};
+    /*double g_gen[] = {-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1};
     double g_bb[] = {-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1};
-    double g_spec[] = {-4, 2, 8};
+    double g_spec[] = {-4, 2, 8};*/
+
+    double g_gen[] = {-2};
+    double g_bb[] = {-2};
+    double g_spec[] = {-4, 2, 4};
 
     double k0 = 1;
     double k = 2;
     for(auto & gen : g_gen){
         for(auto & bb : g_bb){
             for(auto & spec : g_spec){
-                Simulation * sim = new Simulation(gen, spec, bb, k0, k, 10);
+                Simulation * sim = new Simulation(gen, spec, bb, k0, k, 3);
+                sim->run();
             }
         }
     }

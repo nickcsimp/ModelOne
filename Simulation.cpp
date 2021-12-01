@@ -37,7 +37,7 @@ void Simulation::run() {
     //Need an initial template sequence here going into system
     System *system = new System(number_of_families, number_of_types, monomers, init_temp, energy, baserates, effective_conc);
     int count = 0;
-
+    system->print();
     while (current_time < end_time) {
         //cout << endl << "------------------" << endl;
         //We calculate all rates in conglomerates and externally
@@ -105,22 +105,7 @@ void Simulation::run() {
 
     system->getEverything();
 
-    //system->print();
-
-    //Get rates
-    vector<int> rates = system->getRates();
-
-
     system->print();
-
-    cout << "Head Binding: " << rates[0] << endl;
-    cout << "Tail Binding: " << rates[1] << endl;
-    cout << "Head Unbinding: " << rates[2] << endl;
-    cout << "Tail Unbinding: " << rates[3] << endl;
-    cout << "Connected Neighbours: " << rates[4] << endl;
-    cout << "Unconnected Neighbours: " << rates[5] << endl;
-    cout << "Head Connections: " << rates[6] << endl;
-    cout << "Tail Connections: " << rates[7] << endl;
 
     delete system;
 }
